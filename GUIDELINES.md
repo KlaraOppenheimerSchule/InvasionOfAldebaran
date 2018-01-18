@@ -1,4 +1,4 @@
-# Coding Guidelines
+# Coding Guidelines [WIP]
 
 ## Variables
 * Methoden interne Variablen werden mit unterstrich (_) gekennzeichnet
