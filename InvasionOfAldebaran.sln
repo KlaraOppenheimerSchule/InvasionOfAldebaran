@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2009
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InvasionOfAldebaran", "InvasionOfAldebaran\InvasionOfAldebaran.csproj", "{2A74BD5E-A489-46B7-9F50-3797FC24B709}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2A74BD5E-A489-46B7-9F50-3797FC24B709}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A74BD5E-A489-46B7-9F50-3797FC24B709}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A74BD5E-A489-46B7-9F50-3797FC24B709}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A74BD5E-A489-46B7-9F50-3797FC24B709}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D4895F51-CD58-4CC1-B2DE-E751F413A576}
+	EndGlobalSection
+EndGlobal
