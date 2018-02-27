@@ -18,9 +18,9 @@ namespace InvasionOfAldebaran.Views
     /// <summary>
     /// Interaction logic for UserControl1.xaml
     /// </summary>
-    public partial class UserControl1 : UserControl
+    public partial class MenuView : UserControl
     {
-        public UserControl1()
+        public MenuView()
         {
             InitializeComponent();
         }
