@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace InvasionOfAldebaran.Views
 {
     /// <summary>
-    /// Interaktionslogik für Window1.xaml
+    /// Interaktionslogik für MainMenu.xaml
     /// </summary>
-    public partial class Window1 : Window
+    public partial class MainMenu : Window
     {
-        public Window1()
+        public MainMenu()
         {
             InitializeComponent();
         }
