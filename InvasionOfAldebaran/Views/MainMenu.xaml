@@ -7,14 +7,17 @@
         xmlns:cal="http://www.caliburnproject.org" x:Class="InvasionOfAldebaran.Views.Window1"
         mc:Ignorable="d"
         Title="MainMenu" Height="300" Width="300">
+    <Window.Background>
+        <ImageBrush ImageSource="../Resources/15-original.png"></ImageBrush>
+    </Window.Background>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Button x:Name="PlayButton" Content="Play" HorizontalAlignment="Left" Margin="112,95,0,0" VerticalAlignment="Top" Width="76"/>
         <Button x:Name="ExitButton" Content="Exit" HorizontalAlignment="Left" Margin="112,210,0,0"  VerticalAlignment="Top" Width="76"/>
-        <Label x:Name="GameTitle" HorizontalContentAlignment="Center"  VerticalContentAlignment="Center"  Content="Invasion of Aldebaran" HorizontalAlignment="Left" Margin="0,17,0,0" VerticalAlignment="Top" Height="50" Width="292" FontFamily="Arial" FontSize="18"/>
-        <Label x:Name="Highscore" HorizontalContentAlignment="Center"  VerticalContentAlignment="Center" Content="HIGHSCORE" HorizontalAlignment="Left" Margin="112,149,0,0" VerticalAlignment="Top" Height="41" Width="76"/>
+        <Label x:Name="GameTitle" HorizontalContentAlignment="Center" Foreground="White" VerticalContentAlignment="Center"  Content="Invasion of Aldebaran" HorizontalAlignment="Left" Margin="0,17,0,0" VerticalAlignment="Top" Height="50" Width="292" FontFamily="Arial" FontSize="18"/>
+        <Label x:Name="Highscore" HorizontalContentAlignment="Center" Foreground="White" VerticalContentAlignment="Center" Content="HIGHSCORE" HorizontalAlignment="Left" Margin="112,149,0,0" VerticalAlignment="Top" Height="41" Width="76"/>
 
     </Grid>
 </Window>
