@@ -129,5 +129,8 @@
     <Folder Include="Models\" />
     <Folder Include="Shared\" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\15-original.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
