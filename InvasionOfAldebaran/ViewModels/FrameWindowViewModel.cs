@@ -7,7 +7,8 @@ using Caliburn.Micro;
 
 namespace InvasionOfAldebaran.ViewModels
 {
-    public class MenuViewModel : Screen
+    class FrameWindowViewModel : Conductor<Screen>.Collection.OneActive
     {
+		
     }
 }

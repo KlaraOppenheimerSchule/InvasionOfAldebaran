@@ -16,7 +16,7 @@ namespace InvasionOfAldebaran
         protected override void OnStartup(object sender, StartupEventArgs e)
         {
             
-            this.DisplayRootViewFor<MainWindowViewModel>();
+            this.DisplayRootViewFor<FrameWindowViewModel>();
         }
     }
 }
