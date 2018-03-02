@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InvasionOfAldebaran.Models
+namespace InvasionOfAldebaran.Shared
 {
-    enum Direction
-    {
-        Left,
-        Right,
-        Up,
-        Down,
-    }
+	public enum Direction
+	{
+		Left,
+		Up,
+		Right,
+		Down
+	}
 }

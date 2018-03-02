@@ -4,11 +4,31 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Shapes;
 
 namespace InvasionOfAldebaran.Models
 {
-	class Player
+	public class Player: AnimatedObject
 	{
-	    
+		Polygon Frame = new Polygon()
+		{
+			Fill = Brushes.Blue,
+		};
+
+		public Player(Canvas canvas, double x, double y, double vx, double vy) : base(x, y, vx, vy)
+		{
+			Frame.Points.Add(new Point(0.0, -10.0));
+			Frame.Points.Add(new Point(5.0, 7.0));
+			Frame.Points.Add(new Point(-5.0, 7.0));
+		}
+
+		public override void Draw(Canvas canvas)
+		{
+			canvas.Children.Add(Frame);
+			Canvas.SetLeft(Frame, X);
+			Canvas.SetTop(Frame, Y);
+		}
 	}
 }
