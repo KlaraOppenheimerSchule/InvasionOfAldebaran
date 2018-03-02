@@ -22,9 +22,6 @@ C:\Users\Install\source\repos\InvasionOfAldebaran\InvasionOfAldebaran\obj\Debug\
 C:\Users\Install\source\repos\InvasionOfAldebaran\InvasionOfAldebaran\obj\Debug\Views\MainWindowView.baml
 C:\Users\Install\source\repos\InvasionOfAldebaran\InvasionOfAldebaran\obj\Debug\InvasionOfAldebaran.csprojResolveAssemblyReference.cache
 C:\Users\Install\source\repos\InvasionOfAldebaran\InvasionOfAldebaran\obj\Debug\App.baml
-C:\Git\InvasionOfAldebaran\InvasionOfAldebaran\obj\Debug\InvasionOfAldebaran.csprojResolveAssemblyReference.cache
-C:\Git\InvasionOfAldebaran\InvasionOfAldebaran\obj\Debug\Views\MainWindowView.g.cs
-C:\Git\InvasionOfAldebaran\InvasionOfAldebaran\obj\Debug\Views\MenuView.g.cs
 C:\Git\InvasionOfAldebaran\InvasionOfAldebaran\obj\Debug\Views\PlayView.g.cs
 C:\Git\InvasionOfAldebaran\InvasionOfAldebaran\obj\Debug\App.g.cs
 C:\Git\InvasionOfAldebaran\InvasionOfAldebaran\obj\Debug\GeneratedInternalTypeHelper.g.cs
@@ -43,8 +40,6 @@ C:\Git\InvasionOfAldebaran\InvasionOfAldebaran\bin\Debug\Caliburn.Micro.xml
 C:\Git\InvasionOfAldebaran\InvasionOfAldebaran\bin\Debug\Caliburn.Micro.Platform.xml
 C:\Git\InvasionOfAldebaran\InvasionOfAldebaran\bin\Debug\Caliburn.Micro.Platform.Core.xml
 C:\Git\InvasionOfAldebaran\InvasionOfAldebaran\obj\Debug\App.baml
-C:\Git\InvasionOfAldebaran\InvasionOfAldebaran\obj\Debug\Views\MainWindowView.baml
-C:\Git\InvasionOfAldebaran\InvasionOfAldebaran\obj\Debug\Views\MenuView.baml
 C:\Git\InvasionOfAldebaran\InvasionOfAldebaran\obj\Debug\Views\PlayView.baml
 C:\Git\InvasionOfAldebaran\InvasionOfAldebaran\obj\Debug\InvasionOfAldebaran.g.resources
 C:\Git\InvasionOfAldebaran\InvasionOfAldebaran\obj\Debug\InvasionOfAldebaran.Properties.Resources.resources
@@ -80,3 +75,7 @@ H:\IOA\InvasionOfAldebaran\InvasionOfAldebaran\obj\Debug\InvasionOfAldebaran.csp
 H:\IOA\InvasionOfAldebaran\InvasionOfAldebaran\obj\Debug\InvasionOfAldebaran.csproj.CoreCompileInputs.cache
 H:\IOA\InvasionOfAldebaran\InvasionOfAldebaran\obj\Debug\InvasionOfAldebaran.exe
 H:\IOA\InvasionOfAldebaran\InvasionOfAldebaran\obj\Debug\InvasionOfAldebaran.pdb
+C:\Git\InvasionOfAldebaran\InvasionOfAldebaran\obj\Debug\Views\MainMenuView.g.cs
+C:\Git\InvasionOfAldebaran\InvasionOfAldebaran\obj\Debug\Views\MainMenuView.baml
+C:\Git\InvasionOfAldebaran\InvasionOfAldebaran\obj\Debug\Views\FrameWindowView.g.cs
+C:\Git\InvasionOfAldebaran\InvasionOfAldebaran\obj\Debug\Views\FrameWindowView.baml

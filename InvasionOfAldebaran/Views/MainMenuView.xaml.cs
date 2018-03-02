@@ -15,14 +15,14 @@ using System.Windows.Shapes;
 
 namespace InvasionOfAldebaran.Views
 {
-    /// <summary>
-    /// Interaction logic for UserControl1.xaml
-    /// </summary>
-    public partial class MenuView : UserControl
-    {
-        public MenuView()
-        {
-            InitializeComponent();
-        }
-    }
+	/// <summary>
+	/// Interaction logic for MainMenuView.xaml
+	/// </summary>
+	public partial class MainMenuView : UserControl
+	{
+		public MainMenuView()
+		{
+			InitializeComponent();
+		}
+	}
 }

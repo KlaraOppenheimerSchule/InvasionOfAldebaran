@@ -7,8 +7,8 @@ using Caliburn.Micro;
 
 namespace InvasionOfAldebaran.ViewModels
 {
-    class MainWindowViewModel : Conductor<Screen>.Collection.OneActive
+    class FrameWindowViewModel : Conductor<Screen>.Collection.OneActive
     {
-
+		
     }
 }
