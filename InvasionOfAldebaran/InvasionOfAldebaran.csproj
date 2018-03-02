@@ -67,7 +67,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Models\Direction.cs" />
+    <Compile Include="Shared\Direction.cs" />
     <Compile Include="Models\Player.cs" />
     <Compile Include="Models\AnimatedObject.cs" />
     <Compile Include="Models\Ship.cs" />
@@ -129,8 +129,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Shared\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

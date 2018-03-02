@@ -11,40 +11,43 @@ namespace InvasionOfAldebaran.Models
 {
     public abstract class AnimatedObject
     {
-        public double x { get; protected set; }
-        public double y { get; protected set; }
+        public double X { get; protected set; }
+        public double Y { get; protected set; }
+		public double Vx { get; protected set; }
+		public double Vy { get; protected set; }
 
-        public AnimatedObject(double _x, double _y, double _vx, double _vy)
+	    protected AnimatedObject(double x, double y, double vx, double vy)
         {
-            x = _x;
-            y = _y;
+            X = x;
+            Y = y;
+	        Vx = vx;
+	        Vy = vy;
         }
 
 	    public abstract void Zeichne(Canvas zeichenfläche);
 
 	    public void Animiere(TimeSpan intervall, Canvas zeichenfläche)
 	    {
-		    x += vx * intervall.TotalSeconds;
-		    y += vy * intervall.TotalSeconds;
+		    X += Vx * intervall.TotalSeconds;
+		    Y += Vy * intervall.TotalSeconds;
 
-		    if (x < 0.0)
+		    if (X < 0.0)
 		    {
-			    x = zeichenfläche.ActualWidth;
+			    X = zeichenfläche.ActualWidth;
 		    }
-		    else if (x > zeichenfläche.ActualWidth)
+		    else if (X > zeichenfläche.ActualWidth)
 		    {
-			    x = 0;
-		    }
-
-		    if (y < 0.0)
-		    {
-			    y = zeichenfläche.ActualHeight;
-		    }
-		    else if (y > zeichenfläche.ActualHeight)
-		    {
-			    y = 0;
+			    X = 0;
 		    }
 
+		    if (Y < 0.0)
+		    {
+			    Y = zeichenfläche.ActualHeight;
+		    }
+		    else if (Y > zeichenfläche.ActualHeight)
+		    {
+			    Y = 0;
+		    }
 	    }
 	}
 }

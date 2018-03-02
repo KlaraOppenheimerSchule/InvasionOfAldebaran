@@ -7,7 +7,7 @@ using Caliburn.Micro;
 
 namespace InvasionOfAldebaran.ViewModels
 {
-    class PlayViewModel : Screen
+    public class PlayViewModel : Screen
     {
     }
 }
