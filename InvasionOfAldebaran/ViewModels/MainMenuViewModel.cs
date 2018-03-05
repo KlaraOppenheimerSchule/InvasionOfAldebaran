@@ -9,5 +9,10 @@ namespace InvasionOfAldebaran.ViewModels
 {
     class MainMenuViewModel : Screen
     {
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+
+        }
     }
 }
