@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -12,16 +13,14 @@ namespace InvasionOfAldebaran.Models
 {
 	public class Player: AnimatedObject
 	{
-		Polygon Frame = new Polygon()
-		{
-			Fill = Brushes.Blue,
-		};
 
 		public Player(Canvas canvas, double x, double y, double vx, double vy) : base(x, y, vx, vy)
 		{
 			Frame.Points.Add(new Point(0.0, -10.0));
 			Frame.Points.Add(new Point(5.0, 7.0));
 			Frame.Points.Add(new Point(-5.0, 7.0));
+
+			this.Frame.Fill = Brushes.Blue;
 		}
 
 		public override void Draw(Canvas canvas)

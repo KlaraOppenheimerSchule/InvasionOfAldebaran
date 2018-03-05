@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Shapes;
 
 namespace InvasionOfAldebaran.Models
 {
@@ -16,6 +18,8 @@ namespace InvasionOfAldebaran.Models
 
 		protected static Random Random = new Random();
 
+		public Polygon Frame = new Polygon();
+
 		public AnimatedObject(double x, double y, double vx, double vy)
 		{
 			X = x;
@@ -26,7 +30,7 @@ namespace InvasionOfAldebaran.Models
 
 		public abstract void Draw(Canvas zeichenfläche);
 
-		public void Animiere(TimeSpan intervall, Canvas zeichenfläche)
+		public void Animate(TimeSpan intervall, Canvas zeichenfläche)
 		{
 			X += Vx * intervall.TotalSeconds;
 			Y += Vy * intervall.TotalSeconds;
@@ -48,7 +52,11 @@ namespace InvasionOfAldebaran.Models
 			{
 				Y = 0;
 			}
+		}
 
+		public bool ContainsPoint(double x, double y)
+		{
+			return Frame.RenderedGeometry.FillContains(new Point(x - X, y - Y));
 		}
 	}
 }

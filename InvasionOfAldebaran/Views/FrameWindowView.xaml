@@ -4,9 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:InvasionOfAldebaran.Views"
+        xmlns:cal="http://www.caliburnproject.org"
         mc:Ignorable="d"
-        Title="FrameWindowView" Height="300" Width="300">
+        Title="FrameWindowView" Height="1000" Width="700">
     <Grid>
-        
-    </Grid>
+		<ContentControl cal:View.Model="{Binding ActiveItem}" />
+	</Grid>
 </Window>
