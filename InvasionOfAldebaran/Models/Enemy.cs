@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using InvasionOfAldebaran.Shared;
 
 namespace InvasionOfAldebaran.Models
 {
@@ -17,5 +18,10 @@ namespace InvasionOfAldebaran.Models
 		{
 			throw new NotImplementedException();
 		}
-	}
+
+        public override void Move(Direction direction)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

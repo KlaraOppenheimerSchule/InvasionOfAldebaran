@@ -29,29 +29,29 @@ namespace InvasionOfAldebaran.Models
 			Vy = vy;
 		}
 
-		public abstract void Draw(Canvas zeichenfläche);
+		public abstract void Draw(Canvas canvas);
 
 		public abstract void Move(Direction direction);
 
-		public void Animate(TimeSpan intervall, Canvas zeichenfläche)
+		public void Animate(TimeSpan interval, Canvas canvas)
 		{
-			X += Vx * intervall.TotalSeconds;
-			Y += Vy * intervall.TotalSeconds;
+			X += Vx * interval.TotalSeconds;
+			Y += Vy * interval.TotalSeconds;
 
 			if (X < 0.0)
 			{
-				X = zeichenfläche.ActualWidth;
+				X = canvas.ActualWidth;
 			}
-			else if (X > zeichenfläche.ActualWidth)
+			else if (X > canvas.ActualWidth)
 			{
 				X = 0;
 			}
 
 			if (Y < 0.0)
 			{
-				Y = zeichenfläche.ActualHeight;
+				Y = canvas.ActualHeight;
 			}
-			else if (Y > zeichenfläche.ActualHeight)
+			else if (Y > canvas.ActualHeight)
 			{
 				Y = 0;
 			}

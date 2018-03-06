@@ -11,13 +11,14 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using Caliburn.Micro;
 using InvasionOfAldebaran.Models;
+using InvasionOfAldebaran.Shared;
 
 namespace InvasionOfAldebaran.ViewModels
 {
     public class PlayViewModel : Screen
     {
 	    private readonly DispatcherTimer _timer = new DispatcherTimer();
-
+        
 	    public List<AnimatedObject> Objects { get; set; }
 
 	    public Player Player;
@@ -28,18 +29,28 @@ namespace InvasionOfAldebaran.ViewModels
 
 		public PlayViewModel()
 	    {
+            
 			Objects = new List<AnimatedObject>();
-			Canvas = new Canvas();
+            Canvas = new Canvas()
+            {
+                Height = 900,
+                Width = 600,
+                Focusable = true,
+                Background = Brushes.DarkGray
+            };
 			_timer.Interval = TimeSpan.FromSeconds(0.01);
-		    _timer.Tick += AnimateObjects;
 
-			this.Player = new Player(Canvas, 100, 100, 3, 3);
+		    _timer.Tick += AnimateObjects;
+            this.Canvas.KeyDown += this.WindowKeyDown;
+
+			this.Player = new Player(Canvas, 300, 800, 0, 0);
 			this.Objects.Add(Player);
 			_timer.Start();
 		}
 
 	    void AnimateObjects(object sender, EventArgs e)
 	    {
+            this.Canvas.Focus();
 		    foreach (var item in Objects)
 		    {
 			    item.Animate(_timer.Interval, Canvas);
@@ -79,27 +90,19 @@ namespace InvasionOfAldebaran.ViewModels
 					    break;
 				    case Key.A:
 				    case Key.Left:
-					    this.Player.BiegeAb(true);
+					    this.Player.Move(Direction.Left);
 					    break;
 				    case Key.D:
 				    case Key.Right:
-					    this.Player.BiegeAb(false);
+					    this.Player.Move(Direction.Right);
 					    break;
-				    case Key.W:
-				    case Key.Up:
-					    this.Player.Beschleunige(true);
-					    break;
-				    case Key.S:
-				    case Key.Down:
-					    this.Player.Beschleunige(false);
-					    break;
-				    case Key.Space:
-					    if (lastTorpedo.AddSeconds(0.5) <= DateTime.Now)
-					    {
-						    spielobjekte.Add(new Photonentorpedo(raumschiff));
-						    lastTorpedo = DateTime.Now;
-					    }
-					    break;
+				    //case Key.Space:
+					   // if (lastTorpedo.AddSeconds(0.5) <= DateTime.Now)
+					   // {
+						  //  spielobjekte.Add(new Photonentorpedo(raumschiff));
+						  //  lastTorpedo = DateTime.Now;
+					   // }
+					   // break;
 			    }
 		    }
 	    }

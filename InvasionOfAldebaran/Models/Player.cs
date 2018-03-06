@@ -14,12 +14,19 @@ namespace InvasionOfAldebaran.Models
 {
 	public class Player: AnimatedObject
 	{
+        private double _speed = 400;
 
-		public Player(Canvas canvas, double x, double y, double vx, double vy) : base(x, y, vx, vy)
+        private void ResetSpeed()
+        {
+            this.Vx = 0;
+            this.Vy = 0;
+        }
+
+        public Player(Canvas canvas, double x, double y, double vx, double vy) : base(x, y, vx, vy)
 		{
-			Frame.Points.Add(new Point(0.0, -10.0));
-			Frame.Points.Add(new Point(5.0, 7.0));
-			Frame.Points.Add(new Point(-5.0, 7.0));
+			Frame.Points.Add(new Point(0.0, -20.0));
+			Frame.Points.Add(new Point(10.0, 14.0));
+			Frame.Points.Add(new Point(-10.0, 14.0));
 
 			this.Frame.Fill = Brushes.Blue;
 		}
@@ -29,18 +36,19 @@ namespace InvasionOfAldebaran.Models
 			canvas.Children.Add(Frame);
 			Canvas.SetLeft(Frame, X);
 			Canvas.SetTop(Frame, Y);
+            //this.ResetSpeed();
 		}
 
-		public override void Move(Direction direction)
+        public override void Move(Direction direction)
 		{
 			switch (direction)
 			{
 				case Direction.Left:
-					this.Vx = -5;
+                    this.Vx = -_speed;
 					break;
 
 				case Direction.Right:
-					this.Vx = 5;
+                    this.Vx = _speed;
 					break;
 			}
 		}
