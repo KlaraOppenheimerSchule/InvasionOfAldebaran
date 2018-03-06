@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using InvasionOfAldebaran.Shared;
 
 namespace InvasionOfAldebaran.Models
 {
@@ -28,6 +29,20 @@ namespace InvasionOfAldebaran.Models
 			canvas.Children.Add(Frame);
 			Canvas.SetLeft(Frame, X);
 			Canvas.SetTop(Frame, Y);
+		}
+
+		public override void Move(Direction direction)
+		{
+			switch (direction)
+			{
+				case Direction.Left:
+					this.Vx = -5;
+					break;
+
+				case Direction.Right:
+					this.Vx = 5;
+					break;
+			}
 		}
 	}
 }

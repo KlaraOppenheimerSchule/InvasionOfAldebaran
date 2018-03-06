@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Shapes;
+using InvasionOfAldebaran.Shared;
 
 namespace InvasionOfAldebaran.Models
 {
@@ -29,6 +30,8 @@ namespace InvasionOfAldebaran.Models
 		}
 
 		public abstract void Draw(Canvas zeichenfläche);
+
+		public abstract void Move(Direction direction);
 
 		public void Animate(TimeSpan intervall, Canvas zeichenfläche)
 		{

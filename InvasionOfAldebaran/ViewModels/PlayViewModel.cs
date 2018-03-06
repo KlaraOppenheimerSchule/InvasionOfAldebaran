@@ -83,15 +83,15 @@ namespace InvasionOfAldebaran.ViewModels
 					    break;
 				    case Key.D:
 				    case Key.Right:
-					    raumschiff.BiegeAb(false);
+					    this.Player.BiegeAb(false);
 					    break;
 				    case Key.W:
 				    case Key.Up:
-					    raumschiff.Beschleunige(true);
+					    this.Player.Beschleunige(true);
 					    break;
 				    case Key.S:
 				    case Key.Down:
-					    raumschiff.Beschleunige(false);
+					    this.Player.Beschleunige(false);
 					    break;
 				    case Key.Space:
 					    if (lastTorpedo.AddSeconds(0.5) <= DateTime.Now)
