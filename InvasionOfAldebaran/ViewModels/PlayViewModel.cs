@@ -20,6 +20,8 @@ namespace InvasionOfAldebaran.ViewModels
 
 	    public List<AnimatedObject> Objects { get; set; }
 
+	    public Player Player;
+
 		public Canvas Canvas { get; set; }
 
 	    public TextBlock TextField { get; set; }
@@ -31,7 +33,8 @@ namespace InvasionOfAldebaran.ViewModels
 			_timer.Interval = TimeSpan.FromSeconds(0.01);
 		    _timer.Tick += AnimateObjects;
 
-			this.Objects.Add(new Player(this.Canvas, Canvas.Width * 0.5, Canvas.Height * 0.1, 3, 3 ));
+			this.Player = new Player(Canvas, 100, 100, 3, 3);
+			this.Objects.Add(Player);
 			_timer.Start();
 		}
 
@@ -68,7 +71,7 @@ namespace InvasionOfAldebaran.ViewModels
 
 	    private void WindowKeyDown(object sender, KeyEventArgs e)
 	    {
-		    if (Objects.Contains(//Todo: Spielervariable einfügen))
+		    if (Objects.Contains(this.Player))
 		    {
 			    switch (e.Key)
 			    {
@@ -76,7 +79,7 @@ namespace InvasionOfAldebaran.ViewModels
 					    break;
 				    case Key.A:
 				    case Key.Left:
-					    raumschiff.BiegeAb(true);
+					    this.Player.BiegeAb(true);
 					    break;
 				    case Key.D:
 				    case Key.Right:
