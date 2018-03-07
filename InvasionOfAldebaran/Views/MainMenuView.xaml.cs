@@ -21,9 +21,11 @@ namespace InvasionOfAldebaran.Views
 	/// </summary>
 	public partial class MainMenuView : UserControl
 	{
+
 		public MainMenuView()
 		{
 			InitializeComponent();
 		}
+
     }
 }

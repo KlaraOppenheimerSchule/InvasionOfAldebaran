@@ -10,16 +10,20 @@ using Caliburn.Micro;
 namespace InvasionOfAldebaran.ViewModels
 {
     class MainMenuViewModel : Screen
-    {
+    {   
+        
         public ICommand pPlayButtonCommand { get; set; }
         public ICommand pCloseButtonCommand { get; set; }
-        public String pHighscore;
+        public String pHighscore { get; set; }
+
         private FrameWindowViewModel pFrameModel;
 
         public MainMenuViewModel( FrameWindowViewModel _frameModel) {
             pFrameModel = _frameModel;
+
             this.pPlayButtonCommand = new RelayCommand(this.Change_Window);
             this.pCloseButtonCommand = new RelayCommand(this.Close_Window);
+
             if (pFrameModel.pPoints != null)
             {
                 pHighscore = "HIGHSCORE: " + pFrameModel.pPoints;
