@@ -5,10 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:InvasionOfAldebaran.Views"
              mc:Ignorable="d" Focusable="False"
-             d:DesignHeight="1000" d:DesignWidth="700">
+             d:DesignHeight="800" d:DesignWidth="500">
     <Grid>
-		<TextBlock Text="Spiel View" Foreground="BurlyWood" Height="100" VerticalAlignment="Top"></TextBlock>
-		<Canvas  HorizontalAlignment="Center" Height="900" Margin="10,40,0,0" VerticalAlignment="Center" Width="600">
+        <Canvas HorizontalAlignment="Left" VerticalAlignment="Top" >
 			<ContentPresenter Content="{Binding Path=Canvas}" />
 		</Canvas>
     </Grid>

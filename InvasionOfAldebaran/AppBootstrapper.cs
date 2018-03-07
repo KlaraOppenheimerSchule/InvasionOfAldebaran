@@ -1,4 +1,5 @@
-﻿using System.Dynamic;
+﻿using System.Collections.Generic;
+using System.Dynamic;
 using System.Windows;
 using Caliburn.Micro;
 using InvasionOfAldebaran.ViewModels;

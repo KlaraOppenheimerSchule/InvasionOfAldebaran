@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:InvasionOfAldebaran.Views"
         xmlns:cal="http://www.caliburnproject.org"
         mc:Ignorable="d"
-        Title="FrameWindowView" Height="1000" Width="700">
+        Title="FrameWindowView" Height="800" Width="500">
     <Grid>
 		<ContentControl cal:View.Model="{Binding ActiveItem}" />
 	</Grid>

@@ -17,98 +17,106 @@ namespace InvasionOfAldebaran.ViewModels
 {
     public class PlayViewModel : Screen
     {
-	    private readonly DispatcherTimer _timer = new DispatcherTimer();
-        
-	    public List<AnimatedObject> Objects { get; set; }
+        private readonly DispatcherTimer _timer = new DispatcherTimer();
 
-	    public Player Player;
+        public List<AnimatedObject> Objects { get; set; }
 
-		public Canvas Canvas { get; set; }
+        public Player Player;
 
-	    public TextBlock TextField { get; set; }
+        public Canvas Canvas { get; set; }
 
-		public PlayViewModel()
-	    {
-			Objects = new List<AnimatedObject>();
+        public TextBlock TextField { get; set; }
+
+        public DateTime lastMissile { get; set; }
+
+        public PlayViewModel()
+        {
+            Objects = new List<AnimatedObject>();
             Canvas = new Canvas()
             {
-                Height = 900,
-                Width = 600,
+                Height = 800,
+                Width = 500,
                 Focusable = true,
                 Background = Brushes.DarkGray
             };
-			_timer.Interval = TimeSpan.FromSeconds(0.01);
+            _timer.Interval = TimeSpan.FromSeconds(0.01);
 
-		    _timer.Tick += AnimateObjects;
+            _timer.Tick += AnimateObjects;
             this.Canvas.PreviewKeyDown += this.WindowKeyDown;
 
-			this.Player = new Player(Canvas, 300, 800, 0, 0);
-			this.Objects.Add(Player);
+            this.Player = new Player(Canvas, 250, 700, 0, 0);
+            this.Objects.Add(Player);
 
-            this.Objects.Add(new Enemy(Canvas, 300, 100, 0, 0));
+            this.Objects.Add(new Enemy(Canvas, 250, 100, 0, 0));
 
-			_timer.Start();
+            _timer.Start();
         }
 
-	    void AnimateObjects(object sender, EventArgs e)
-	    {
+        void AnimateObjects(object sender, EventArgs e)
+        {
             if (!this.Canvas.IsFocused)
                 this.Canvas.Focus();
 
-		    foreach (var item in Objects)
-		    {
-			    item.Animate(_timer.Interval, Canvas);
-		    }
+            foreach (var item in Objects)
+            {
+                item.Animate(_timer.Interval, Canvas);
+            }
+            List<AnimatedObject> ObjectsToBeDeleted = new List<AnimatedObject>();
 
-		    foreach (var player in Objects.OfType<Player>())
-		    {
-			    foreach (var enemy in Objects.OfType<Enemy>())
-			    {
-				    if (player.ContainsPoint(enemy.X, enemy.Y))
-				    {
-					    // Player dies
-				    }
-			    }
-		    }
-		   
-			this.Canvas.Children.Clear();
-		    foreach (var item in Objects)
-		    {
-			   item.Draw(this.Canvas);
-		    }
+            foreach (var missile in Objects.OfType<Missile>())
+            {
+                foreach (var enemy in Objects.OfType<Enemy>())
+                {
+                    if (enemy.ContainsPoint(missile.X, missile.Y))
+                    {
+                        ObjectsToBeDeleted.Add(enemy);
+                        ObjectsToBeDeleted.Add(missile);
+                    }
+                }
+            }
+            foreach (var obj in ObjectsToBeDeleted)
+            {
+                this.Objects.Remove(obj);
+            }
+
+            this.Canvas.Children.Clear();
+            foreach (var item in Objects)
+            {
+                item.Draw(this.Canvas);
+            }
         }
 
-	    private void EndGame(string text)
-	    {
-		    TextField.Text = text;
-		    TextField.Visibility = Visibility.Visible;
-	    }
+        private void EndGame(string text)
+        {
+            TextField.Text = text;
+            TextField.Visibility = Visibility.Visible;
+        }
 
-	    private void WindowKeyDown(object sender, KeyEventArgs e)
-	    {
-		    if (Objects.Contains(this.Player))
-		    {
-			    switch (e.Key)
-			    {
-				    default:
-					    break;
-				    case Key.A:
-				    case Key.Left:
-					    this.Player.Move(Direction.Left);
-					    break;
-				    case Key.D:
-				    case Key.Right:
-					    this.Player.Move(Direction.Right);
-					    break;
-				    //case Key.Space:
-					   // if (lastTorpedo.AddSeconds(0.5) <= DateTime.Now)
-					   // {
-						  //  spielobjekte.Add(new Photonentorpedo(raumschiff));
-						  //  lastTorpedo = DateTime.Now;
-					   // }
-					   // break;
-			    }
-		    }
-	    }
-	}
+        private void WindowKeyDown(object sender, KeyEventArgs e)
+        {
+            if (Objects.Contains(this.Player))
+            {
+                switch (e.Key)
+                {
+                    default:
+                        break;
+                    case Key.A:
+                    case Key.Left:
+                        this.Player.Move(Direction.Left);
+                        break;
+                    case Key.D:
+                    case Key.Right:
+                        this.Player.Move(Direction.Right);
+                        break;
+                    case Key.Space:
+                        if (lastMissile.AddSeconds(0.5) <= DateTime.Now)
+                        {
+                            Objects.Add(new Missile(Canvas, Player, 0, 0));
+                            lastMissile = DateTime.Now;
+                        }
+                        break;
+                }
+            }
+        }
+    }
 }
