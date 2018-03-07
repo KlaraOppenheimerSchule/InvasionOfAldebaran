@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:InvasionOfAldebaran.Views"
-             mc:Ignorable="d" 
+             mc:Ignorable="d" Focusable="False"
              d:DesignHeight="1000" d:DesignWidth="700">
     <Grid>
 		<TextBlock Text="Spiel View" Foreground="BurlyWood" Height="100" VerticalAlignment="Top"></TextBlock>

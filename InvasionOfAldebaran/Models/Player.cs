@@ -24,8 +24,8 @@ namespace InvasionOfAldebaran.Models
 
         public Player(Canvas canvas, double x, double y, double vx, double vy) : base(x, y, vx, vy)
 		{
-			Frame.Points.Add(new Point(0.0, -20.0));
-			Frame.Points.Add(new Point(10.0, 14.0));
+            Frame.Points.Add(new Point(0.0, -20.0));
+            Frame.Points.Add(new Point(10.0, 14.0));
 			Frame.Points.Add(new Point(-10.0, 14.0));
 
 			this.Frame.Fill = Brushes.Blue;
@@ -36,7 +36,7 @@ namespace InvasionOfAldebaran.Models
 			canvas.Children.Add(Frame);
 			Canvas.SetLeft(Frame, X);
 			Canvas.SetTop(Frame, Y);
-            //this.ResetSpeed();
+            this.ResetSpeed();
 		}
 
         public override void Move(Direction direction)

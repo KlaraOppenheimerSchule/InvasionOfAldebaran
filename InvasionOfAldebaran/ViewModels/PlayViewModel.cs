@@ -29,7 +29,6 @@ namespace InvasionOfAldebaran.ViewModels
 
 		public PlayViewModel()
 	    {
-            
 			Objects = new List<AnimatedObject>();
             Canvas = new Canvas()
             {
@@ -41,16 +40,21 @@ namespace InvasionOfAldebaran.ViewModels
 			_timer.Interval = TimeSpan.FromSeconds(0.01);
 
 		    _timer.Tick += AnimateObjects;
-            this.Canvas.KeyDown += this.WindowKeyDown;
+            this.Canvas.PreviewKeyDown += this.WindowKeyDown;
 
 			this.Player = new Player(Canvas, 300, 800, 0, 0);
 			this.Objects.Add(Player);
+
+            this.Objects.Add(new Enemy(Canvas, 300, 100, 0, 0));
+
 			_timer.Start();
-		}
+        }
 
 	    void AnimateObjects(object sender, EventArgs e)
 	    {
-            this.Canvas.Focus();
+            if (!this.Canvas.IsFocused)
+                this.Canvas.Focus();
+
 		    foreach (var item in Objects)
 		    {
 			    item.Animate(_timer.Interval, Canvas);
@@ -72,7 +76,7 @@ namespace InvasionOfAldebaran.ViewModels
 		    {
 			   item.Draw(this.Canvas);
 		    }
-	    }
+        }
 
 	    private void EndGame(string text)
 	    {
