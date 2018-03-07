@@ -11,24 +11,33 @@ namespace InvasionOfAldebaran.ViewModels
 {
     class MainMenuViewModel : Screen
     {
-        public ICommand PlayButtonCommand { get; set; }
-        public ICommand CloseButtonCommand { get; set; }
-        private FrameWindowViewModel _frameModel;
+        public ICommand pPlayButtonCommand { get; set; }
+        public ICommand pCloseButtonCommand { get; set; }
+        public String pHighscore;
+        private FrameWindowViewModel pFrameModel;
 
-        public MainMenuViewModel( FrameWindowViewModel frame_model) {
-            _frameModel = frame_model;
-            this.PlayButtonCommand = new RelayCommand(this.Change_Window);
-            this.CloseButtonCommand = new RelayCommand(this.Close_Window);
+        public MainMenuViewModel( FrameWindowViewModel _frameModel) {
+            pFrameModel = _frameModel;
+            this.pPlayButtonCommand = new RelayCommand(this.Change_Window);
+            this.pCloseButtonCommand = new RelayCommand(this.Close_Window);
+            if (pFrameModel.pPoints != null)
+            {
+                pHighscore = "HIGHSCORE: " + pFrameModel.pPoints;
+            }
+            else
+            {
+                pHighscore = "HIGHSCORE: 0";
+            }
         }
 
 
         public void Close_Window()
         {
-            _frameModel.CloseItem(_frameModel);
+            pFrameModel.CloseItem(pFrameModel);
         }
         public void Change_Window()
         {
-            _frameModel.ActivateItem(_frameModel.Items[1]);
+            pFrameModel.ActivateItem(pFrameModel.Items[1]);
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

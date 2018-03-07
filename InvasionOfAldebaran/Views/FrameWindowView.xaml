@@ -7,7 +7,7 @@
         xmlns:cal="http://www.caliburnproject.org"
         mc:Ignorable="d"
         Title="FrameWindowView" Height="1000" Width="700"
-        Closing="Window_Closing">
+        Closing="WindowClosing">
     <Grid>
         <ContentControl cal:View.Model="{Binding ActiveItem}"></ContentControl>
     </Grid>

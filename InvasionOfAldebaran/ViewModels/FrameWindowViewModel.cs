@@ -11,17 +11,29 @@ namespace InvasionOfAldebaran.ViewModels
 {
     class FrameWindowViewModel : Conductor<Screen>.Collection.OneActive
     {
+
+        public String pName;
+        public String pPoints;
         public FrameWindowViewModel()
         {
+            String[] arguments = Environment.GetCommandLineArgs();
+            if(arguments.Length> 2)
+            {   
+                
+                pName = arguments[1];
+                pPoints = arguments[2];
+            }
 
             this.Items.Add(new MainMenuViewModel(this));
             this.Items.Add(new PlayViewModel());
             this.ActivateItem( this.Items.FirstOrDefault());
             
         }
-        public override void TryClose(bool? dialogResult = null)
+
+        public void WindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            base.TryClose(dialogResult);
+            //Environment.ExitCode = pointsAchived();
         }
+        
     }
 }
