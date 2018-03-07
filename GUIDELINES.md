@@ -5,6 +5,6 @@
 * Klasseninterne (private oder protected) Variablen  werden mit _ geschrieben
 * Globale Variablen werden Großgeschrieben
 * Worttrennung erfolgt durch Groß-Kleinschreibung *VariablerName*
-
+ 
 ## Klassen
 * 
