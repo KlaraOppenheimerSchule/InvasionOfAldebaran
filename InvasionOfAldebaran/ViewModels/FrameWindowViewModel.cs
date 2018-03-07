@@ -14,7 +14,7 @@ namespace InvasionOfAldebaran.ViewModels
         public FrameWindowViewModel()
         {
 
-            this.Items.Add(new MainMenuViewModel());
+            this.Items.Add(new MainMenuViewModel(this));
             this.Items.Add(new PlayViewModel());
             this.ActivateItem( this.Items.FirstOrDefault());
             

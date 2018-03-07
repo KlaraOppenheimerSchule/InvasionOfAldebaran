@@ -21,18 +21,9 @@ namespace InvasionOfAldebaran.Views
 	/// </summary>
 	public partial class MainMenuView : UserControl
 	{
-        private MainMenuViewModel MainView;
-
 		public MainMenuView()
 		{
 			InitializeComponent();
-            this.MainView = new MainMenuViewModel();
 		}
-
-        private void PlayButton_Click(object sender, RoutedEventArgs e)
-        {
-            this.MainView.Change_Window();
-        }
-
     }
 }
