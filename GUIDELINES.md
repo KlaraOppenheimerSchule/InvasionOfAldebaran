@@ -4,7 +4,7 @@
 * Methoden interne Variablen werden mit unterstrich kleingeschrieben
 * Klasseninterne (private oder protected) Variablen  werden mit _ geschrieben
 * Globale Variablen werden Großgeschrieben
-* Worttrennung erfolgt durch Groß-Kleinschreibung *VariablerName*
+* Worttrennung erfolgt durch Groß-Kleinschreibung *VariablerName* 
  
 ## Klassen
 * 
