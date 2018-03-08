@@ -13,7 +13,7 @@ namespace InvasionOfAldebaran.ViewModels
     {
 
         public String pName;
-        public String pPoints;
+        public int pPoints;
         public FrameWindowViewModel()
         {
             String[] arguments = Environment.GetCommandLineArgs();
@@ -21,18 +21,22 @@ namespace InvasionOfAldebaran.ViewModels
             {   
                 
                 pName = arguments[1];
-                pPoints = arguments[2];
+                pPoints = Convert.ToInt32(arguments[2]);
             }
 
             this.Items.Add(new MainMenuViewModel(this));
-            this.Items.Add(new PlayViewModel());
+            this.Items.Add(new PlayViewModel(this));
             this.ActivateItem( this.Items.FirstOrDefault());
-            
         }
 
         public void WindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            //Environment.ExitCode = pointsAchived();
+            Environment.ExitCode = pPoints;
+        }
+
+        public void PointsAchieved( int _points )
+        {
+            pPoints = _points;
         }
         
     }

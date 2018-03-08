@@ -26,12 +26,13 @@ namespace InvasionOfAldebaran.Views
         {
             InitializeComponent();
             this.pViewModel = new FrameWindowViewModel();
-
+            
         }
 
         private void WindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            this.pViewModel.WindowClosing( sender, e);
+            this.pViewModel.WindowClosing(sender, e);
+
         }
     }
 }

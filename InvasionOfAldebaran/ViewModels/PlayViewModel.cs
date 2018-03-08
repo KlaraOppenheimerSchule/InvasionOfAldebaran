@@ -9,5 +9,11 @@ namespace InvasionOfAldebaran.ViewModels
 {
     class PlayViewModel : Screen
     {
+
+        public PlayViewModel( FrameWindowViewModel _frame)
+        {
+
+
+        }
     }
 }
