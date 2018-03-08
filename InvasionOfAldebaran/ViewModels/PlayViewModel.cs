@@ -19,15 +19,16 @@ namespace InvasionOfAldebaran.ViewModels
     {
         private readonly DispatcherTimer _timer = new DispatcherTimer();
 
+        private DateTime lastMissile;
+
+
         public List<AnimatedObject> Objects { get; set; }
 
-        public Player Player;
+        public List<Coords> SpawnPoints { get; set; }
+
+        public Player Player { get; set; }
 
         public Canvas Canvas { get; set; }
-
-        public TextBlock TextField { get; set; }
-
-        public DateTime lastMissile { get; set; }
 
         public PlayViewModel()
         {
@@ -44,10 +45,8 @@ namespace InvasionOfAldebaran.ViewModels
             _timer.Tick += AnimateObjects;
             this.Canvas.PreviewKeyDown += this.WindowKeyDown;
 
-            this.Player = new Player(Canvas, 250, 700, 0, 0);
+            this.Player = new Player(Canvas, new Coords(250, 700), 0, 0);
             this.Objects.Add(Player);
-
-            this.Objects.Add(new Enemy(Canvas, 250, 100, 0, 0));
 
             _timer.Start();
         }
@@ -67,7 +66,7 @@ namespace InvasionOfAldebaran.ViewModels
             {
                 foreach (var enemy in Objects.OfType<Enemy>())
                 {
-                    if (enemy.ContainsPoint(missile.X, missile.Y))
+                    if (enemy.ContainsPoint(missile.Coords.X, missile.Coords.Y))
                     {
                         ObjectsToBeDeleted.Add(enemy);
                         ObjectsToBeDeleted.Add(missile);
@@ -88,8 +87,8 @@ namespace InvasionOfAldebaran.ViewModels
 
         private void EndGame(string text)
         {
-            TextField.Text = text;
-            TextField.Visibility = Visibility.Visible;
+            //TextField.Text = text;
+            //TextField.Visibility = Visibility.Visible;
         }
 
         private void WindowKeyDown(object sender, KeyEventArgs e)
@@ -116,6 +115,40 @@ namespace InvasionOfAldebaran.ViewModels
                         }
                         break;
                 }
+            }
+        }
+
+        private void PopulateSpawnPoints()
+        {
+            double canvasPos = 50;
+
+            for (int i = 0; i < 4; i++)
+            {
+                Coords point = new Coords(canvasPos, 100);
+                this.SpawnPoints.Add(point);
+                canvasPos += 100;
+            }
+        }
+
+        private void SpawnEnemies()
+        {
+            List<Brush> colors = new List<Brush>();
+            List<Coords> spawns = this.SpawnPoints;
+            colors.Add(Brushes.Red);
+            colors.Add(Brushes.Orange);
+            colors.Add(Brushes.White);
+            colors.Add(Brushes.Violet);
+
+            for (int i = 0; i < 4; i++)
+            {
+                Random r = new Random();
+                int rColor = r.Next(0, 3 - i);
+                int rSpawns = r.Next(0, 3 - i);
+
+                this.Objects.Add(new Enemy(this.Canvas, colors[rColor], spawns[rSpawns], 0, 0));
+
+                colors.RemoveAt(rColor);
+                spawns.RemoveAt(rSpawns);
             }
         }
     }

@@ -12,8 +12,7 @@ namespace InvasionOfAldebaran.Models
 {
 	public abstract class AnimatedObject
 	{
-		public double X { get; protected set; }
-		public double Y { get; protected set; }
+		public Coords Coords { get; protected set; }
 		public double Vx { get; protected set; }
 		public double Vy { get; protected set; }
 
@@ -21,10 +20,9 @@ namespace InvasionOfAldebaran.Models
 
 		public Polygon Frame = new Polygon();
 
-		public AnimatedObject(double x, double y, double vx, double vy)
+		public AnimatedObject(Coords coords, double vx, double vy)
 		{
-			X = x;
-			Y = y;
+            this.Coords = coords;
 			Vx = vx;
 			Vy = vy;
 		}
@@ -35,31 +33,31 @@ namespace InvasionOfAldebaran.Models
 
 		public void Animate(TimeSpan interval, Canvas canvas)
 		{
-			X += Vx * interval.TotalSeconds;
-			Y += Vy * interval.TotalSeconds;
+			this.Coords.X += Vx * interval.TotalSeconds;
+			this.Coords.Y += Vy * interval.TotalSeconds;
 
-			if (X < 0.0)
+			if (this.Coords.X < 0.0)
 			{
-				X = canvas.ActualWidth;
+                this.Coords.X = canvas.ActualWidth;
 			}
-			else if (X > canvas.ActualWidth)
+			else if (this.Coords.X > canvas.ActualWidth)
 			{
-				X = 0;
+                this.Coords.X = 0;
 			}
 
-			if (Y < 0.0)
+			if (this.Coords.Y < 0.0)
 			{
-				Y = canvas.ActualHeight;
+                this.Coords.Y = canvas.ActualHeight;
 			}
-			else if (Y > canvas.ActualHeight)
+			else if (this.Coords.Y > canvas.ActualHeight)
 			{
-				Y = 0;
+                this.Coords.Y = 0;
 			}
 		}
 
 		public bool ContainsPoint(double x, double y)
 		{
-			return Frame.RenderedGeometry.FillContains(new Point(x - X, y - Y));
+			return Frame.RenderedGeometry.FillContains(new Point(x - this.Coords.X, y - this.Coords.Y));
 		}
 	}
 }

@@ -68,6 +68,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Models\AnimatedObject.cs" />
+    <Compile Include="Models\Coords.cs" />
     <Compile Include="Models\Enemy.cs" />
     <Compile Include="Models\Missile.cs" />
     <Compile Include="Models\Player.cs" />

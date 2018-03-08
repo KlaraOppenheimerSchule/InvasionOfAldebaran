@@ -12,14 +12,31 @@ namespace InvasionOfAldebaran.Models
 {
     public class Enemy : AnimatedObject
     {
-	    public Enemy(Canvas canvas, double x, double y, double vx, double vy) : base(x, y, vx, vy)
+        private Brush _color;
+
+        public Brush Color
+        {
+            get
+            {
+                return this._color;
+            }
+
+            private set
+            {
+                this._color = value;
+                this.Frame.Fill = value;
+            }
+        }
+
+        public Enemy(Canvas canvas, Brush color, Coords coords, double vx, double vy) : base(coords, vx, vy)
 	    {
             Frame.Points.Add(new Point(-10.0, -20.0));
             Frame.Points.Add(new Point(10.0, -20.0));
             Frame.Points.Add(new Point(10.0, 14.0));
             Frame.Points.Add(new Point(-10.0, 14.0));
 
-            this.Frame.Fill = Brushes.Red;
+            this.Color = color;
+
 
             Vy = 50;
         }
@@ -27,8 +44,8 @@ namespace InvasionOfAldebaran.Models
 		public override void Draw(Canvas canvas)
 		{
             canvas.Children.Add(Frame);
-            Canvas.SetLeft(Frame, X);
-            Canvas.SetTop(Frame, Y);
+            Canvas.SetLeft(Frame, this.Coords.X);
+            Canvas.SetTop(Frame, this.Coords.Y);
         }
 
         public override void Move(Direction direction)
