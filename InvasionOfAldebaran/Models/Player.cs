@@ -14,7 +14,7 @@ namespace InvasionOfAldebaran.Models
 {
 	public class Player: AnimatedObject
 	{
-        private double _speed = 400;
+        private double _speed = 600;
 
         private void ResetSpeed()
         {
@@ -22,7 +22,7 @@ namespace InvasionOfAldebaran.Models
             this.Vy = 0;
         }
 
-        public Player(Canvas canvas, Coords coords, double vx, double vy) : base(coords, vx, vy)
+        public Player(Coords coords, double vx, double vy) : base(coords, vx, vy)
 		{
             Frame.Points.Add(new Point(0.0, -20.0));
             Frame.Points.Add(new Point(10.0, 14.0));
@@ -52,5 +52,29 @@ namespace InvasionOfAldebaran.Models
 					break;
 			}
 		}
-	}
+
+        public override void Animate(TimeSpan interval, Canvas canvas)
+        {
+            this.Coords.X += Vx * interval.TotalSeconds;
+            this.Coords.Y += Vy * interval.TotalSeconds;
+
+            if (this.Coords.X > canvas.ActualWidth)
+            {
+                this.Coords.X = canvas.ActualWidth;
+            }
+            else if (this.Coords.X < 0)
+            {
+                this.Coords.X = 0;
+            }
+
+            if (this.Coords.Y > canvas.ActualHeight)
+            {
+                this.Coords.Y = canvas.ActualHeight;
+            }
+            else if (this.Coords.Y < 0)
+            {
+                this.Coords.Y = 0;
+            }
+        }
+    }
 }

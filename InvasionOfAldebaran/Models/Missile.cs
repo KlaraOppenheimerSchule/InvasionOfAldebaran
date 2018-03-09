@@ -12,7 +12,7 @@ namespace InvasionOfAldebaran.Models
 {
     class Missile : AnimatedObject
     {
-        public Missile(Canvas canvas, Player player, double vx, double vy) : base(player.Coords, vx, vy)
+        public Missile(Coords player, double vx, double vy) : base(player, vx, vy)
         {
             Frame.Points.Add(new Point(-5.0, -10.0));
             Frame.Points.Add(new Point(5.0, -10.0));
@@ -21,14 +21,14 @@ namespace InvasionOfAldebaran.Models
 
             this.Frame.Fill = Brushes.Green;
 
-            Vy = -100;
+            this.Vy = -300;
         }
 
         public override void Draw(Canvas canvas)
         {
             canvas.Children.Add(Frame);
-            Canvas.SetLeft(Frame, Coords.X);
-            Canvas.SetTop(Frame, Coords.Y);
+            Canvas.SetLeft(Frame, this.Coords.X);
+            Canvas.SetTop(Frame, this.Coords.Y);
         }
 
         public override void Move(Direction direction)

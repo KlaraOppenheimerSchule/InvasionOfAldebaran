@@ -33,6 +33,7 @@ namespace InvasionOfAldebaran.ViewModels
         public PlayViewModel()
         {
             Objects = new List<AnimatedObject>();
+            SpawnPoints = new List<Coords>();
             Canvas = new Canvas()
             {
                 Height = 800,
@@ -45,8 +46,11 @@ namespace InvasionOfAldebaran.ViewModels
             _timer.Tick += AnimateObjects;
             this.Canvas.PreviewKeyDown += this.WindowKeyDown;
 
-            this.Player = new Player(Canvas, new Coords(250, 700), 0, 0);
+            this.Player = new Player(new Coords(250, 700), 0, 0);
             this.Objects.Add(Player);
+
+            PopulateSpawnPoints();
+            SpawnEnemies();
 
             _timer.Start();
         }
@@ -56,23 +60,31 @@ namespace InvasionOfAldebaran.ViewModels
             if (!this.Canvas.IsFocused)
                 this.Canvas.Focus();
 
+            List<AnimatedObject> ObjectsToBeDeleted = new List<AnimatedObject>();
+
             foreach (var item in Objects)
             {
                 item.Animate(_timer.Interval, Canvas);
+                if (item.ReachedEnd)
+                {
+                    ObjectsToBeDeleted.Add(item);
+                }
             }
-            List<AnimatedObject> ObjectsToBeDeleted = new List<AnimatedObject>();
+            
 
-            foreach (var missile in Objects.OfType<Missile>())
+            foreach (var enemy in Objects.OfType<Enemy>())
             {
-                foreach (var enemy in Objects.OfType<Enemy>())
+                foreach (var missile in Objects.OfType<Missile>())
                 {
                     if (enemy.ContainsPoint(missile.Coords.X, missile.Coords.Y))
                     {
                         ObjectsToBeDeleted.Add(enemy);
                         ObjectsToBeDeleted.Add(missile);
                     }
+                    
                 }
             }
+
             foreach (var obj in ObjectsToBeDeleted)
             {
                 this.Objects.Remove(obj);
@@ -110,7 +122,8 @@ namespace InvasionOfAldebaran.ViewModels
                     case Key.Space:
                         if (lastMissile.AddSeconds(0.5) <= DateTime.Now)
                         {
-                            Objects.Add(new Missile(Canvas, Player, 0, 0));
+                            Coords missileSpawn = new Coords(this.Player.Coords.X, this.Player.Coords.Y);
+                            Objects.Add(new Missile(missileSpawn, 0, 0));
                             lastMissile = DateTime.Now;
                         }
                         break;
@@ -145,7 +158,7 @@ namespace InvasionOfAldebaran.ViewModels
                 int rColor = r.Next(0, 3 - i);
                 int rSpawns = r.Next(0, 3 - i);
 
-                this.Objects.Add(new Enemy(this.Canvas, colors[rColor], spawns[rSpawns], 0, 0));
+                this.Objects.Add(new Enemy(colors[rColor], spawns[rSpawns], 0, 0));
 
                 colors.RemoveAt(rColor);
                 spawns.RemoveAt(rSpawns);

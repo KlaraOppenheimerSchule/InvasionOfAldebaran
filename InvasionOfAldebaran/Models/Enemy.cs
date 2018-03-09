@@ -28,7 +28,7 @@ namespace InvasionOfAldebaran.Models
             }
         }
 
-        public Enemy(Canvas canvas, Brush color, Coords coords, double vx, double vy) : base(coords, vx, vy)
+        public Enemy(Brush color, Coords coords, double vx, double vy) : base(coords, vx, vy)
 	    {
             Frame.Points.Add(new Point(-10.0, -20.0));
             Frame.Points.Add(new Point(10.0, -20.0));
@@ -38,7 +38,7 @@ namespace InvasionOfAldebaran.Models
             this.Color = color;
 
 
-            Vy = 50;
+            Vy = 200;
         }
 
 		public override void Draw(Canvas canvas)

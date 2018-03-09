@@ -16,6 +16,9 @@ namespace InvasionOfAldebaran.Models
 		public double Vx { get; protected set; }
 		public double Vy { get; protected set; }
 
+        public bool ReachedEnd { get; protected set; }
+        
+
 		protected static Random Random = new Random();
 
 		public Polygon Frame = new Polygon();
@@ -31,12 +34,12 @@ namespace InvasionOfAldebaran.Models
 
 		public abstract void Move(Direction direction);
 
-		public void Animate(TimeSpan interval, Canvas canvas)
+		public virtual void Animate(TimeSpan interval, Canvas canvas)
 		{
 			this.Coords.X += Vx * interval.TotalSeconds;
 			this.Coords.Y += Vy * interval.TotalSeconds;
 
-			if (this.Coords.X < 0.0)
+			if (this.Coords.X < 0)
 			{
                 this.Coords.X = canvas.ActualWidth;
 			}
@@ -45,13 +48,15 @@ namespace InvasionOfAldebaran.Models
                 this.Coords.X = 0;
 			}
 
-			if (this.Coords.Y < 0.0)
+			if (this.Coords.Y < 0)
 			{
                 this.Coords.Y = canvas.ActualHeight;
+                this.ReachedEnd = true;
 			}
 			else if (this.Coords.Y > canvas.ActualHeight)
 			{
                 this.Coords.Y = 0;
+                this.ReachedEnd = true;
 			}
 		}
 
