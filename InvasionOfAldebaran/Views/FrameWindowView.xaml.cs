@@ -20,18 +20,18 @@ namespace InvasionOfAldebaran.Views
 	/// </summary>
 	public partial class FrameWindowView : Window
 	{
-        private FrameWindowViewModel pViewModel;
+        private FrameWindowViewModel _ViewModel;
 
         public FrameWindowView()
         {
             InitializeComponent();
-            this.pViewModel = new FrameWindowViewModel();
+            this._ViewModel = new FrameWindowViewModel();
             
         }
 
         private void WindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            this.pViewModel.WindowClosing(sender, e);
+            this._ViewModel.WindowClosing(sender, e);
 
         }
     }

@@ -10,9 +10,9 @@
         <ImageBrush ImageSource="../Resources/15-original.png"></ImageBrush>
     </UserControl.Background>
     <Grid>
-        <Button x:Name="PlayButton" Content="Play" HorizontalAlignment="Center" Margin="0, 300" VerticalAlignment="Top" Width="150" Height="30" Command="{Binding pPlayButtonCommand}"/>
-        <Button x:Name="ExitButton" Content="Exit" HorizontalAlignment="Center" Margin="0,500,0,0"  VerticalAlignment="Top" Width="150" Height="30" Command="{Binding pCloseButtonCommand}"/>
+        <Button x:Name="PlayButton" Content="Play" HorizontalAlignment="Center" Margin="0, 300" VerticalAlignment="Top" Width="150" Height="30" Command="{Binding _PlayButtonCommand}"/>
+        <Button x:Name="ExitButton" Content="Exit" HorizontalAlignment="Center" Margin="0,500,0,0"  VerticalAlignment="Top" Width="150" Height="30" Command="{Binding _CloseButtonCommand}"/>
         <Label x:Name="GameTitle" HorizontalContentAlignment="Center" Foreground="White" VerticalContentAlignment="Center"  Content="Invasion of Aldebaran" HorizontalAlignment="Center" Margin="0,100,0,0" VerticalAlignment="Top" Height="90" Width="500" FontFamily="Arial" FontSize="36"/>
-        <Label x:Name="Highscore" HorizontalContentAlignment="Center" Foreground="White" VerticalContentAlignment="Center" Content="{Binding pHighscore}" HorizontalAlignment="Center" Margin="0,375,0,0" VerticalAlignment="Top" Height="75" Width="500" FontSize="20"/>
+        <Label x:Name="Highscore" HorizontalContentAlignment="Center" Foreground="White" VerticalContentAlignment="Center" Content="{Binding _Highscore}" HorizontalAlignment="Center" Margin="0,375,0,0" VerticalAlignment="Top" Height="75" Width="500" FontSize="20"/>
     </Grid>
 </UserControl>

@@ -13,7 +13,6 @@ namespace InvasionOfAldebaran.ViewModels
         public PlayViewModel( FrameWindowViewModel _frame)
         {
 
-
         }
     }
 }

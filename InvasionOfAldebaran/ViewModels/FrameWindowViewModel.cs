@@ -11,33 +11,32 @@ namespace InvasionOfAldebaran.ViewModels
 {
     class FrameWindowViewModel : Conductor<Screen>.Collection.OneActive
     {
-
-        public String pName;
-        public int pPoints;
+        public String _Name;
+        public int _Points;
         public FrameWindowViewModel()
         {
             String[] arguments = Environment.GetCommandLineArgs();
             if(arguments.Length> 2)
             {   
                 
-                pName = arguments[1];
-                pPoints = Convert.ToInt32(arguments[2]);
+                _Name = arguments[1];
+                _Points = Convert.ToInt32(arguments[2]);
             }
-
+            
             this.Items.Add(new MainMenuViewModel(this));
             this.Items.Add(new PlayViewModel(this));
             this.ActivateItem( this.Items.FirstOrDefault());
+
         }
 
         public void WindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            Environment.ExitCode = pPoints;
+            Environment.ExitCode = _Points;
         }
 
         public void PointsAchieved( int _points )
         {
-            pPoints = _points;
+            _Points = _points;
         }
-        
     }
 }
