@@ -4,9 +4,34 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:InvasionOfAldebaran.Views"
-             mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+			 xmlns:vm="clr-namespace:InvasionOfAldebaran.ViewModels"
+             mc:Ignorable="d" Focusable="False"
+			 d:DataContext="{d:DesignInstance vm:PlayViewModel}"
+             d:DesignHeight="850" d:DesignWidth="850">
     <Grid>
-            
-    </Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="80"/>
+			<RowDefinition Height="*"/>
+		</Grid.RowDefinitions>
+		
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="500" />
+			<ColumnDefinition Width="*" />
+		</Grid.ColumnDefinitions>
+		<!-- Question -->
+		<TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" 
+				   HorizontalAlignment="Stretch" VerticalAlignment="Top" Text="Hier steht die Frage"
+				   FontSize="22" FontWeight="Bold" Foreground="Firebrick"/>
+		<!-- Canvas -->
+		<Canvas Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" >
+			<ContentPresenter Content="{Binding Canvas}" />
+		</Canvas>
+		<!-- Answers -->
+		<StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" CanVerticallyScroll="True"
+					Width="250" >
+			<TextBlock> Erste Frage</TextBlock>
+			<TextBlock> Zweite Frage</TextBlock>
+			<TextBlock> Dritte Frage</TextBlock>
+		</StackPanel>
+	</Grid>
 </UserControl>
