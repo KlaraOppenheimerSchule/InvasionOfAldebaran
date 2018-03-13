@@ -4,10 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:InvasionOfAldebaran.Views"
-             mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             mc:Ignorable="d" Focusable="False"
+             d:DesignHeight="800" d:DesignWidth="500">
     <Grid>
-        <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Margin="118,134,0,0" VerticalAlignment="Top" Width="75"/>
-
+        <Canvas HorizontalAlignment="Left" VerticalAlignment="Top" >
+			<ContentPresenter Content="{Binding Path=Canvas}" />
+		</Canvas>
     </Grid>
 </UserControl>

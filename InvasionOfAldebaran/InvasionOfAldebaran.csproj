@@ -67,7 +67,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Shared\RelayCommand.cs" />
+    <Compile Include="Models\AnimatedObject.cs" />
+    <Compile Include="Models\Coords.cs" />
+    <Compile Include="Models\Enemy.cs" />
+    <Compile Include="Models\Missile.cs" />
+    <Compile Include="Models\Player.cs" />
+    <Compile Include="Shared\Direction.cs" />
     <Compile Include="ViewModels\MainMenuViewModel.cs" />
     <Compile Include="ViewModels\FrameWindowViewModel.cs" />
     <Compile Include="Views\FrameWindowView.xaml.cs">
@@ -125,9 +130,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Resources\15-original.png" />
   </ItemGroup>
