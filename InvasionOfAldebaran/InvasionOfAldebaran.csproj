@@ -72,6 +72,7 @@
     <Compile Include="Models\Enemy.cs" />
     <Compile Include="Models\Missile.cs" />
     <Compile Include="Models\Player.cs" />
+    <Compile Include="Models\RelayCommand.cs" />
     <Compile Include="Shared\Direction.cs" />
     <Compile Include="ViewModels\MainMenuViewModel.cs" />
     <Compile Include="ViewModels\FrameWindowViewModel.cs" />

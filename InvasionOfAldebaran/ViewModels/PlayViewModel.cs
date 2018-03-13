@@ -17,12 +17,14 @@ namespace InvasionOfAldebaran.ViewModels
 {
     public class PlayViewModel : Screen
     {
+		private FrameWindowViewModel _frameWindowViewModel;
         private readonly DispatcherTimer _timer = new DispatcherTimer();
+        private DateTime _lastMissile;
+		private  Coords _playerSpawn = new Coords(250, 600);
 
-        private DateTime lastMissile;
 
 
-        public List<AnimatedObject> Objects { get; set; }
+		public List<AnimatedObject> Objects { get; set; }
 
         public List<Coords> SpawnPoints { get; set; }
 
@@ -30,44 +32,51 @@ namespace InvasionOfAldebaran.ViewModels
 
         public Canvas Canvas { get; set; }
 
-        public PlayViewModel()
-        {
-            Objects = new List<AnimatedObject>();
-            SpawnPoints = new List<Coords>();
-            Canvas = new Canvas()
+        public PlayViewModel( FrameWindowViewModel frameWindow)
+		{
+			this._frameWindowViewModel = frameWindow;
+            this.Objects = new List<AnimatedObject>();
+            this.SpawnPoints = new List<Coords>();
+            this.Canvas = new Canvas()
             {
-                Height = 800,
+                Height = 700,
                 Width = 500,
                 Focusable = true,
-                Background = Brushes.DarkGray
+                Background = Brushes.DarkGray,
             };
-            _timer.Interval = TimeSpan.FromSeconds(0.01);
+			
 
-            _timer.Tick += AnimateObjects;
-            this.Canvas.PreviewKeyDown += this.WindowKeyDown;
-
-            this.Player = new Player(new Coords(250, 700), 0, 0);
-            this.Objects.Add(Player);
-
-            PopulateSpawnPoints();
-            SpawnEnemies();
-
-            _timer.Start();
+			this.Activated += StartGame;
         }
+
+		public void StartGame(object sender, EventArgs e)
+		{
+			this._timer.Interval = TimeSpan.FromSeconds(0.01);
+			this.Player = new Player(_playerSpawn, 0, 0);
+			this.Objects.Add(Player);
+
+			this._timer.Tick += AnimateObjects;
+			this.Canvas.PreviewKeyDown += this.WindowKeyDown;
+
+			this.PopulateSpawnPoints();
+			this.SpawnEnemies();
+
+			this._timer.Start();
+		}
 
         void AnimateObjects(object sender, EventArgs e)
         {
             if (!this.Canvas.IsFocused)
                 this.Canvas.Focus();
 
-            List<AnimatedObject> ObjectsToBeDeleted = new List<AnimatedObject>();
+            List<AnimatedObject> objectsToBeDeleted = new List<AnimatedObject>();
 
             foreach (var item in Objects)
             {
                 item.Animate(_timer.Interval, Canvas);
                 if (item.ReachedEnd)
                 {
-                    ObjectsToBeDeleted.Add(item);
+                    objectsToBeDeleted.Add(item);
                 }
             }
             
@@ -78,14 +87,14 @@ namespace InvasionOfAldebaran.ViewModels
                 {
                     if (enemy.ContainsPoint(missile.Coords.X, missile.Coords.Y))
                     {
-                        ObjectsToBeDeleted.Add(enemy);
-                        ObjectsToBeDeleted.Add(missile);
+                        objectsToBeDeleted.Add(enemy);
+                        objectsToBeDeleted.Add(missile);
                     }
                     
                 }
             }
 
-            foreach (var obj in ObjectsToBeDeleted)
+            foreach (var obj in objectsToBeDeleted)
             {
                 this.Objects.Remove(obj);
             }
@@ -120,11 +129,11 @@ namespace InvasionOfAldebaran.ViewModels
                         this.Player.Move(Direction.Right);
                         break;
                     case Key.Space:
-                        if (lastMissile.AddSeconds(0.5) <= DateTime.Now)
+                        if (_lastMissile.AddSeconds(0.5) <= DateTime.Now)
                         {
                             Coords missileSpawn = new Coords(this.Player.Coords.X, this.Player.Coords.Y);
                             Objects.Add(new Missile(missileSpawn, 0, 0));
-                            lastMissile = DateTime.Now;
+                            _lastMissile = DateTime.Now;
                         }
                         break;
                 }

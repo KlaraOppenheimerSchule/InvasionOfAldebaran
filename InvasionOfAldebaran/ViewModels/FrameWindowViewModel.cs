@@ -9,34 +9,34 @@ using Caliburn.Micro;
 
 namespace InvasionOfAldebaran.ViewModels
 {
-    class FrameWindowViewModel : Conductor<Screen>.Collection.OneActive
+    public class FrameWindowViewModel : Conductor<Screen>.Collection.OneActive
     {
-        public String _Name;
-        public int _Points;
+        public String Name;
+        public int Points;
         public FrameWindowViewModel()
         {
             String[] arguments = Environment.GetCommandLineArgs();
             if(arguments.Length> 2)
             {   
                 
-                _Name = arguments[1];
-                _Points = Convert.ToInt32(arguments[2]);
+                Name = arguments[1];
+                Points = Convert.ToInt32(arguments[2]);
             }
             
             this.Items.Add(new MainMenuViewModel(this));
             this.Items.Add(new PlayViewModel(this));
-            this.ActivateItem( this.Items.FirstOrDefault());
+            this.ActiveItem = this.Items.FirstOrDefault();
 
         }
-
+		
         public void WindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            Environment.ExitCode = _Points;
+            Environment.ExitCode = Points;
         }
 
-        public void PointsAchieved( int _points )
+        public void PointsAchieved( int points )
         {
-            _Points = _points;
+            Points = points;
         }
     }
 }

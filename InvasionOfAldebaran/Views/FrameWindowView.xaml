@@ -5,8 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:InvasionOfAldebaran.Views"
         xmlns:cal="http://www.caliburnproject.org"
+		xmlns:vm="clr-namespace:InvasionOfAldebaran.ViewModels"
         mc:Ignorable="d"
-        Title="FrameWindowView" Height= "700" Width="700"
+		d:DataContext="{d:DesignInstance vm:FrameWindowViewModel}"
+        Title="FrameWindowView" Height= "850" Width="850"
         Closing="WindowClosing">
     <Grid>
         <ContentControl cal:View.Model="{Binding ActiveItem}"></ContentControl>
