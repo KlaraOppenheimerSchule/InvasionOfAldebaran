@@ -13,14 +13,14 @@ namespace InvasionOfAldebaran.Models
     {
         public Missile(Coords player, double vx, double vy) : base(player, vx, vy)
         {
-            Frame.Points.Add(new Point(-5.0, -10.0));
-            Frame.Points.Add(new Point(5.0, -10.0));
-            Frame.Points.Add(new Point(5.0, 7.0));
-            Frame.Points.Add(new Point(-5.0, 7.0));
+            Frame.Points.Add(new Point(-2.5, -5.5));
+            Frame.Points.Add(new Point(2.5, -5.5));
+            Frame.Points.Add(new Point(2.5, 3.5));
+            Frame.Points.Add(new Point(-2.5, 3.5));
 
-            this.Frame.Fill = Brushes.Green;
+            this.Frame.Fill = Brushes.OrangeRed;
 
-            this.Vy = -500;
+            this.Vy = -2000;
         }
 
         public override void Draw(Canvas canvas)

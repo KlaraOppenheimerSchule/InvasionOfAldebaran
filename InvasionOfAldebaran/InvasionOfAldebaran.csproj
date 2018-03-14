@@ -72,6 +72,7 @@
     <Compile Include="Models\Coords.cs" />
     <Compile Include="Models\Difficulty.cs" />
     <Compile Include="Models\Enemy.cs" />
+    <Compile Include="Models\InputHandler.cs" />
     <Compile Include="Models\Missile.cs" />
     <Compile Include="Models\Player.cs" />
     <Compile Include="Models\Question.cs" />

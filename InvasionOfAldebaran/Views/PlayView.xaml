@@ -25,11 +25,6 @@
 		<!-- Canvas -->
 		<Canvas Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" >
 			<ContentPresenter Content="{Binding Canvas}" />
-			<Canvas.InputBindings>
-				<KeyBinding Key="Left" Command="{Binding HandleInputCommand}" CommandParameter="Left"/>
-				<KeyBinding Key="Right" Command="{Binding HandleInputCommand}" CommandParameter="Right"/>
-				<KeyBinding Key="Space" Command="{Binding HandleInputCommand}" CommandParameter="Fire"/>
-			</Canvas.InputBindings>
 		</Canvas>
 		<!-- Answers -->
 		<StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" CanVerticallyScroll="True"
@@ -40,3 +35,4 @@
 		</StackPanel>
 	</Grid>
 </UserControl>
+

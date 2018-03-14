@@ -20,15 +20,12 @@ namespace InvasionOfAldebaran.ViewModels
         private readonly DispatcherTimer _timer = new DispatcherTimer();
 		private readonly Coords _playerSpawn = new Coords(250, 600);
 		private DateTime _lastMissile;
-	    private Direction _lastDirection;
-
-
+	    
 	    public List<AnimatedObject> Objects { get; set; }
+		public InputHandler InputHandler { get; private set; }
         public Player Player { get; set; }
         public Canvas Canvas { get; set; }
 		public SpawnHandler Spawner { get; set; }
-		
-		public ICommand HandleInputCommand { get; private set; }
 		
         public PlayViewModel( FrameWindowViewModel frameWindow)
 		{
@@ -43,17 +40,17 @@ namespace InvasionOfAldebaran.ViewModels
                 Background = Brushes.DarkGray,
             };
 			this.Activated += StartGame;
-			
-			this.HandleInputCommand = new RelayCommand(this.HandleInput);
 		}
 
 		private void StartGame(object sender, EventArgs e)
 		{
-			this._timer.Interval = TimeSpan.FromSeconds(0.01);
+			this._timer.Interval = TimeSpan.FromSeconds(0.005);
 			this.Player = new Player(_playerSpawn, 0, 0);
 			this.Objects.Add(Player);
 			this.Spawner = new SpawnHandler(this.Canvas.Width);
 			this.Objects.AddRange(this.Spawner.SpawnEnemies());
+
+			this.InputHandler = new InputHandler(this.Canvas);
 
 			this._timer.Tick += AnimateObjects;
 			this._timer.Start();
@@ -71,6 +68,8 @@ namespace InvasionOfAldebaran.ViewModels
 				this.Canvas.Focus();
 
 			List<AnimatedObject> objectsToBeDeleted = new List<AnimatedObject>();
+
+	        this.ApplyInputToPlayer();
 
             foreach (var item in Objects)
             {
@@ -102,27 +101,24 @@ namespace InvasionOfAldebaran.ViewModels
             }
         }
 
-	    private void HandleInput(string action)
+	    private void ApplyInputToPlayer()
 	    {
-		    switch (action)
+		    if (InputHandler.SpacePressed)
 		    {
-				case null:
-					break;
-				case "Left":
-					this.Player.Move(Direction.Left);
-					break;
-				case "Right":
-					this.Player.Move(Direction.Right);
-					break;
-				case "Fire":
-					if (_lastMissile.AddSeconds(0.5) <= DateTime.Now)
-					{
-						var missile = this.Player.Fire();
-						this.Objects.Add(missile);
-						_lastMissile = DateTime.Now;
-					}
-					break;
-			}
-	    }
+			    if (_lastMissile.AddSeconds(0.3) <= DateTime.Now)
+			    {
+				    var missile = Player.Fire();
+					this.Objects.Add(missile);
+					_lastMissile = DateTime.Now;
+			    }
+		    }
+
+		   if(InputHandler.LeftPressed && !InputHandler.RightPressed)
+				this.Player.Move(Direction.Left);
+		   else if(InputHandler.RightPressed && !InputHandler.LeftPressed)
+				this.Player.Move(Direction.Right);
+		   else if (InputHandler.LeftPressed && InputHandler.RightPressed)
+				this.Player.Move(Direction.Down);
+		   }
     }
 }

@@ -13,13 +13,7 @@ namespace InvasionOfAldebaran.Models
 {
 	public class Player: AnimatedObject
 	{
-        private double _speed = 600;
-
-        private void ResetSpeed()
-        {
-            this.Vx = 0;
-            this.Vy = 0;
-        }
+        private double _speed = 900;
 
         public Player(Coords coords, double vx, double vy) : base(coords, vx, vy)
 		{
@@ -73,6 +67,10 @@ namespace InvasionOfAldebaran.Models
 				case Direction.Right:
 					this.Vx = _speed;
 					break;
+				
+				default:
+					this.Vx = 0;
+					break;
 			}
 		}
 
@@ -80,6 +78,12 @@ namespace InvasionOfAldebaran.Models
 		{
 			Coords missileSpawn = new Coords(this.Coords.X, this.Coords.Y);
 			return new Missile(missileSpawn, 0, 0);
+		}
+
+		private void ResetSpeed()
+		{
+			this.Vx = 0;
+			this.Vy = 0;
 		}
 	}
 }

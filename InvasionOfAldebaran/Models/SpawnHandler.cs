@@ -11,6 +11,9 @@ namespace InvasionOfAldebaran.Models
 	public class SpawnHandler
 	{
 		private readonly double _canvasWidth;
+		private readonly double _slowSpeed = 100;
+		private readonly double _mediumSpeed = 200;
+		private readonly double _fastSpeed = 300;
 		
 		public List<Coords> SpawnPoints { get; private set; }
 
@@ -38,10 +41,10 @@ namespace InvasionOfAldebaran.Models
 		{
 			List<Brush> colors = new List<Brush>();
 			List<Coords> spawns = this.SpawnPoints;
-			colors.Add(Brushes.Red);
-			colors.Add(Brushes.Orange);
-			colors.Add(Brushes.White);
-			colors.Add(Brushes.Violet);
+			colors.Add(Brushes.Green);
+			colors.Add(Brushes.DarkRed);
+			colors.Add(Brushes.Beige);
+			colors.Add(Brushes.DeepPink);
 
 			List<AnimatedObject> newEnemies = new List<AnimatedObject>();
 
@@ -51,7 +54,7 @@ namespace InvasionOfAldebaran.Models
 				int rColor = r.Next(0, 3 - i);
 				int rSpawns = r.Next(0, 3 - i);
 				
-				newEnemies.Add(new Enemy(colors[rColor], spawns[rSpawns], 0, 200));
+				newEnemies.Add(new Enemy(colors[rColor], spawns[rSpawns], 0, _slowSpeed));
 
 				colors.RemoveAt(rColor);
 				spawns.RemoveAt(rSpawns);
