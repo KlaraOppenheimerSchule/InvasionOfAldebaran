@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Shapes;
-using InvasionOfAldebaran.Shared;
 
 namespace InvasionOfAldebaran.Models
 {
@@ -23,7 +22,7 @@ namespace InvasionOfAldebaran.Models
 
 		public Polygon Frame = new Polygon();
 
-		public AnimatedObject(Coords coords, double vx, double vy)
+		protected AnimatedObject(Coords coords, double vx, double vy)
 		{
             this.Coords = coords;
 			Vx = vx;
@@ -31,8 +30,6 @@ namespace InvasionOfAldebaran.Models
 		}
 
 		public abstract void Draw(Canvas canvas);
-
-		public abstract void Move(Direction direction);
 
 		public virtual void Animate(TimeSpan interval, Canvas canvas)
 		{

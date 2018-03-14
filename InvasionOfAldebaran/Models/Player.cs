@@ -8,7 +8,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
-using InvasionOfAldebaran.Shared;
 
 namespace InvasionOfAldebaran.Models
 {
@@ -39,20 +38,6 @@ namespace InvasionOfAldebaran.Models
             this.ResetSpeed();
 		}
 
-        public override void Move(Direction direction)
-		{
-			switch (direction)
-			{
-				case Direction.Left:
-                    this.Vx = -_speed;
-					break;
-
-				case Direction.Right:
-                    this.Vx = _speed;
-					break;
-			}
-		}
-
         public override void Animate(TimeSpan interval, Canvas canvas)
         {
             this.Coords.X += Vx * interval.TotalSeconds;
@@ -76,5 +61,25 @@ namespace InvasionOfAldebaran.Models
                 this.Coords.Y = 0;
             }
         }
-    }
+
+		public void Move(Direction direction)
+		{
+			switch (direction)
+			{
+				case Direction.Left:
+					this.Vx = -_speed;
+					break;
+
+				case Direction.Right:
+					this.Vx = _speed;
+					break;
+			}
+		}
+
+		public Missile Fire()
+		{
+			Coords missileSpawn = new Coords(this.Coords.X, this.Coords.Y);
+			return new Missile(missileSpawn, 0, 0);
+		}
+	}
 }

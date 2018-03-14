@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using InvasionOfAldebaran.Shared;
 
 namespace InvasionOfAldebaran.Models
 {
-    class Missile : AnimatedObject
+    public class Missile : AnimatedObject
     {
         public Missile(Coords player, double vx, double vy) : base(player, vx, vy)
         {
@@ -21,7 +20,7 @@ namespace InvasionOfAldebaran.Models
 
             this.Frame.Fill = Brushes.Green;
 
-            this.Vy = -300;
+            this.Vy = -500;
         }
 
         public override void Draw(Canvas canvas)
@@ -29,11 +28,6 @@ namespace InvasionOfAldebaran.Models
             canvas.Children.Add(Frame);
             Canvas.SetLeft(Frame, this.Coords.X);
             Canvas.SetTop(Frame, this.Coords.Y);
-        }
-
-        public override void Move(Direction direction)
-        {
-            throw new NotImplementedException();
         }
     }
 }

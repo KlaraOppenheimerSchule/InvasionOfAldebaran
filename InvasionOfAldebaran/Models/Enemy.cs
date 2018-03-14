@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using InvasionOfAldebaran.Shared;
 
 namespace InvasionOfAldebaran.Models
 {
@@ -20,7 +19,6 @@ namespace InvasionOfAldebaran.Models
             {
                 return this._color;
             }
-
             private set
             {
                 this._color = value;
@@ -36,9 +34,6 @@ namespace InvasionOfAldebaran.Models
             Frame.Points.Add(new Point(-10.0, 14.0));
 
             this.Color = color;
-
-
-            Vy = 200;
         }
 
 		public override void Draw(Canvas canvas)
@@ -46,11 +41,6 @@ namespace InvasionOfAldebaran.Models
             canvas.Children.Add(Frame);
             Canvas.SetLeft(Frame, this.Coords.X);
             Canvas.SetTop(Frame, this.Coords.Y);
-        }
-
-        public override void Move(Direction direction)
-        {
-            throw new NotImplementedException();
         }
     }
 }

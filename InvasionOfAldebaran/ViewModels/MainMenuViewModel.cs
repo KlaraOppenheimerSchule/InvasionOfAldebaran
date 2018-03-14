@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using InvasionOfAldebaran.Shared;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Caliburn.Micro;
@@ -26,7 +25,6 @@ namespace InvasionOfAldebaran.ViewModels
             Highscore = "HIGHSCORE: " + Convert.ToString(frameModel.Points);
         }
 
-
         public void Close_Window()
         {
             _frameModel.CloseItem(_frameModel);
@@ -34,7 +32,6 @@ namespace InvasionOfAldebaran.ViewModels
         public void Change_Window()
 		{
 			_frameModel.ActivateItem(_frameModel.Items.Single(s => s.GetType() == typeof(PlayViewModel)));
-
 		}
 		
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

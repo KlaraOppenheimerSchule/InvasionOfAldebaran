@@ -10,10 +10,16 @@ namespace InvasionOfAldebaran.Models
 	public class RelayCommand : ICommand
 	{
 		private Action _action;
+		private Action<string> _parameterAction;
 		
 		public RelayCommand(Action action)
 		{
 			this._action = action;
+		}
+
+		public RelayCommand(Action<string> parameterAction)
+		{
+			this._parameterAction = parameterAction;
 		}
 		
 		public bool CanExecute(object parameter)
@@ -23,7 +29,10 @@ namespace InvasionOfAldebaran.Models
 
 		public void Execute(object parameter)
 		{
-			this._action.Invoke();
+			if(parameter == null)
+				this._action.Invoke();
+			else
+				this._parameterAction.Invoke(parameter.ToString());
 		}
 
 		public event EventHandler CanExecuteChanged;

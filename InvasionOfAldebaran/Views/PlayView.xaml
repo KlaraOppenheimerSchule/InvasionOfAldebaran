@@ -8,12 +8,12 @@
              mc:Ignorable="d" Focusable="False"
 			 d:DataContext="{d:DesignInstance vm:PlayViewModel}"
              d:DesignHeight="850" d:DesignWidth="850">
-    <Grid>
+	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="80"/>
 			<RowDefinition Height="*"/>
 		</Grid.RowDefinitions>
-		
+
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="500" />
 			<ColumnDefinition Width="*" />
@@ -25,6 +25,11 @@
 		<!-- Canvas -->
 		<Canvas Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" >
 			<ContentPresenter Content="{Binding Canvas}" />
+			<Canvas.InputBindings>
+				<KeyBinding Key="Left" Command="{Binding HandleInputCommand}" CommandParameter="Left"/>
+				<KeyBinding Key="Right" Command="{Binding HandleInputCommand}" CommandParameter="Right"/>
+				<KeyBinding Key="Space" Command="{Binding HandleInputCommand}" CommandParameter="Fire"/>
+			</Canvas.InputBindings>
 		</Canvas>
 		<!-- Answers -->
 		<StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" CanVerticallyScroll="True"

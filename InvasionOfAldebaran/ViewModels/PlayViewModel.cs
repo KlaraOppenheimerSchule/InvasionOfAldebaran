@@ -11,7 +11,6 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using Caliburn.Micro;
 using InvasionOfAldebaran.Models;
-using InvasionOfAldebaran.Shared;
 
 namespace InvasionOfAldebaran.ViewModels
 {
@@ -19,24 +18,23 @@ namespace InvasionOfAldebaran.ViewModels
     {
 		private FrameWindowViewModel _frameWindowViewModel;
         private readonly DispatcherTimer _timer = new DispatcherTimer();
-        private DateTime _lastMissile;
-		private  Coords _playerSpawn = new Coords(250, 600);
+		private readonly Coords _playerSpawn = new Coords(250, 600);
+		private DateTime _lastMissile;
+	    private Direction _lastDirection;
 
 
-
-		public List<AnimatedObject> Objects { get; set; }
-
-        public List<Coords> SpawnPoints { get; set; }
-
+	    public List<AnimatedObject> Objects { get; set; }
         public Player Player { get; set; }
-
         public Canvas Canvas { get; set; }
-
+		public SpawnHandler Spawner { get; set; }
+		
+		public ICommand HandleInputCommand { get; private set; }
+		
         public PlayViewModel( FrameWindowViewModel frameWindow)
 		{
 			this._frameWindowViewModel = frameWindow;
             this.Objects = new List<AnimatedObject>();
-            this.SpawnPoints = new List<Coords>();
+			
             this.Canvas = new Canvas()
             {
                 Height = 700,
@@ -44,32 +42,35 @@ namespace InvasionOfAldebaran.ViewModels
                 Focusable = true,
                 Background = Brushes.DarkGray,
             };
-			
-
 			this.Activated += StartGame;
-        }
+			
+			this.HandleInputCommand = new RelayCommand(this.HandleInput);
+		}
 
-		public void StartGame(object sender, EventArgs e)
+		private void StartGame(object sender, EventArgs e)
 		{
 			this._timer.Interval = TimeSpan.FromSeconds(0.01);
 			this.Player = new Player(_playerSpawn, 0, 0);
 			this.Objects.Add(Player);
+			this.Spawner = new SpawnHandler(this.Canvas.Width);
+			this.Objects.AddRange(this.Spawner.SpawnEnemies());
 
 			this._timer.Tick += AnimateObjects;
-			this.Canvas.PreviewKeyDown += this.WindowKeyDown;
-
-			this.PopulateSpawnPoints();
-			this.SpawnEnemies();
-
 			this._timer.Start();
 		}
 
-        void AnimateObjects(object sender, EventArgs e)
-        {
-            if (!this.Canvas.IsFocused)
-                this.Canvas.Focus();
+		private void EndGame(string text)
+		{
+			//TextField.Text = text;
+			//TextField.Visibility = Visibility.Visible;
+		}
 
-            List<AnimatedObject> objectsToBeDeleted = new List<AnimatedObject>();
+		private void AnimateObjects(object sender, EventArgs e)
+        {
+			if (!this.Canvas.IsFocused)
+				this.Canvas.Focus();
+
+			List<AnimatedObject> objectsToBeDeleted = new List<AnimatedObject>();
 
             foreach (var item in Objects)
             {
@@ -79,8 +80,6 @@ namespace InvasionOfAldebaran.ViewModels
                     objectsToBeDeleted.Add(item);
                 }
             }
-            
-
             foreach (var enemy in Objects.OfType<Enemy>())
             {
                 foreach (var missile in Objects.OfType<Missile>())
@@ -90,15 +89,12 @@ namespace InvasionOfAldebaran.ViewModels
                         objectsToBeDeleted.Add(enemy);
                         objectsToBeDeleted.Add(missile);
                     }
-                    
                 }
             }
-
             foreach (var obj in objectsToBeDeleted)
             {
                 this.Objects.Remove(obj);
             }
-
             this.Canvas.Children.Clear();
             foreach (var item in Objects)
             {
@@ -106,72 +102,27 @@ namespace InvasionOfAldebaran.ViewModels
             }
         }
 
-        private void EndGame(string text)
-        {
-            //TextField.Text = text;
-            //TextField.Visibility = Visibility.Visible;
-        }
-
-        private void WindowKeyDown(object sender, KeyEventArgs e)
-        {
-            if (Objects.Contains(this.Player))
-            {
-                switch (e.Key)
-                {
-                    default:
-                        break;
-                    case Key.A:
-                    case Key.Left:
-                        this.Player.Move(Direction.Left);
-                        break;
-                    case Key.D:
-                    case Key.Right:
-                        this.Player.Move(Direction.Right);
-                        break;
-                    case Key.Space:
-                        if (_lastMissile.AddSeconds(0.5) <= DateTime.Now)
-                        {
-                            Coords missileSpawn = new Coords(this.Player.Coords.X, this.Player.Coords.Y);
-                            Objects.Add(new Missile(missileSpawn, 0, 0));
-                            _lastMissile = DateTime.Now;
-                        }
-                        break;
-                }
-            }
-        }
-
-        private void PopulateSpawnPoints()
-        {
-            double canvasPos = 50;
-
-            for (int i = 0; i < 4; i++)
-            {
-                Coords point = new Coords(canvasPos, 100);
-                this.SpawnPoints.Add(point);
-                canvasPos += 100;
-            }
-        }
-
-        private void SpawnEnemies()
-        {
-            List<Brush> colors = new List<Brush>();
-            List<Coords> spawns = this.SpawnPoints;
-            colors.Add(Brushes.Red);
-            colors.Add(Brushes.Orange);
-            colors.Add(Brushes.White);
-            colors.Add(Brushes.Violet);
-
-            for (int i = 0; i < 4; i++)
-            {
-                Random r = new Random();
-                int rColor = r.Next(0, 3 - i);
-                int rSpawns = r.Next(0, 3 - i);
-
-                this.Objects.Add(new Enemy(colors[rColor], spawns[rSpawns], 0, 0));
-
-                colors.RemoveAt(rColor);
-                spawns.RemoveAt(rSpawns);
-            }
-        }
+	    private void HandleInput(string action)
+	    {
+		    switch (action)
+		    {
+				case null:
+					break;
+				case "Left":
+					this.Player.Move(Direction.Left);
+					break;
+				case "Right":
+					this.Player.Move(Direction.Right);
+					break;
+				case "Fire":
+					if (_lastMissile.AddSeconds(0.5) <= DateTime.Now)
+					{
+						var missile = this.Player.Fire();
+						this.Objects.Add(missile);
+						_lastMissile = DateTime.Now;
+					}
+					break;
+			}
+	    }
     }
 }
