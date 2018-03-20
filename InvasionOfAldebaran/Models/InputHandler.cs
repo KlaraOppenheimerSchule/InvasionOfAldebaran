@@ -1,26 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using InvasionOfAldebaran.Helper;
 
 namespace InvasionOfAldebaran.Models
 {
 	public class InputHandler
 	{
-		private readonly Canvas _canvas;
+		public bool LeftPressed;
+		public bool RightPressed;
+		public bool SpacePressed;
 
-		public bool LeftPressed { get; private set; }
-		public bool RightPressed { get; private set; }
-		public bool SpacePressed { get; private set; }
-
-		public InputHandler(Canvas canvas)
+		public InputHandler(IInputElement canvas)
 		{
-			_canvas = canvas;
-			_canvas.PreviewKeyDown += this.OnKeyDownHandler;
-			_canvas.PreviewKeyUp += this.OnKeyUpDownHandler;
+			
+			canvas.PreviewKeyDown += this.OnKeyDownHandler;
+			canvas.PreviewKeyUp += this.OnKeyUpDownHandler;
 		}
 
 		private void OnKeyDownHandler(object sender, KeyEventArgs e)
@@ -28,15 +23,15 @@ namespace InvasionOfAldebaran.Models
 			switch (e.Key)
 			{
 				case Key.Left:
-					this.LeftPressed = true;
+					LeftPressed = true;
 					break;
 
 				case Key.Right:
-					this.RightPressed = true;
+					RightPressed = true;
 					break;
 
 				case Key.Space:
-					this.SpacePressed = true;
+					SpacePressed = true;
 					break;
 			}
 		}
@@ -46,15 +41,15 @@ namespace InvasionOfAldebaran.Models
 			switch (e.Key)
 			{
 				case Key.Left:
-					this.LeftPressed = false;
+					LeftPressed = false;
 					break;
 
 				case Key.Right:
-					this.RightPressed = false;
+					RightPressed = false;
 					break;
 
 				case Key.Space:
-					this.SpacePressed = false;
+					SpacePressed = false;
 					break;
 			}
 		}

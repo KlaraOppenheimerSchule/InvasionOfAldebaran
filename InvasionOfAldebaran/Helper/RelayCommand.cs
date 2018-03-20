@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace InvasionOfAldebaran.Models
+namespace InvasionOfAldebaran.Helper
 {
 	public class RelayCommand : ICommand
 	{
@@ -14,12 +10,12 @@ namespace InvasionOfAldebaran.Models
 		
 		public RelayCommand(Action action)
 		{
-			this._action = action;
+			_action = action;
 		}
 
 		public RelayCommand(Action<string> parameterAction)
 		{
-			this._parameterAction = parameterAction;
+			_parameterAction = parameterAction;
 		}
 		
 		public bool CanExecute(object parameter)
@@ -30,9 +26,9 @@ namespace InvasionOfAldebaran.Models
 		public void Execute(object parameter)
 		{
 			if(parameter == null)
-				this._action.Invoke();
+				_action.Invoke();
 			else
-				this._parameterAction.Invoke(parameter.ToString());
+				_parameterAction.Invoke(parameter.ToString());
 		}
 
 		public event EventHandler CanExecuteChanged;

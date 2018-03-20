@@ -67,20 +67,26 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Helper\Serializer.cs" />
     <Compile Include="Models\AnimatedObject.cs" />
     <Compile Include="Models\Answer.cs" />
-    <Compile Include="Models\Coords.cs" />
-    <Compile Include="Models\Difficulty.cs" />
+    <Compile Include="Helper\Coords.cs" />
+    <Compile Include="Helper\Difficulty.cs" />
     <Compile Include="Models\Enemy.cs" />
+    <Compile Include="Helper\RandomBool.cs" />
+    <Compile Include="Helper\Speed.cs" />
     <Compile Include="Models\InputHandler.cs" />
     <Compile Include="Models\Missile.cs" />
     <Compile Include="Models\Player.cs" />
     <Compile Include="Models\Question.cs" />
-    <Compile Include="Models\RelayCommand.cs" />
-    <Compile Include="Models\Direction.cs" />
+    <Compile Include="Helper\RelayCommand.cs" />
+    <Compile Include="Helper\Direction.cs" />
     <Compile Include="Models\SpawnHandler.cs" />
+    <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="ViewModels\IScreenViewModel.cs" />
     <Compile Include="ViewModels\MainMenuViewModel.cs" />
     <Compile Include="ViewModels\FrameWindowViewModel.cs" />
+    <Compile Include="ViewModels\NotifyPropertyChangedBase.cs" />
     <Compile Include="Views\FrameWindowView.xaml.cs">
       <DependentUpon>FrameWindowView.xaml</DependentUpon>
     </Compile>
@@ -136,7 +142,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Resource Include="Resources\15-original.png" />
   </ItemGroup>

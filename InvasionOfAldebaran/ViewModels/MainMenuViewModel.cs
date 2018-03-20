@@ -1,42 +1,34 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using Caliburn.Micro;
-using InvasionOfAldebaran.Models;
+using InvasionOfAldebaran.Helper;
 
 namespace InvasionOfAldebaran.ViewModels
 {
-	public class MainMenuViewModel : Screen
+	public class MainMenuViewModel : Screen, IScreenViewModel
     {
         public ICommand PlayButtonCommand { get; set; }
         public ICommand CloseButtonCommand { get; set; }
-        public String Highscore { get; set; }
+        public string Highscore { get; set; }
 		
-        private FrameWindowViewModel _frameModel;
+        private readonly FrameWindowViewModel _frameModel;
 
         public MainMenuViewModel( FrameWindowViewModel frameModel) {
             _frameModel = frameModel;
 
-            this.PlayButtonCommand = new RelayCommand(this.Change_Window);
-            this.CloseButtonCommand = new RelayCommand(this.Close_Window);
-            Highscore = "HIGHSCORE: " + Convert.ToString(frameModel.Points);
+	        this.PlayButtonCommand = new RelayCommand(this.ChangeWindow);
+	        this.CloseButtonCommand = new RelayCommand(this.CloseWindow);
+	        this.Highscore = "HIGHSCORE: " + Convert.ToString(frameModel.Points);
         }
 
-        public void Close_Window()
+        public void CloseWindow()
         {
             _frameModel.CloseItem(_frameModel);
         }
-        public void Change_Window()
+        public void ChangeWindow()
 		{
-			_frameModel.ActivateItem(_frameModel.Items.Single(s => s.GetType() == typeof(PlayViewModel)));
+			_frameModel.ActivateItem(_frameModel.Items.Single(s => s is PlayViewModel));
 		}
-		
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-
-        }
     }
 }

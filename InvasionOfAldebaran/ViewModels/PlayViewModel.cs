@@ -1,65 +1,65 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Shapes;
 using System.Windows.Threading;
 using Caliburn.Micro;
 using InvasionOfAldebaran.Models;
 
 namespace InvasionOfAldebaran.ViewModels
 {
-    public class PlayViewModel : Screen
+    public sealed class PlayViewModel : NotifyPropertyChangedBase, IScreenViewModel
     {
-		private FrameWindowViewModel _frameWindowViewModel;
-        private readonly DispatcherTimer _timer = new DispatcherTimer();
-		private readonly Coords _playerSpawn = new Coords(250, 600);
-		private DateTime _lastMissile;
-	    
-	    public List<AnimatedObject> Objects { get; set; }
-		public InputHandler InputHandler { get; private set; }
-        public Player Player { get; set; }
-        public Canvas Canvas { get; set; }
-		public SpawnHandler Spawner { get; set; }
-		
-        public PlayViewModel( FrameWindowViewModel frameWindow)
+	    private const int maxWave = 8;
+
+		private readonly FrameWindowViewModel _frameViewModel;
+		private readonly DispatcherTimer _timer = new DispatcherTimer();
+	    private SpawnHandler _spawner;
+
+		private List<AnimatedObject> _objectsToBeDeleted;
+	    private List<AnimatedObject> _objects;
+	    private List<AnimatedObject> _enemies;
+
+		private Question _currentQuestion;
+	    private int _currentWave;
+
+	    public Canvas Canvas { get; private set; }
+		public Question CurrentQuestion
+	    {
+		    get { return _currentQuestion; }
+		    private set
+		    {
+			    if (value == null) return;
+
+			    _currentQuestion = value;
+			    this.NotifyPropertyChanged(nameof(this.CurrentQuestion));
+		    }
+	    }
+	    public int CurrentWave
+	    {
+		    get { return _currentWave; }
+		    private set
+		    {
+			    _currentWave = value;
+			    this.NotifyPropertyChanged(nameof(this.CurrentWave));
+		    }
+	    }
+
+	    public PlayViewModel( FrameWindowViewModel frameWindow)
 		{
-			this._frameWindowViewModel = frameWindow;
-            this.Objects = new List<AnimatedObject>();
-			
-            this.Canvas = new Canvas()
+			_frameViewModel = frameWindow;
+
+			this.Canvas = new Canvas()
             {
                 Height = 700,
                 Width = 500,
                 Focusable = true,
                 Background = Brushes.DarkGray,
             };
-			this.Activated += StartGame;
-		}
-
-		private void StartGame(object sender, EventArgs e)
-		{
-			this._timer.Interval = TimeSpan.FromSeconds(0.005);
-			this.Player = new Player(_playerSpawn, 0, 0);
-			this.Objects.Add(Player);
-			this.Spawner = new SpawnHandler(this.Canvas.Width);
-			this.Objects.AddRange(this.Spawner.SpawnEnemies());
-
-			this.InputHandler = new InputHandler(this.Canvas);
-
-			this._timer.Tick += AnimateObjects;
-			this._timer.Start();
-		}
-
-		private void EndGame(string text)
-		{
-			//TextField.Text = text;
-			//TextField.Visibility = Visibility.Visible;
+			this.Activated += this.StartGameEventHandler;
 		}
 
 		private void AnimateObjects(object sender, EventArgs e)
@@ -67,58 +67,112 @@ namespace InvasionOfAldebaran.ViewModels
 			if (!this.Canvas.IsFocused)
 				this.Canvas.Focus();
 
-			List<AnimatedObject> objectsToBeDeleted = new List<AnimatedObject>();
+	        this.CurrentWave = _spawner.Update();
 
-	        this.ApplyInputToPlayer();
-
-            foreach (var item in Objects)
+            foreach (var item in _objects)
             {
-                item.Animate(_timer.Interval, Canvas);
-                if (item.ReachedEnd)
+                item.Animate(_timer.Interval, this.Canvas);
+
+				if (item.ReachedEnd)
+					_objectsToBeDeleted.Add(item);
+            }
+
+            foreach (var enemy in _objects.OfType<Enemy>())
+            {
+                foreach (var missile in _objects.OfType<Missile>())
                 {
-                    objectsToBeDeleted.Add(item);
+	                if (!enemy.ContainsPoint(missile.Coords.X, missile.Coords.Y))
+						continue;
+
+					if (enemy.Color.Equals(this.CurrentQuestion.CorrectAnswer.Color))
+					{
+						_objectsToBeDeleted.Add(enemy);
+						_enemies.Remove(enemy);
+						_objectsToBeDeleted.Add(missile);
+						
+						//todo: Minuspunkte!!
+						MessageBox.Show("Das war ein eigener!!");
+					}
+					else
+					{
+						_objectsToBeDeleted.Add(enemy);
+						_enemies.Remove(enemy);
+						_objectsToBeDeleted.Add(missile);
+						//todo: Pluspunkte!!
+					}
                 }
             }
-            foreach (var enemy in Objects.OfType<Enemy>())
-            {
-                foreach (var missile in Objects.OfType<Missile>())
-                {
-                    if (enemy.ContainsPoint(missile.Coords.X, missile.Coords.Y))
-                    {
-                        objectsToBeDeleted.Add(enemy);
-                        objectsToBeDeleted.Add(missile);
-                    }
-                }
-            }
-            foreach (var obj in objectsToBeDeleted)
-            {
-                this.Objects.Remove(obj);
-            }
-            this.Canvas.Children.Clear();
-            foreach (var item in Objects)
-            {
-                item.Draw(this.Canvas);
-            }
+			_objectsToBeDeleted.ForEach(obj => _objects.Remove(obj));
+			_objectsToBeDeleted.Clear();
+
+	        this.Canvas.Children.Clear();
+			_objects.ForEach(item => item.Draw(this.Canvas));
+
+			//todo: Questionwechsel funktioniert noch nicht
+	        if (_enemies.Count <= 0 && this.CurrentWave >= maxWave)
+		        this.CurrentQuestion = _spawner.StartQuestion();
         }
 
-	    private void ApplyInputToPlayer()
-	    {
-		    if (InputHandler.SpacePressed)
-		    {
-			    if (_lastMissile.AddSeconds(0.3) <= DateTime.Now)
-			    {
-				    var missile = Player.Fire();
-					this.Objects.Add(missile);
-					_lastMissile = DateTime.Now;
-			    }
-		    }
+		#region EventHandler
 
-		   if(InputHandler.LeftPressed && !InputHandler.RightPressed)
-				this.Player.Move(Direction.Left);
-		   else if(InputHandler.RightPressed && !InputHandler.LeftPressed)
-				this.Player.Move(Direction.Right);
-		   else if (InputHandler.LeftPressed && InputHandler.RightPressed)
-				this.Player.Move(Direction.Down);
-		   }
-    }
+		private void StartGameEventHandler(object sender, EventArgs e)
+	    {
+		    _objects = new List<AnimatedObject>();
+			_enemies = new List<AnimatedObject>();
+		    _objectsToBeDeleted = new List<AnimatedObject>();
+		    _spawner = new SpawnHandler(this.Canvas, this.Canvas.Width, this.Canvas.Height);
+			_timer.Interval = TimeSpan.FromSeconds(0.005);
+
+			_timer.Tick += this.AnimateObjects;
+		    _spawner.ObjectsSpawned += this.AddObjectEventHandler;
+		    _spawner.QuestionChanged += this.ChangeQuestionEventHandler;
+
+			_spawner.SetupPlayer();
+		    this.CurrentQuestion = _spawner.StartQuestion();
+		    _timer.Start();
+	    }
+		//todo evtl gar nicht benötigt aber dann müssen die Eventhandler woanders deabonniert werden
+	    private void EndGameEventHandler(object sender, EventArgs e)
+	    {
+		    _timer.Tick -= this.AnimateObjects;
+		    _spawner.ObjectsSpawned -= this.AddObjectEventHandler;
+		    _spawner.QuestionChanged -= this.ChangeQuestionEventHandler;
+
+		    this.ChangeWindow();
+	    }
+
+		private void ChangeQuestionEventHandler(Question question)
+	    {
+		    this.CurrentWave = 0;
+		    this.CurrentQuestion = question;
+	    }
+
+	    private void AddObjectEventHandler(List<AnimatedObject> newObjects)
+	    {
+		    if (newObjects.FirstOrDefault() is Enemy)
+		    {
+			    this.CurrentWave++;
+			    _objects.AddRange(newObjects);
+				_enemies.AddRange(newObjects.Where(obj => obj.GetType() == typeof(Enemy)));
+			}
+			else
+				_objects.AddRange(newObjects);
+	    }
+
+		#endregion
+
+	    #region Interface Members
+
+	    public void CloseWindow()
+	    {
+		    _frameViewModel.CloseItem(_frameViewModel);
+	    }
+
+	    public void ChangeWindow()
+	    {
+		    _frameViewModel.ActivateItem(_frameViewModel.Items.Single(s => s is MainMenuViewModel));
+	    }
+
+	    #endregion
+	}
 }

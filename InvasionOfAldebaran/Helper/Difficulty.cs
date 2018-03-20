@@ -1,4 +1,4 @@
-﻿namespace InvasionOfAldebaran.Models
+﻿namespace InvasionOfAldebaran.Helper
 {
 	public enum Difficulty
 	{

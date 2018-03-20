@@ -22,6 +22,7 @@
 		<TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" 
 				   HorizontalAlignment="Stretch" VerticalAlignment="Top" Text="Hier steht die Frage"
 				   FontSize="22" FontWeight="Bold" Foreground="Firebrick"/>
+		
 		<!-- Canvas -->
 		<Canvas Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" >
 			<ContentPresenter Content="{Binding Canvas}" />
@@ -29,9 +30,10 @@
 		<!-- Answers -->
 		<StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" CanVerticallyScroll="True"
 					Width="250" >
-			<TextBlock> Erste Frage</TextBlock>
-			<TextBlock> Zweite Frage</TextBlock>
-			<TextBlock> Dritte Frage</TextBlock>
+			<TextBlock> Erste Antwort</TextBlock>
+			<TextBlock> Zweite Antwort</TextBlock>
+			<TextBlock> Dritte Antwort</TextBlock>
+			<TextBlock Text="{Binding CurrentWave}"></TextBlock>
 		</StackPanel>
 	</Grid>
 </UserControl>

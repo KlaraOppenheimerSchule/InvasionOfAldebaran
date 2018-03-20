@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Dynamic;
-using System.Windows;
+﻿using System.Windows;
 using Caliburn.Micro;
 using InvasionOfAldebaran.ViewModels;
 
@@ -11,12 +9,12 @@ namespace InvasionOfAldebaran
     {
         public AppBootstrapper()
         {
-            this.Initialize();
+	        this.Initialize();
         }
 
         protected override void OnStartup(object sender, StartupEventArgs e)
         {
-            this.DisplayRootViewFor<FrameWindowViewModel>();
+	        this.DisplayRootViewFor<FrameWindowViewModel>();
         }
     }
 }

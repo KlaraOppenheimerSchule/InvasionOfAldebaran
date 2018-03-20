@@ -1,58 +1,51 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Windows.Shapes;
+using InvasionOfAldebaran.Helper;
 
 namespace InvasionOfAldebaran.Models
 {
 	public class Player: AnimatedObject
 	{
-        private double _speed = 900;
+		private const double speed = 900;	
 
-        public Player(Coords coords, double vx, double vy) : base(coords, vx, vy)
+		public Player(Brush color, Coords coords) : base(color, coords)
 		{
-            Frame.Points.Add(new Point(0.0, -20.0));
-            Frame.Points.Add(new Point(10.0, 14.0));
-			Frame.Points.Add(new Point(-10.0, 14.0));
-
-			this.Frame.Fill = Brushes.Blue;
+			this.Frame.Points.Add(new Point(0.0, -20.0));
+			this.Frame.Points.Add(new Point(10.0, 14.0));
+			this.Frame.Points.Add(new Point(-10.0, 14.0));
 		}
 
 		public override void Draw(Canvas canvas)
 		{
-			canvas.Children.Add(Frame);
-			Canvas.SetLeft(Frame, this.Coords.X);
-			Canvas.SetTop(Frame, this.Coords.Y);
-            this.ResetSpeed();
+			canvas.Children.Add(this.Frame);
+			Canvas.SetLeft(this.Frame, this.Coords.X);
+			Canvas.SetTop(this.Frame, this.Coords.Y);
+			this.ResetSpeed();
 		}
 
         public override void Animate(TimeSpan interval, Canvas canvas)
         {
-            this.Coords.X += Vx * interval.TotalSeconds;
-            this.Coords.Y += Vy * interval.TotalSeconds;
+	        this.Coords.X += this.Vx * interval.TotalSeconds;
+	        this.Coords.Y += this.Vy * interval.TotalSeconds;
 
             if (this.Coords.X > canvas.ActualWidth)
             {
-                this.Coords.X = canvas.ActualWidth;
+	            this.Coords.X = canvas.ActualWidth;
             }
             else if (this.Coords.X < 0)
             {
-                this.Coords.X = 0;
+	            this.Coords.X = 0;
             }
 
             if (this.Coords.Y > canvas.ActualHeight)
             {
-                this.Coords.Y = canvas.ActualHeight;
+	            this.Coords.Y = canvas.ActualHeight;
             }
             else if (this.Coords.Y < 0)
             {
-                this.Coords.Y = 0;
+	            this.Coords.Y = 0;
             }
         }
 
@@ -61,11 +54,11 @@ namespace InvasionOfAldebaran.Models
 			switch (direction)
 			{
 				case Direction.Left:
-					this.Vx = -_speed;
+					this.Vx = -speed;
 					break;
 
 				case Direction.Right:
-					this.Vx = _speed;
+					this.Vx = speed;
 					break;
 				
 				default:
@@ -76,8 +69,10 @@ namespace InvasionOfAldebaran.Models
 
 		public Missile Fire()
 		{
-			Coords missileSpawn = new Coords(this.Coords.X, this.Coords.Y);
-			return new Missile(missileSpawn, 0, 0);
+			var missileSpawn = new Coords(this.Coords.X, this.Coords.Y);
+			var missile = new Missile(Brushes.OrangeRed, missileSpawn);
+
+			return missile;
 		}
 
 		private void ResetSpeed()
@@ -86,4 +81,6 @@ namespace InvasionOfAldebaran.Models
 			this.Vy = 0;
 		}
 	}
+
+	
 }
