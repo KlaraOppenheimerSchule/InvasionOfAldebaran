@@ -30,6 +30,12 @@ namespace InvasionOfAldebaran.Models
 		public List<Question> Questions { get; private set; }
 		public Question CurrentQuestion { get; private set; }
 
+		public delegate void SpawnEventHandler(List<AnimatedObject> spawns);
+		public event SpawnEventHandler ObjectsSpawned;
+
+		public delegate void QuestionChangedEventHandler(Question question);
+		public event QuestionChangedEventHandler QuestionChanged;
+
 		public SpawnHandler(Canvas canvas, double canvasWidth, double canvasHeight)
 		{
 			_canvasWidth = canvasWidth;
@@ -108,12 +114,6 @@ namespace InvasionOfAldebaran.Models
 		{
 			return new Player(Brushes.Blue, _playerSpawn);
 		}
-
-		public delegate void SpawnEventHandler(List<AnimatedObject> spawns);
-		public event SpawnEventHandler ObjectsSpawned;
-
-		public delegate void QuestionChangedEventHandler(Question question);
-		public event QuestionChangedEventHandler QuestionChanged;
 
 		public void SetupPlayer()
 		{
