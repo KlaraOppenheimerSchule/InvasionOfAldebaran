@@ -12,6 +12,7 @@
 		<Grid.RowDefinitions>
 			<RowDefinition Height="80"/>
 			<RowDefinition Height="*"/>
+			<RowDefinition Height="30" />
 		</Grid.RowDefinitions>
 
 		<Grid.ColumnDefinitions>
@@ -35,6 +36,8 @@
 			<TextBlock> Dritte Antwort</TextBlock>
 			<TextBlock Text="{Binding CurrentWave}"></TextBlock>
 		</StackPanel>
+		<TextBlock Grid.Row="2" Grid.Column="0" Text="{Binding Message}"/>
+		<TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Points}"/>
 	</Grid>
 </UserControl>
 

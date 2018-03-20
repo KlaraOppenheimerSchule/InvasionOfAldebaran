@@ -15,65 +15,24 @@ namespace InvasionOfAldebaran.Models
 		private readonly List<Coords> _spawnPoints;
 		private Random _r = new Random();
 
-		private readonly InputHandler _inputHandler;
-
 		private DateTime _lastMissile;
-		private List<AnimatedObject> _missiles;
-
-		private DateTime _nextSpawnDate;
-		private List<AnimatedObject> _nextWave;	 
-
-		private int _currentWave = 0;
-		private bool _gameEnded = true;
-
-		public Player Player { get; set; }
-		public List<Question> Questions { get; private set; }
-		public Question CurrentQuestion { get; private set; }
+		private readonly List<AnimatedObject> _missiles;
+		private readonly List<Question> _questions;
 
 		public delegate void SpawnEventHandler(List<AnimatedObject> spawns);
 		public event SpawnEventHandler ObjectsSpawned;
 
-		public delegate void QuestionChangedEventHandler(Question question);
-		public event QuestionChangedEventHandler QuestionChanged;
-
-		public SpawnHandler(Canvas canvas, double canvasWidth, double canvasHeight)
+		public SpawnHandler(double canvasWidth, double canvasHeight)
 		{
 			_canvasWidth = canvasWidth;
 			_canvasHeight = canvasHeight;
 			_playerSpawn = new Coords(_canvasWidth / 2, _canvasHeight - 50);
-			_inputHandler= new InputHandler(canvas);
 			_spawnPoints = new List<Coords>();
 
 			_missiles = new List<AnimatedObject>();
-			_nextWave = new List<AnimatedObject>();
-
-			this.Questions = this.MakeList();
+			_questions = this.MakeList();
 
 			this.PopulateSpawnPoints();
-		}
-
-		public int Update()
-		{
-			this.ApplyInputToPlayer();
-
-			if (_gameEnded)
-				return 0;
-
-			if (_nextSpawnDate <= DateTime.Now)
-			{
-				this.SpawnWave();
-				_nextSpawnDate = DateTime.Now.AddSeconds(10);
-				_currentWave++;
-				return _currentWave;
-			}
-			//else if (_currentWave >= maxWaves)
-			//{
-			//	MessageBox.Show("Neue Frage!!");
-			//	this.StartQuestion();
-			//	return _currentWave;
-			//}
-			else
-				return _currentWave;
 		}
 
 		private void PopulateSpawnPoints()
@@ -89,9 +48,9 @@ namespace InvasionOfAldebaran.Models
 			}
 		}
 
-		public List<Enemy> SpawnEnemies(Question question)
+		public List<AnimatedObject> SpawnEnemies(Question question)
 		{
-			var enemies = new List<Enemy>();
+			var enemies = new List<AnimatedObject>();
 
 			List<Brush> colors = question.Answers.Select(answer => answer.Color).ToList();
 			List<Coords> spawns = _spawnPoints.Select(point => new Coords(point.X, point.Y)).ToList();
@@ -109,71 +68,36 @@ namespace InvasionOfAldebaran.Models
 			}
 			return enemies;
 		}
-
+		
 		public Player SpawnPlayer()
 		{
 			return new Player(Brushes.Blue, _playerSpawn);
 		}
 
-		public void SetupPlayer()
+		public Question GetQuestion()
 		{
-			_gameEnded = false;
-			this.Player = SpawnPlayer();
-			_nextWave.Add(this.Player);
-
-			this.ObjectsSpawned?.Invoke(_nextWave);
-			_nextWave.Clear();
-		}
-
-		public Question StartQuestion()
-		{
-			_currentWave = 0;
-			var newQuestion = this.Questions.FirstOrDefault();
-
-			if (this.Questions.Count > 0)
+			if (_questions.Count > 0)
 			{
-				this.CurrentQuestion = newQuestion;
-				this.Questions.Remove(newQuestion);
-
-				//this.QuestionChanged?.Invoke(newQuestion);
-				_nextSpawnDate = DateTime.Now.AddSeconds(5);
-
-				return this.CurrentQuestion;
+				var question = _questions.FirstOrDefault();
+				_questions.Remove(question);
+				return question;
 			}
 			else
-			{
-				_gameEnded = true;
 				return null;
-			}
 		}
 
-		private void SpawnWave()
+		public void SpawnMissile(Player player)
 		{
-			_nextWave.AddRange(SpawnEnemies(this.CurrentQuestion));
-			this.ObjectsSpawned?.Invoke(_nextWave);
-			_nextWave.Clear();
-		}
-
-		private void ApplyInputToPlayer()
-		{
-			if (_inputHandler.SpacePressed)
+			_missiles.Clear();
+			if (_lastMissile.AddSeconds(0.3) < DateTime.Now)
 			{
-				_missiles.Clear();
-				if (_lastMissile.AddSeconds(0.3) < DateTime.Now)
-				{
-					var missile = this.Player.Fire();
-					_missiles.Add(missile);
-					_lastMissile = DateTime.Now;
-					this.ObjectsSpawned?.Invoke(_missiles);
-				}
-			}
+				var missileSpawn = new Coords(player.Coords.X, player.Coords.Y);
+				var missile = new Missile(Brushes.OrangeRed, missileSpawn);
 
-			if (_inputHandler.LeftPressed && !_inputHandler.RightPressed)
-				this.Player.Move(Direction.Left);
-			else if (_inputHandler.RightPressed && !_inputHandler.LeftPressed)
-				this.Player.Move(Direction.Right);
-			else if (_inputHandler.LeftPressed && _inputHandler.RightPressed)
-				this.Player.Move(Direction.Down);
+				_missiles.Add(missile);
+				_lastMissile = DateTime.Now;
+				this.ObjectsSpawned?.Invoke(_missiles);
+			}
 		}
 
 		private List<Question> MakeList()

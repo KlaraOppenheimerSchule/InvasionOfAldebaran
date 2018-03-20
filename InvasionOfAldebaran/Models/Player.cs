@@ -67,20 +67,10 @@ namespace InvasionOfAldebaran.Models
 			}
 		}
 
-		public Missile Fire()
-		{
-			var missileSpawn = new Coords(this.Coords.X, this.Coords.Y);
-			var missile = new Missile(Brushes.OrangeRed, missileSpawn);
-
-			return missile;
-		}
-
 		private void ResetSpeed()
 		{
 			this.Vx = 0;
 			this.Vy = 0;
 		}
 	}
-
-	
 }

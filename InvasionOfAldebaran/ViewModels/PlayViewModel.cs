@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Threading;
 using Caliburn.Micro;
+using InvasionOfAldebaran.Helper;
 using InvasionOfAldebaran.Models;
 
 namespace InvasionOfAldebaran.ViewModels
@@ -18,6 +19,7 @@ namespace InvasionOfAldebaran.ViewModels
 		private readonly FrameWindowViewModel _frameViewModel;
 		private readonly DispatcherTimer _timer = new DispatcherTimer();
 	    private SpawnHandler _spawner;
+	    private InputHandler _inputHandler;
 
 		private List<AnimatedObject> _objectsToBeDeleted;
 	    private List<AnimatedObject> _objects;
@@ -25,15 +27,47 @@ namespace InvasionOfAldebaran.ViewModels
 
 		private Question _currentQuestion;
 	    private int _currentWave;
+	    private DateTime _nextpSpawn;
+	    private bool _spawnAllowed;
+	    private bool _gameEnded;
+
+	    private int _points;
+	    private string _message;
 
 	    public Canvas Canvas { get; private set; }
+	    public Player Player { get; private set; }
+
+	    public int Points
+	    {
+		    get { return this._points; }
+		    private set
+		    {
+			    this._points = value;
+			    NotifyPropertyChanged(nameof(this.Points));
+		    }
+	    }
+
+	    public string Message
+	    {
+		    get { return this._message; }
+		    private set
+		    {
+			    this._message = value;
+			    NotifyPropertyChanged(nameof(this.Message));
+		    }
+	    }
+
 		public Question CurrentQuestion
 	    {
 		    get { return _currentQuestion; }
 		    private set
 		    {
-			    if (value == null) return;
-
+			    if (value == null)
+			    {
+					this.EndGame();
+				    this.GameEnded?.Invoke(this.Points);
+				    return;
+			    }
 			    _currentQuestion = value;
 			    this.NotifyPropertyChanged(nameof(this.CurrentQuestion));
 		    }
@@ -47,6 +81,9 @@ namespace InvasionOfAldebaran.ViewModels
 			    this.NotifyPropertyChanged(nameof(this.CurrentWave));
 		    }
 	    }
+
+		public delegate void GameEndedEventHandler(int points);
+	    public event GameEndedEventHandler GameEnded;
 
 	    public PlayViewModel( FrameWindowViewModel frameWindow)
 		{
@@ -67,9 +104,24 @@ namespace InvasionOfAldebaran.ViewModels
 			if (!this.Canvas.IsFocused)
 				this.Canvas.Focus();
 
-	        this.CurrentWave = _spawner.Update();
+			// Handles Input for the player
+	        this.ApplyInputToPlayer();
 
-            foreach (var item in _objects)
+	        if (_currentWave == maxWave)
+		        _spawnAllowed = false;
+
+	        if (_spawnAllowed && _nextpSpawn <= DateTime.Now)
+	        {
+		        _spawner.SpawnEnemies(this.CurrentQuestion);
+				_nextpSpawn = DateTime.Now.AddSeconds(10);
+		        _currentWave++;
+			}
+	        if (!_spawnAllowed)
+	        {
+		        this.CurrentQuestion = _spawner.GetQuestion();
+	        }
+
+			foreach (var item in _objects)
             {
                 item.Animate(_timer.Interval, this.Canvas);
 
@@ -89,16 +141,15 @@ namespace InvasionOfAldebaran.ViewModels
 						_objectsToBeDeleted.Add(enemy);
 						_enemies.Remove(enemy);
 						_objectsToBeDeleted.Add(missile);
-						
-						//todo: Minuspunkte!!
-						MessageBox.Show("Das war ein eigener!!");
+						this.Message = "that was a friendly ship!";
+						this.Points--;
 					}
 					else
 					{
 						_objectsToBeDeleted.Add(enemy);
 						_enemies.Remove(enemy);
 						_objectsToBeDeleted.Add(missile);
-						//todo: Pluspunkte!!
+						this.Points++;
 					}
                 }
             }
@@ -109,43 +160,63 @@ namespace InvasionOfAldebaran.ViewModels
 			_objects.ForEach(item => item.Draw(this.Canvas));
 
 			//todo: Questionwechsel funktioniert noch nicht
-	        if (_enemies.Count <= 0 && this.CurrentWave >= maxWave)
-		        this.CurrentQuestion = _spawner.StartQuestion();
+	        if (this.CurrentWave >= maxWave)
+	        {
+				this.CurrentQuestion = _spawner.GetQuestion();
+			}       
         }
+
+	    private void ApplyInputToPlayer()
+	    {
+		    if (_inputHandler.SpacePressed)
+				this._spawner.SpawnMissile(this.Player);
+
+		    if (_inputHandler.LeftPressed && !_inputHandler.RightPressed)
+			    this.Player.Move(Direction.Left);
+		    else if (_inputHandler.RightPressed && !_inputHandler.LeftPressed)
+			    this.Player.Move(Direction.Right);
+		    else if (_inputHandler.LeftPressed && _inputHandler.RightPressed)
+			    this.Player.Move(Direction.Down);
+	    }
+
+	    //todo evtl gar nicht benötigt aber dann müssen die Eventhandler woanders deabonniert werden
+	    private void EndGame()
+	    {
+		    _timer.Tick -= this.AnimateObjects;
+		    _spawner.ObjectsSpawned -= this.AddObjectEventHandler;
+
+			//todo evtl per enum ziel festlegen oder event nehmen
+		    //this.ChangeWindow();
+	    }
 
 		#region EventHandler
 
 		private void StartGameEventHandler(object sender, EventArgs e)
 	    {
+			// initialization
 		    _objects = new List<AnimatedObject>();
 			_enemies = new List<AnimatedObject>();
 		    _objectsToBeDeleted = new List<AnimatedObject>();
-		    _spawner = new SpawnHandler(this.Canvas, this.Canvas.Width, this.Canvas.Height);
-			_timer.Interval = TimeSpan.FromSeconds(0.005);
-
+		    _spawner = new SpawnHandler(this.Canvas.Width, this.Canvas.Height);
+			_inputHandler = new InputHandler(this.Canvas);
+			
 			_timer.Tick += this.AnimateObjects;
 		    _spawner.ObjectsSpawned += this.AddObjectEventHandler;
-		    _spawner.QuestionChanged += this.ChangeQuestionEventHandler;
 
-			_spawner.SetupPlayer();
-		    this.CurrentQuestion = _spawner.StartQuestion();
-		    _timer.Start();
-	    }
-		//todo evtl gar nicht benötigt aber dann müssen die Eventhandler woanders deabonniert werden
-	    private void EndGameEventHandler(object sender, EventArgs e)
-	    {
-		    _timer.Tick -= this.AnimateObjects;
-		    _spawner.ObjectsSpawned -= this.AddObjectEventHandler;
-		    _spawner.QuestionChanged -= this.ChangeQuestionEventHandler;
+			// Setup for Gameplay
+			this.Player =_spawner.SpawnPlayer();
+		    this.CurrentQuestion = _spawner.GetQuestion();
+			// First Spawn after this amount of seconds
+		    _nextpSpawn = DateTime.Now.AddSeconds(5);
+		    _currentWave = 0;
+		    _spawnAllowed = true;
+		    this.Points = 0;
+		    this.Message = "Shoot the wrong answers!";
 
-		    this.ChangeWindow();
+			_timer.Interval = TimeSpan.FromSeconds(0.005);
+			_timer.Start();
 	    }
-
-		private void ChangeQuestionEventHandler(Question question)
-	    {
-		    this.CurrentWave = 0;
-		    this.CurrentQuestion = question;
-	    }
+		
 
 	    private void AddObjectEventHandler(List<AnimatedObject> newObjects)
 	    {
