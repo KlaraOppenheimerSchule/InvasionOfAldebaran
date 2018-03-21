@@ -1,24 +1,23 @@
 ﻿using System;
-using System.Windows.Media;
-using System.Xml.Serialization;
 
 namespace InvasionOfAldebaran.Models
 {
-	public class Answer
-	{
-		public string Text { get; private set; }
-		public bool IsCorrect { get; private set; }
-		public string Alien { get; set; }
+    public class Answer
+    {
+        public string Text { get; private set; }
+        public bool IsCorrect { get; private set; }
+        public string Alien { get; set; }
+
         public Uri Source
         {
-            get { return new Uri(@"../../Resources/Images/"+ Alien +".png", UriKind.Relative); }
+            get { return new Uri(@"../../Resources/Images/" + Alien + ".png", UriKind.Relative); }
             set { this.Source = value; }
         }
 
-		public Answer(string text, bool isCorrect)
-		{
-			this.Text = text;
-			this.IsCorrect = isCorrect;
-		}
-	}
+        public Answer(string text, bool isCorrect)
+        {
+            this.Text = text;
+            this.IsCorrect = isCorrect;
+        }
+    }
 }

@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Caliburn.Micro;
+using System;
 using System.Linq;
-using Caliburn.Micro;
 
 namespace InvasionOfAldebaran.ViewModels
 {
@@ -13,27 +13,27 @@ namespace InvasionOfAldebaran.ViewModels
         {
             string[] arguments = Environment.GetCommandLineArgs();
 
-			if (arguments.Length> 2)
+            if (arguments.Length > 2)
             {
-	            this.Name = arguments[1];
+                this.Name = arguments[1];
 
-	            int.TryParse(arguments[2], out var points);
-	            this.Points = points;	
+                int.TryParse(arguments[2], out var points);
+                this.Points = points;
             }
 
-	        this.Items.Add(new MainMenuViewModel(this));
-	        this.Items.Add(new PlayViewModel(this));
-	        this.ActiveItem = this.Items.FirstOrDefault();
+            this.Items.Add(new MainMenuViewModel(this));
+            this.Items.Add(new PlayViewModel(this));
+            this.ActiveItem = this.Items.FirstOrDefault();
         }
-		
+
         public void WindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             Environment.ExitCode = this.Points;
         }
 
-        public void PointsAchieved( int points )
+        public void PointsAchieved(int points)
         {
-	        this.Points = points;
+            this.Points = points;
         }
     }
 }

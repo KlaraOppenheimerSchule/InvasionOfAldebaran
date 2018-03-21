@@ -1,10 +1,10 @@
 ﻿namespace InvasionOfAldebaran.Helper
 {
-	public enum Direction
-	{
-		Left,
-		Up,
-		Right,
-		Down
-	}
+    public enum Direction
+    {
+        Left,
+        Up,
+        Right,
+        Down
+    }
 }

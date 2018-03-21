@@ -1,7 +1,6 @@
-﻿using System.Windows;
-using Caliburn.Micro;
+﻿using Caliburn.Micro;
 using InvasionOfAldebaran.ViewModels;
-
+using System.Windows;
 
 namespace InvasionOfAldebaran
 {
@@ -9,12 +8,12 @@ namespace InvasionOfAldebaran
     {
         public AppBootstrapper()
         {
-	        this.Initialize();
+            this.Initialize();
         }
 
         protected override void OnStartup(object sender, StartupEventArgs e)
         {
-	        this.DisplayRootViewFor<FrameWindowViewModel>();
+            this.DisplayRootViewFor<FrameWindowViewModel>();
         }
     }
 }
