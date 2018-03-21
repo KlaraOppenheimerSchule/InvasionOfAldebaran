@@ -14,7 +14,7 @@ namespace InvasionOfAldebaran.ViewModels
 {
     public sealed class PlayViewModel : NotifyPropertyChangedBase, IScreenViewModel
     {
-	    private const int maxWave = 8;
+	    private const int maxWave = 4;
 
 		private readonly FrameWindowViewModel _frameViewModel;
 		private readonly DispatcherTimer _timer = new DispatcherTimer();
@@ -81,7 +81,7 @@ namespace InvasionOfAldebaran.ViewModels
 		    }
 	    }
 
-		public delegate void GameEndedEventHandler(int points);
+	    public delegate void GameEndedEventHandler(int points);
 	    public event GameEndedEventHandler GameEnded;
 
 	    public PlayViewModel( FrameWindowViewModel frameWindow)
@@ -111,19 +111,24 @@ namespace InvasionOfAldebaran.ViewModels
 
 	        if (_spawnAllowed && _nextpSpawn <= DateTime.Now)
 	        {
-		        _objects.AddRange(_spawner.SpawnEnemies(this.CurrentQuestion));
-				_nextpSpawn = DateTime.Now.AddSeconds(10);
+		        var enemies = _spawner.SpawnEnemies(this.CurrentQuestion);
+				_objects.AddRange(enemies);
+				_enemies.AddRange(enemies);
+				_nextpSpawn = DateTime.Now.AddSeconds(8);
 		        this.CurrentWave++;
 			}
-	        if (!_spawnAllowed)
+	        if (!_spawnAllowed && _enemies.Count <= 0)
 	        {
 		        this.CurrentWave = 0;
 				this.CurrentQuestion = _spawner.GetQuestion();
 				// Ends the game once the questions run out
-				if (this.CurrentQuestion == null)
-			        this.EndGame();
+		        if (this.CurrentQuestion == null)
+		        {
+			       if( MessageBox.Show("You`ve won! Now fuck off!", "Congratulations", MessageBoxButton.OKCancel).Equals(MessageBoxResult.OK))
+						this.EndGame();
+				}
 
-		        _nextpSpawn = DateTime.Now.AddSeconds(20);
+		        _nextpSpawn = DateTime.Now.AddSeconds(5);
 		        _spawnAllowed = true;
 	        }
 
@@ -134,9 +139,7 @@ namespace InvasionOfAldebaran.ViewModels
 	            if (item.ReachedEnd)
 	            {
 					_objectsToBeDeleted.Add(item);
-		            if (item.GetType() == typeof(Enemy) && item.Color.Equals(this.CurrentQuestion.CorrectAnswer.Color))
-			            this.Points++;
-		            else
+		            if (item.GetType() == typeof(Enemy) && !item.Color.Equals(this.CurrentQuestion.CorrectAnswer.Color))
 			            this.Points--;
 	            }
 					
