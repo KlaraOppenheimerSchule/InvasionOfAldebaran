@@ -21,7 +21,7 @@
 		</Grid.ColumnDefinitions>
 		<!-- Question -->
 		<TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" 
-				   HorizontalAlignment="Stretch" VerticalAlignment="Top" Text="Hier steht die Frage"
+				   HorizontalAlignment="Stretch" VerticalAlignment="Top" Text="{Binding CurrentQuestion.Text}"
 				   FontSize="22" FontWeight="Bold" Foreground="Firebrick"/>
 		
 		<!-- Canvas -->
@@ -31,13 +31,18 @@
 		<!-- Answers -->
 		<StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" CanVerticallyScroll="True"
 					Width="250" >
-			<TextBlock> Erste Antwort</TextBlock>
-			<TextBlock> Zweite Antwort</TextBlock>
-			<TextBlock> Dritte Antwort</TextBlock>
-			<TextBlock Text="{Binding CurrentWave}"></TextBlock>
+			<TextBlock Text="{Binding CurrentQuestion.Answers[0].Text}" FontSize="24" FontWeight="ExtraBold"
+					   Foreground="{Binding CurrentQuestion.Answers[0].Color}"/>
+			<TextBlock Text="{Binding CurrentQuestion.Answers[1].Text}" FontSize="24" FontWeight="ExtraBold"
+					   Foreground="{Binding CurrentQuestion.Answers[1].Color}"/>
+			<TextBlock Text="{Binding CurrentQuestion.Answers[2].Text}" FontSize="24" FontWeight="ExtraBold"
+					   Foreground="{Binding CurrentQuestion.Answers[2].Color}"/>
+			<TextBlock Text="{Binding CurrentQuestion.Answers[3].Text}" FontSize="24" FontWeight="ExtraBold"
+					   Foreground="{Binding CurrentQuestion.Answers[3].Color}"/>
 		</StackPanel>
-		<TextBlock Grid.Row="2" Grid.Column="0" Text="{Binding Message}"/>
-		<TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Points}"/>
+		<TextBlock Grid.Row="2" Grid.Column="0" Text="{Binding Message}" Foreground="Red" FontSize="20"/>
+		<TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Points}" Foreground="Red" FontSize="20"/>
+		<TextBlock Grid.Row="2" Grid.Column="1" HorizontalAlignment="Right" Foreground="Blue" FontSize="20" Text="{Binding CurrentWave}"/>
 	</Grid>
 </UserControl>
 

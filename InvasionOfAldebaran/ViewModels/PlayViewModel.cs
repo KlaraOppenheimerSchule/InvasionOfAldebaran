@@ -29,7 +29,6 @@ namespace InvasionOfAldebaran.ViewModels
 	    private int _currentWave;
 	    private DateTime _nextpSpawn;
 	    private bool _spawnAllowed;
-	    private bool _gameEnded;
 
 	    private int _points;
 	    private string _message;
@@ -43,7 +42,7 @@ namespace InvasionOfAldebaran.ViewModels
 		    private set
 		    {
 			    this._points = value;
-			    NotifyPropertyChanged(nameof(this.Points));
+			    this.NotifyPropertyChanged(nameof(this.Points));
 		    }
 	    }
 
@@ -53,7 +52,7 @@ namespace InvasionOfAldebaran.ViewModels
 		    private set
 		    {
 			    this._message = value;
-			    NotifyPropertyChanged(nameof(this.Message));
+			    this.NotifyPropertyChanged(nameof(this.Message));
 		    }
 	    }
 
@@ -107,26 +106,40 @@ namespace InvasionOfAldebaran.ViewModels
 			// Handles Input for the player
 	        this.ApplyInputToPlayer();
 
-	        if (_currentWave == maxWave)
+	        if (_currentWave >= maxWave)
 		        _spawnAllowed = false;
 
 	        if (_spawnAllowed && _nextpSpawn <= DateTime.Now)
 	        {
-		        _spawner.SpawnEnemies(this.CurrentQuestion);
+		        _objects.AddRange(_spawner.SpawnEnemies(this.CurrentQuestion));
 				_nextpSpawn = DateTime.Now.AddSeconds(10);
-		        _currentWave++;
+		        this.CurrentWave++;
 			}
 	        if (!_spawnAllowed)
 	        {
-		        this.CurrentQuestion = _spawner.GetQuestion();
+		        this.CurrentWave = 0;
+				this.CurrentQuestion = _spawner.GetQuestion();
+				// Ends the game once the questions run out
+				if (this.CurrentQuestion == null)
+			        this.EndGame();
+
+		        _nextpSpawn = DateTime.Now.AddSeconds(20);
+		        _spawnAllowed = true;
 	        }
 
 			foreach (var item in _objects)
             {
                 item.Animate(_timer.Interval, this.Canvas);
 
-				if (item.ReachedEnd)
+	            if (item.ReachedEnd)
+	            {
 					_objectsToBeDeleted.Add(item);
+		            if (item.GetType() == typeof(Enemy) && item.Color.Equals(this.CurrentQuestion.CorrectAnswer.Color))
+			            this.Points++;
+		            else
+			            this.Points--;
+	            }
+					
             }
 
             foreach (var enemy in _objects.OfType<Enemy>())
@@ -141,7 +154,7 @@ namespace InvasionOfAldebaran.ViewModels
 						_objectsToBeDeleted.Add(enemy);
 						_enemies.Remove(enemy);
 						_objectsToBeDeleted.Add(missile);
-						this.Message = "that was a friendly ship!";
+						this.Message = "That was a friendly ship!";
 						this.Points--;
 					}
 					else
@@ -149,21 +162,20 @@ namespace InvasionOfAldebaran.ViewModels
 						_objectsToBeDeleted.Add(enemy);
 						_enemies.Remove(enemy);
 						_objectsToBeDeleted.Add(missile);
+						this.Message = "Good hit!";
 						this.Points++;
 					}
                 }
             }
 			_objectsToBeDeleted.ForEach(obj => _objects.Remove(obj));
+
+			var eny = _objectsToBeDeleted.Where(obj => obj.GetType() == typeof(Enemy)).ToList();
+			eny.ForEach(obj => _enemies.Remove(obj));
+
 			_objectsToBeDeleted.Clear();
 
 	        this.Canvas.Children.Clear();
 			_objects.ForEach(item => item.Draw(this.Canvas));
-
-			//todo: Questionwechsel funktioniert noch nicht
-	        if (this.CurrentWave >= maxWave)
-	        {
-				this.CurrentQuestion = _spawner.GetQuestion();
-			}       
         }
 
 	    private void ApplyInputToPlayer()
@@ -186,7 +198,7 @@ namespace InvasionOfAldebaran.ViewModels
 		    _spawner.ObjectsSpawned -= this.AddObjectEventHandler;
 
 			//todo evtl per enum ziel festlegen oder event nehmen
-		    //this.ChangeWindow();
+		    this.ChangeWindow();
 	    }
 
 		#region EventHandler
@@ -205,10 +217,11 @@ namespace InvasionOfAldebaran.ViewModels
 
 			// Setup for Gameplay
 			this.Player =_spawner.SpawnPlayer();
+			_objects.Add(this.Player);
 		    this.CurrentQuestion = _spawner.GetQuestion();
 			// First Spawn after this amount of seconds
 		    _nextpSpawn = DateTime.Now.AddSeconds(5);
-		    _currentWave = 0;
+		    this.CurrentWave = 0;
 		    _spawnAllowed = true;
 		    this.Points = 0;
 		    this.Message = "Shoot the wrong answers!";
@@ -217,12 +230,10 @@ namespace InvasionOfAldebaran.ViewModels
 			_timer.Start();
 	    }
 		
-
 	    private void AddObjectEventHandler(List<AnimatedObject> newObjects)
 	    {
 		    if (newObjects.FirstOrDefault() is Enemy)
 		    {
-			    this.CurrentWave++;
 			    _objects.AddRange(newObjects);
 				_enemies.AddRange(newObjects.Where(obj => obj.GetType() == typeof(Enemy)));
 			}
