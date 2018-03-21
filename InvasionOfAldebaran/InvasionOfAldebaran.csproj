@@ -145,5 +145,8 @@
   <ItemGroup>
     <Resource Include="Resources\15-original.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\Soundeffects\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
