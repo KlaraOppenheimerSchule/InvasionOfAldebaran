@@ -10,18 +10,18 @@ namespace InvasionOfAldebaran.Models
 	{
 		private const double speed = 900;	
 
-		public Player(Brush color, Coords coords) : base(color, coords)
+		public Player(string imagePath, Coords coords) : base(imagePath, coords)
 		{
-			this.Frame.Points.Add(new Point(0.0, -20.0));
-			this.Frame.Points.Add(new Point(10.0, 14.0));
-			this.Frame.Points.Add(new Point(-10.0, 14.0));
-		}
+            //this.Image.Points.Add(new Point(0.0, -20.0));
+            //this.Image.Points.Add(new Point(10.0, 14.0));
+            //this.Image.Points.Add(new Point(-10.0, 14.0));
+        }
 
 		public override void Draw(Canvas canvas)
 		{
-			canvas.Children.Add(this.Frame);
-			Canvas.SetLeft(this.Frame, this.Coords.X);
-			Canvas.SetTop(this.Frame, this.Coords.Y);
+			canvas.Children.Add(this.Image);
+			Canvas.SetLeft(this.Image, this.Coords.X);
+			Canvas.SetTop(this.Image, this.Coords.Y);
 			this.ResetSpeed();
 		}
 
@@ -30,11 +30,11 @@ namespace InvasionOfAldebaran.Models
 	        this.Coords.X += this.Vx * interval.TotalSeconds;
 	        this.Coords.Y += this.Vy * interval.TotalSeconds;
 
-            if (this.Coords.X > canvas.ActualWidth)
+            if ((this.Coords.X + (Image.ActualWidth)) > canvas.ActualWidth)
             {
-	            this.Coords.X = canvas.ActualWidth;
+	            this.Coords.X = canvas.ActualWidth - (Image.ActualWidth);
             }
-            else if (this.Coords.X < 0)
+            else if ((this.Coords.X) < 0)
             {
 	            this.Coords.X = 0;
             }

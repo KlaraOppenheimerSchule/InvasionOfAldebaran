@@ -26,7 +26,7 @@ namespace InvasionOfAldebaran.Models
 		{
 			_canvasWidth = canvasWidth;
 			_canvasHeight = canvasHeight;
-			_playerSpawn = new Coords(_canvasWidth / 2, _canvasHeight - 50);
+			_playerSpawn = new Coords(_canvasWidth / 2, _canvasHeight - 65);
 			_spawnPoints = new List<Coords>();
 
 			_missiles = new List<AnimatedObject>();
@@ -52,26 +52,29 @@ namespace InvasionOfAldebaran.Models
 		{
 			var enemies = new List<AnimatedObject>();
 
-			List<Brush> colors = question.Answers.Select(answer => answer.Color).ToList();
+			List<string> aliens = question.Answers.Select(answer => answer.Alien).ToList();
 			List<Coords> spawns = _spawnPoints.Select(point => new Coords(point.X, point.Y)).ToList();
 
 			for (int i = 0; i < 4; i++)
 			{
-				int rColor = _r.Next(0, 3 - i);
 				int rSpawns = _r.Next(0, 3 - i);
+                int alienRandomizer = _r.Next(0,3 - i );
 				int rSpeed = _r.Next(0, 3);
-				
-				enemies.Add(new Enemy(colors[rColor], spawns[rSpawns], (Speed)rSpeed , RandomBool.Get()));
+                string alien = aliens[alienRandomizer];
+                string imagePath = @"../../Resources/Images/" + alien +".png";
 
-				colors.RemoveAt(rColor);
+                enemies.Add(new Enemy(alien, imagePath, spawns[rSpawns], (Speed)rSpeed , RandomBool.Get()));
+
+				aliens.RemoveAt(alienRandomizer);
 				spawns.RemoveAt(rSpawns);
 			}
 			return enemies;
 		}
 		
 		public Player SpawnPlayer()
-		{
-			return new Player(Brushes.Blue, _playerSpawn);
+        {
+            string imagePath = @"../../Resources/Images/playership.png";
+            return new Player( imagePath, _playerSpawn);
 		}
 
 		public Question GetQuestion()
@@ -86,13 +89,17 @@ namespace InvasionOfAldebaran.Models
 				return null;
 		}
 
-		public void SpawnMissile(Player player)
+		public void SpawnMissile(Player player, MediaPlayer soundEffect)
 		{
 			_missiles.Clear();
 			if (_lastMissile.AddSeconds(0.3) < DateTime.Now)
 			{
-				var missileSpawn = new Coords(player.Coords.X, player.Coords.Y);
-				var missile = new Missile(Brushes.OrangeRed, missileSpawn);
+                string imagePath = @"../../Resources/Images/laser.png";
+                Uri uri = new Uri(@"../../Resources/Media/Soundeffects/laser.wav", UriKind.Relative);
+                soundEffect.Open(uri);
+                soundEffect.Play();
+                var missileSpawn = new Coords((player.Coords.X + (player.Image.ActualWidth / 2)), player.Coords.Y);
+				var missile = new Missile( imagePath, missileSpawn);
 
 				_missiles.Add(missile);
 				_lastMissile = DateTime.Now;
@@ -108,7 +115,7 @@ namespace InvasionOfAldebaran.Models
 					new Answer("ja", true),
 					new Answer("nein", false),
 					new Answer("evtl", false),
-					new Answer("hllö", false),
+					new Answer("ICECREAM", false),
 					Difficulty.Easy),
 
 				new Question("schlau?",

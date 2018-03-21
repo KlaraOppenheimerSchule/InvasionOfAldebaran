@@ -8,7 +8,12 @@ namespace InvasionOfAldebaran.Models
 	{
 		public string Text { get; private set; }
 		public bool IsCorrect { get; private set; }
-		public Brush Color { get; set; }
+		public string Alien { get; set; }
+        public Uri Source
+        {
+            get { return new Uri(@"../../Resources/Images/"+ Alien +".png", UriKind.Relative); }
+            set { this.Source = value; }
+        }
 
 		public Answer(string text, bool isCorrect)
 		{

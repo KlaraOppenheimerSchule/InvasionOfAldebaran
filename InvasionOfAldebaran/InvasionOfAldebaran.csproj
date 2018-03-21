@@ -145,8 +145,28 @@
   <ItemGroup>
     <Resource Include="Resources\15-original.png" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Resources\Soundeffects\" />
+    <Resource Include="Resources\Images\alien5.png" />
+    <Resource Include="Resources\Images\alien6.png" />
+    <Resource Include="Resources\Images\playership.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\alien2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\alien1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\alien3.png" />
+    <Resource Include="Resources\Images\alien4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\background.JPG" />
+    <Resource Include="Resources\Images\laser.png" />
+    <Content Include="Resources\Media\Soundeffects\explosion.wav" />
+    <Content Include="Resources\Media\Soundeffects\hit.wav" />
+    <Content Include="Resources\Media\Soundeffects\laser.wav" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

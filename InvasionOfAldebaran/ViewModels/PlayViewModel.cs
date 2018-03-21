@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using Caliburn.Micro;
 using InvasionOfAldebaran.Helper;
@@ -14,14 +15,15 @@ namespace InvasionOfAldebaran.ViewModels
 {
     public sealed class PlayViewModel : NotifyPropertyChangedBase, IScreenViewModel
     {
-	    private const int maxWave = 8;
+	    private const int maxWave = 4;
 
 		private readonly FrameWindowViewModel _frameViewModel;
 		private readonly DispatcherTimer _timer = new DispatcherTimer();
 	    private SpawnHandler _spawner;
 	    private InputHandler _inputHandler;
+        private MediaPlayer _soundEffect;
 
-		private List<AnimatedObject> _objectsToBeDeleted;
+        private List<AnimatedObject> _objectsToBeDeleted;
 	    private List<AnimatedObject> _objects;
 	    private List<AnimatedObject> _enemies;
 
@@ -32,10 +34,9 @@ namespace InvasionOfAldebaran.ViewModels
 
 	    private int _points;
 	    private string _message;
-
-	    public Canvas Canvas { get; private set; }
+        #region Properties
+        public Canvas Canvas { get; private set; }
 	    public Player Player { get; private set; }
-
 	    public int Points
 	    {
 		    get { return this._points; }
@@ -80,25 +81,32 @@ namespace InvasionOfAldebaran.ViewModels
 			    this.NotifyPropertyChanged(nameof(this.CurrentWave));
 		    }
 	    }
+        #endregion Properties
 
-		public delegate void GameEndedEventHandler(int points);
+        public delegate void GameEndedEventHandler(int points);
 	    public event GameEndedEventHandler GameEnded;
+        
 
-	    public PlayViewModel( FrameWindowViewModel frameWindow)
-		{
-			_frameViewModel = frameWindow;
+        public PlayViewModel(FrameWindowViewModel frameWindow)
+        {
+            _soundEffect = new MediaPlayer();
+            _frameViewModel = frameWindow;
+            ImageBrush backgroundImage = new ImageBrush();
+            string imagePath = @"../../Resources/Images/background.jpg";
+            var imageBitmap = new BitmapImage(new Uri(imagePath, UriKind.Relative));
+            backgroundImage.ImageSource = imageBitmap;
 
-			this.Canvas = new Canvas()
+            this.Canvas = new Canvas()
             {
                 Height = 700,
                 Width = 500,
                 Focusable = true,
-                Background = Brushes.DarkGray,
+                Background = backgroundImage
             };
-			this.Activated += this.StartGameEventHandler;
-		}
+            this.Activated += this.StartGameEventHandler;
+        }
 
-		private void AnimateObjects(object sender, EventArgs e)
+        private void AnimateObjects(object sender, EventArgs e)
         {
 			if (!this.Canvas.IsFocused)
 				this.Canvas.Focus();
@@ -134,7 +142,7 @@ namespace InvasionOfAldebaran.ViewModels
 	            if (item.ReachedEnd)
 	            {
 					_objectsToBeDeleted.Add(item);
-		            if (item.GetType() == typeof(Enemy) && item.Color.Equals(this.CurrentQuestion.CorrectAnswer.Color))
+		            if (item.GetType() == typeof(Enemy) && item.Image.Equals(this.CurrentQuestion.CorrectAnswer.Alien))
 			            this.Points++;
 		            else
 			            this.Points--;
@@ -146,12 +154,15 @@ namespace InvasionOfAldebaran.ViewModels
             {
                 foreach (var missile in _objects.OfType<Missile>())
                 {
-	                if (!enemy.ContainsPoint(missile.Coords.X, missile.Coords.Y))
+	                if (!enemy.IntersectsWith(missile.Coords.X, missile.Coords.Y, enemy.Image, missile.Image))
 						continue;
 
-					if (enemy.Color.Equals(this.CurrentQuestion.CorrectAnswer.Color))
+					if (!enemy.AlienName.Equals(this.CurrentQuestion.CorrectAnswer.Alien))
 					{
-						_objectsToBeDeleted.Add(enemy);
+                        Uri uri = new Uri(@"../../Resources/Media/Soundeffects/explosion.wav", UriKind.Relative);   
+                        _soundEffect.Open(uri);
+                        _soundEffect.Play();
+                        _objectsToBeDeleted.Add(enemy);
 						_enemies.Remove(enemy);
 						_objectsToBeDeleted.Add(missile);
 						this.Message = "That was a friendly ship!";
@@ -159,7 +170,10 @@ namespace InvasionOfAldebaran.ViewModels
 					}
 					else
 					{
-						_objectsToBeDeleted.Add(enemy);
+                        Uri uri = new Uri(@"../../Resources/Media/Soundeffects/hit.wav", UriKind.Relative);
+                        _soundEffect.Open(uri);
+                        _soundEffect.Play();
+                        _objectsToBeDeleted.Add(enemy);
 						_enemies.Remove(enemy);
 						_objectsToBeDeleted.Add(missile);
 						this.Message = "Good hit!";
@@ -181,7 +195,7 @@ namespace InvasionOfAldebaran.ViewModels
 	    private void ApplyInputToPlayer()
 	    {
 		    if (_inputHandler.SpacePressed)
-				this._spawner.SpawnMissile(this.Player);
+				this._spawner.SpawnMissile(this.Player, this._soundEffect);
 
 		    if (_inputHandler.LeftPressed && !_inputHandler.RightPressed)
 			    this.Player.Move(Direction.Left);

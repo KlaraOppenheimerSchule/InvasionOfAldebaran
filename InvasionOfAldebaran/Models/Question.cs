@@ -42,8 +42,7 @@ namespace InvasionOfAldebaran.Models
 			if(answers == null)
 				throw new ArgumentNullException($@"The provided answerlist {answers} was null");
 
-			var colors = new List<Brush> { Brushes.Green, Brushes.DarkRed, Brushes.DarkOrange, Brushes.DeepPink };
-			
+            var aliens = new List<string> { "alien1", "alien2", "alien3", "alien4" };			
 			var correctAnswerHandled = false;
 
 			for (int i = 0; i < answers.Count; i++)
@@ -59,8 +58,8 @@ namespace InvasionOfAldebaran.Models
 				}
 
 				var r = _random.Next(0, 3 - i);
-				answers[i].Color = colors[r];
-				colors.RemoveAt(r);
+				answers[i].Alien = aliens[r];
+				aliens.RemoveAt(r);
 
 				this.Answers.Add(answers[i]);
 			}

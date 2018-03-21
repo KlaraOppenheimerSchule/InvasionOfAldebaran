@@ -11,20 +11,23 @@ namespace InvasionOfAldebaran.Models
 	    private readonly double _initialPosX;
 	    private bool _movingLeft;
 
+
 	    private const double slowSpeed = 60;
 	    private const double mediumSpeed = 140;
 	    private const double fastSpeed = 220;
 
 		public bool MovesSideways { get; private set; }
+        public string AlienName { get; private set; }
 		
-        public Enemy(Brush color, Coords coords, Speed speed, bool movesSideways) : base(color, coords)
+        public Enemy(string alien, string imagePath, Coords coords, Speed speed, bool movesSideways) : base( imagePath, coords)
 	    {
-		    this.Frame.Points.Add(new Point(-10.0, -20.0));
-		    this.Frame.Points.Add(new Point(10.0, -20.0));
-		    this.Frame.Points.Add(new Point(10.0, 14.0));
-		    this.Frame.Points.Add(new Point(-10.0, 14.0));
+            AlienName = alien;
+            //this.Image.Points.Add(new Point(-10.0, -20.0));
+            //this.Image.Points.Add(new Point(10.0, -20.0));
+            //this.Image.Points.Add(new Point(10.0, 14.0));
+            //this.Image.Points.Add(new Point(-10.0, 14.0));
 
-		    switch (speed)
+            switch (speed)
 		    {
 				case Speed.Fast:
 					this.Vy = fastSpeed;
@@ -48,9 +51,9 @@ namespace InvasionOfAldebaran.Models
 			{
 				this.MoveSideways();
 			}
-            canvas.Children.Add(this.Frame);
-            Canvas.SetLeft(this.Frame, this.Coords.X);
-            Canvas.SetTop(this.Frame, this.Coords.Y);
+            canvas.Children.Add(this.Image);
+            Canvas.SetLeft(this.Image, this.Coords.X);
+            Canvas.SetTop(this.Image, this.Coords.Y);
         }
 
 	    private void MoveSideways()
