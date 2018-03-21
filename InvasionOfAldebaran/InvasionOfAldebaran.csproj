@@ -147,7 +147,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Resource Include="Resources\Images\alien5.png" />
+    <Resource Include="Resources\Images\alien4.png" />
     <Resource Include="Resources\Images\alien6.png" />
     <Resource Include="Resources\Images\playership.png" />
   </ItemGroup>
@@ -158,8 +158,8 @@
     <Resource Include="Resources\Images\alien1.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resources\Images\COLORDOESNTFITFORPRINCESS.png" />
     <Resource Include="Resources\Images\alien3.png" />
-    <Resource Include="Resources\Images\alien4.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\background.JPG" />
