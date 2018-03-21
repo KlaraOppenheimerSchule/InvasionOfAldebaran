@@ -157,7 +157,7 @@ namespace InvasionOfAldebaran.ViewModels
 	                if (!enemy.IntersectsWith(missile.Coords.X, missile.Coords.Y, enemy.Image, missile.Image))
 						continue;
 
-					if (!enemy.AlienName.Equals(this.CurrentQuestion.CorrectAnswer.Alien))
+					if (enemy.AlienName.Equals(this.CurrentQuestion.CorrectAnswer.Alien))
 					{
                         Uri uri = new Uri(@"../../Resources/Media/Soundeffects/explosion.wav", UriKind.Relative);   
                         _soundEffect.Open(uri);
