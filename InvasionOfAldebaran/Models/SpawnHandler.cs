@@ -77,21 +77,21 @@ namespace InvasionOfAldebaran.Models
             return new Player(imagePath, _playerSpawn);
         }
 
-		/// <summary>
-		/// Returns the next question from the questions array, null if there a no questions left.
-		/// </summary>
-		/// <returns></returns>
-		public Question GetQuestion()
-		{
-			if (_questions.Count > 0)
-			{
-				var question = _questions.FirstOrDefault();
-				_questions.Remove(question);
-				return question;
-			}
-			else
-				return null;
-		}
+        /// <summary>
+        /// Returns the next question from the questions array, null if there a no questions left.
+        /// </summary>
+        /// <returns></returns>
+        public Question GetQuestion()
+        {
+            if (_questions.Count > 0)
+            {
+                var question = _questions.FirstOrDefault();
+                _questions.Remove(question);
+                return question;
+            }
+            else
+                return null;
+        }
 
         public void SpawnMissile(Player player, MediaPlayer soundEffect)
         {
@@ -111,39 +111,39 @@ namespace InvasionOfAldebaran.Models
             }
         }
 
-		private List<Question> MakeList()
-		{
-			var list = new List<Question>()
-			{
-				new Question("Wie viel Bits hat ein Byte?",
-					new Answer("2", false),
-					new Answer("4", false),
-					new Answer("8", true),
-					new Answer("16", false),
-					Difficulty.Easy),
+        private List<Question> MakeList()
+        {
+            var list = new List<Question>()
+            {
+                new Question("Wie viel Bits hat ein Byte?",
+                    new Answer("2", false),
+                    new Answer("4", false),
+                    new Answer("8", true),
+                    new Answer("16", false),
+                    Difficulty.Easy),
 
-				new Question("Wie lang ist eine IPv4 Adresse?",
-					new Answer("16 Bit", false),
-					new Answer("32 Bit", true),
-					new Answer("64 Bit", false),
-					new Answer("128 Bit", false),
-					Difficulty.Easy),
+                new Question("Wie lang ist eine IPv4 Adresse?",
+                    new Answer("16 Bit", false),
+                    new Answer("32 Bit", true),
+                    new Answer("64 Bit", false),
+                    new Answer("128 Bit", false),
+                    Difficulty.Easy),
 
-				new Question("Wie viele Sitze hat der Bundesrat?",
-					new Answer("69", true),
-					new Answer("72", false),
-					new Answer("98", false),
-					new Answer("112", false),
-					Difficulty.Easy),
+                new Question("Wie viele Sitze hat der Bundesrat?",
+                    new Answer("69", true),
+                    new Answer("72", false),
+                    new Answer("98", false),
+                    new Answer("112", false),
+                    Difficulty.Easy),
 
-				new Question("Worüber kann man einen Monitor am PC anschließen?",
-					new Answer("USB", false),
-					new Answer("DCMI : ^)", false),
-					new Answer("HSDPA", false),
-					new Answer("DisplayPort", true),
-					Difficulty.Easy)
-			};
-			return list;
-		}
-	}
+                new Question("Worüber kann man einen Monitor am PC anschließen?",
+                    new Answer("USB", false),
+                    new Answer("DCMI : ^)", false),
+                    new Answer("HSDPA", false),
+                    new Answer("DisplayPort", true),
+                    Difficulty.Easy)
+            };
+            return list;
+        }
+    }
 }

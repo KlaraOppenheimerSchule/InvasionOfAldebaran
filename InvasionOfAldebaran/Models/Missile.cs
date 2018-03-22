@@ -9,11 +9,6 @@ namespace InvasionOfAldebaran.Models
 
         public Missile(string imagePath, Coords player) : base(imagePath, player)
         {
-            //this.Image.Points.Add(new Point(-2.5, -5.5));
-            //this.Image.Points.Add(new Point(2.5, -5.5));
-            //this.Image.Points.Add(new Point(2.5, 3.5));
-            //this.Image.Points.Add(new Point(-2.5, 3.5));
-
             this.Vy = speed;
         }
 

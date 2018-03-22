@@ -34,12 +34,12 @@ namespace InvasionOfAldebaran.ViewModels
         private int _points;
         private string _message;
 
-	    private Uri uri = new Uri(@"../../Resources/Media/Soundeffects/explosion.wav", UriKind.Relative);
-	    private Uri uriEny = new Uri(@"../../Resources/Media/Soundeffects/hit.wav", UriKind.Relative);
+        private Uri uri = new Uri(@"../../Resources/Media/Soundeffects/explosion.wav", UriKind.Relative);
+        private Uri uriEny = new Uri(@"../../Resources/Media/Soundeffects/hit.wav", UriKind.Relative);
 
-		#region Properties
+        #region Property Methods
 
-		public Canvas Canvas { get; private set; }
+        public Canvas Canvas { get; private set; }
         public Player Player { get; private set; }
 
         public int Points
@@ -87,7 +87,7 @@ namespace InvasionOfAldebaran.ViewModels
             }
         }
 
-        #endregion Properties
+        #endregion Property Methods
 
         public delegate void GameEndedEventHandler(int points);
 
@@ -123,28 +123,28 @@ namespace InvasionOfAldebaran.ViewModels
             if (_currentWave >= maxWave)
                 _spawnAllowed = false;
 
-	        if (_spawnAllowed && _nextpSpawn <= DateTime.Now)
-	        {
-		        var enemies = _spawner.SpawnEnemies(this.CurrentQuestion);
-				_objects.AddRange(enemies);
-				_enemies.AddRange(enemies);
-				_nextpSpawn = DateTime.Now.AddSeconds(8);
-		        this.CurrentWave++;
-			}
-	        if (!_spawnAllowed && _enemies.Count <= 0)
-	        {
-		        this.CurrentWave = 0;
-				this.CurrentQuestion = _spawner.GetQuestion();
-				// Ends the game once the questions run out
-		        if (this.CurrentQuestion == null)
-		        {
-			       if( MessageBox.Show("You`ve won! Now fuck off!", "Congratulations", MessageBoxButton.OKCancel).Equals(MessageBoxResult.OK))
-						this.EndGame();
-				}
+            if (_spawnAllowed && _nextpSpawn <= DateTime.Now)
+            {
+                var enemies = _spawner.SpawnEnemies(this.CurrentQuestion);
+                _objects.AddRange(enemies);
+                _enemies.AddRange(enemies);
+                _nextpSpawn = DateTime.Now.AddSeconds(8);
+                this.CurrentWave++;
+            }
+            if (!_spawnAllowed && _enemies.Count <= 0)
+            {
+                this.CurrentWave = 0;
+                this.CurrentQuestion = _spawner.GetQuestion();
+                //End game
+                if (this.CurrentQuestion == null)
+                {
+                    if (MessageBox.Show("You've defeated the Aldebarans!", "Congratulations", MessageBoxButton.OKCancel).Equals(MessageBoxResult.OK))
+                        this.EndGame();
+                }
 
-		        _nextpSpawn = DateTime.Now.AddSeconds(5);
-		        _spawnAllowed = true;
-	        }
+                _nextpSpawn = DateTime.Now.AddSeconds(5);
+                _spawnAllowed = true;
+            }
 
             foreach (var item in _objects)
             {
@@ -154,11 +154,11 @@ namespace InvasionOfAldebaran.ViewModels
                 {
                     _objectsToBeDeleted.Add(item);
 
-					if (item.GetType() != typeof(Enemy)) continue;
+                    if (item.GetType() != typeof(Enemy)) continue;
 
-					var ship = item as Enemy;
-	                if (ship.GetType() == typeof(Enemy) && !ship.AlienName.Equals(this.CurrentQuestion.CorrectAnswer.Alien))
-		                this.Points--;
+                    var alienShip = item as Enemy;
+                    if (alienShip.GetType() == typeof(Enemy) && !alienShip.AlienName.Equals(this.CurrentQuestion.CorrectAnswer.Alien))
+                        this.Points--;
                 }
             }
 

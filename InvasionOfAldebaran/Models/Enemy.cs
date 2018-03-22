@@ -19,10 +19,6 @@ namespace InvasionOfAldebaran.Models
         public Enemy(string alien, string imagePath, Coords coords, Speed speed, bool movesSideways) : base(imagePath, coords)
         {
             AlienName = alien;
-            //this.Image.Points.Add(new Point(-10.0, -20.0));
-            //this.Image.Points.Add(new Point(10.0, -20.0));
-            //this.Image.Points.Add(new Point(10.0, 14.0));
-            //this.Image.Points.Add(new Point(-10.0, 14.0));
 
             switch (speed)
             {

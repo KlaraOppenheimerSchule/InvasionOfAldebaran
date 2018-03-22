@@ -17,16 +17,6 @@ namespace InvasionOfAldebaran.Models
         public Image Image { get; protected set; }
         public Uri ImagePath { get; protected set; }
 
-        //public Brush Color
-        //{
-        //	get { return _color; }
-        //	protected set
-        //	{
-        //		_color = value ?? Brushes.AntiqueWhite;
-        //		this.Image.Fill = _color;
-        //	}
-        //}
-
         protected AnimatedObject(string ImagePath, Coords coords)
         {
             var imageBitmap = new BitmapImage(new Uri(ImagePath, UriKind.Relative));
@@ -34,7 +24,6 @@ namespace InvasionOfAldebaran.Models
             this.Image.Source = imageBitmap;
             this.Image.Width = imageBitmap.Width;
             this.Image.Height = imageBitmap.Height;
-            //this.Color = color;
             this.Coords = coords;
         }
 
