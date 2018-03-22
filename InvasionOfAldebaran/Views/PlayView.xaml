@@ -45,7 +45,7 @@
 					<Image Grid.Column="0" Grid.Row="0" Source="{Binding CurrentQuestion.Answers[0].Source}" Margin="5 0"
 						   HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="Fant" Stretch="Fill" Width="30" Height="30"/>
 					<TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding CurrentQuestion.Answers[0].Text}" FontSize="24" 
-							   FontWeight="ExtraBold" HorizontalAlignment="Left" Foreground="DodgerBlue"/>
+							   FontWeight="Bold" HorizontalAlignment="Left" Foreground="DodgerBlue"/>
 				</Grid>
 			</ItemsControl>
 			<Border Visibility="Visible" BorderBrush="Black" BorderThickness="1" Margin="0 10 0 10"/>
@@ -58,7 +58,7 @@
 					<Image Grid.Column="0" Grid.Row="0" Source="{Binding CurrentQuestion.Answers[1].Source}" Margin="5 0"
 			               HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="Fant" Stretch="Fill" Width="30" Height="30"/>
 					<TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding CurrentQuestion.Answers[1].Text}" FontSize="24" 
-			                   FontWeight="ExtraBold" HorizontalAlignment="Left" Foreground="DodgerBlue"/>
+			                   FontWeight="Bold" HorizontalAlignment="Left" Foreground="DodgerBlue"/>
 				</Grid>
 			</ItemsControl>
 			<Border Visibility="Visible" BorderBrush="Black" BorderThickness="1" Margin="0 10 0 10"/>
@@ -71,7 +71,7 @@
 					<Image Grid.Column="0" Grid.Row="0" Source="{Binding CurrentQuestion.Answers[2].Source}" Margin="5 0"
 					       HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="Fant" Stretch="Fill" Width="30" Height="30"/>
 					<TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding CurrentQuestion.Answers[2].Text}" FontSize="24" 
-					           FontWeight="ExtraBold" HorizontalAlignment="Left" Foreground="DodgerBlue"/>
+					           FontWeight="Bold" HorizontalAlignment="Left" Foreground="DodgerBlue"/>
 				</Grid>
 			</ItemsControl>
 			<Border Visibility="Visible" BorderBrush="Black" BorderThickness="1" Margin="0 10 0 10"/>
@@ -84,7 +84,7 @@
 					<Image Grid.Column="0" Grid.Row="0" Source="{Binding CurrentQuestion.Answers[3].Source}" Margin="5 0"
 			               HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="Fant" Stretch="Fill" Width="30" Height="30"/>
 					<TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding CurrentQuestion.Answers[3].Text}" FontSize="24" 
-			                   FontWeight="ExtraBold" HorizontalAlignment="Left" Foreground="DodgerBlue"/>
+			                   FontWeight="Bold" HorizontalAlignment="Left" Foreground="DodgerBlue"/>
 				</Grid>
 			</ItemsControl>
 		</StackPanel>
