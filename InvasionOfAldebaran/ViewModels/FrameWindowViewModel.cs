@@ -30,7 +30,7 @@ namespace InvasionOfAldebaran.ViewModels
         {
             Environment.ExitCode = this.Points;
         }
-
+		//Todo: Das sollten wir besser per Event machen
         public void PointsAchieved(int points)
         {
             this.Points = points;

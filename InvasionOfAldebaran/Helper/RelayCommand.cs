@@ -5,8 +5,8 @@ namespace InvasionOfAldebaran.Helper
 {
     public class RelayCommand : ICommand
     {
-        private Action _action;
-        private Action<string> _parameterAction;
+        private readonly Action _action;
+        private readonly Action<string> _parameterAction;
 
         public RelayCommand(Action action)
         {

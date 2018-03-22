@@ -26,9 +26,9 @@ namespace InvasionOfAldebaran.Models
             this.Coords.X += this.Vx * interval.TotalSeconds;
             this.Coords.Y += this.Vy * interval.TotalSeconds;
 
-            if ((this.Coords.X + (Image.ActualWidth)) > canvas.ActualWidth)
+            if ((this.Coords.X + (this.Image.ActualWidth)) > canvas.ActualWidth)
             {
-                this.Coords.X = canvas.ActualWidth - (Image.ActualWidth);
+                this.Coords.X = canvas.ActualWidth - (this.Image.ActualWidth);
             }
             else if ((this.Coords.X) < 0)
             {

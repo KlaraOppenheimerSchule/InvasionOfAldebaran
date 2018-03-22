@@ -1,4 +1,5 @@
 ﻿using System;
+using InvasionOfAldebaran.Annotations;
 
 namespace InvasionOfAldebaran.Models
 {
@@ -8,13 +9,14 @@ namespace InvasionOfAldebaran.Models
         public bool IsCorrect { get; private set; }
         public string Alien { get; set; }
 
-        public Uri Source
-        {
-            get { return new Uri(@"../../Resources/Images/" + Alien + ".png", UriKind.Relative); }
-            set { this.Source = value; }
-        }
+	    [NotNull]
+	    public Uri Source
+	    {
+		    get => new Uri(@"../../Resources/Images/" + Alien + ".png", UriKind.Relative);
+		    set => this.Source = value ?? throw new ArgumentNullException(nameof(value));
+	    }
 
-        public Answer(string text, bool isCorrect)
+	    public Answer(string text, bool isCorrect)
         {
             this.Text = text;
             this.IsCorrect = isCorrect;

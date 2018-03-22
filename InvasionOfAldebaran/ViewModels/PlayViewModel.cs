@@ -19,6 +19,8 @@ namespace InvasionOfAldebaran.ViewModels
         private readonly FrameWindowViewModel _frameViewModel;
         private readonly DispatcherTimer _timer = new DispatcherTimer();
 	    private readonly MediaPlayer _soundEffect;
+	    private readonly Uri _uri = new Uri(@"../../Resources/Media/Soundeffects/explosion.wav", UriKind.Relative);
+	    private readonly Uri _uriEny = new Uri(@"../../Resources/Media/Soundeffects/hit.wav", UriKind.Relative);
 		private SpawnHandler _spawner;
         private InputHandler _inputHandler;
 
@@ -33,9 +35,6 @@ namespace InvasionOfAldebaran.ViewModels
 
         private int _points;
         private string _message;
-
-	    private Uri uri = new Uri(@"../../Resources/Media/Soundeffects/explosion.wav", UriKind.Relative);
-	    private Uri uriEny = new Uri(@"../../Resources/Media/Soundeffects/hit.wav", UriKind.Relative);
 
 		#region Properties
 
@@ -170,7 +169,7 @@ namespace InvasionOfAldebaran.ViewModels
 
                     if (enemy.AlienName.Equals(this.CurrentQuestion.CorrectAnswer.Alien))
                     {
-                        _soundEffect.Open(uri);
+                        _soundEffect.Open(_uri);
                         _soundEffect.Play();
                         _objectsToBeDeleted.Add(enemy);
                         _enemies.Remove(enemy);
@@ -180,7 +179,7 @@ namespace InvasionOfAldebaran.ViewModels
                     }
                     else
                     {
-                        _soundEffect.Open(uriEny);
+                        _soundEffect.Open(_uriEny);
                         _soundEffect.Play();
                         _objectsToBeDeleted.Add(enemy);
                         _enemies.Remove(enemy);
