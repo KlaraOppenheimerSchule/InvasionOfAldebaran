@@ -18,9 +18,11 @@ namespace InvasionOfAldebaran.ViewModels
 
         private readonly FrameWindowViewModel _frameViewModel;
         private readonly DispatcherTimer _timer = new DispatcherTimer();
-        private SpawnHandler _spawner;
+	    private readonly MediaPlayer _soundEffect;
+	    private readonly Uri _uri = new Uri(@"../../Resources/Media/Soundeffects/explosion.wav", UriKind.Relative);
+	    private readonly Uri _uriEny = new Uri(@"../../Resources/Media/Soundeffects/hit.wav", UriKind.Relative);
+		private SpawnHandler _spawner;
         private InputHandler _inputHandler;
-        private MediaPlayer _soundEffect;
 
         private List<AnimatedObject> _objectsToBeDeleted;
         private List<AnimatedObject> _objects;
@@ -34,12 +36,9 @@ namespace InvasionOfAldebaran.ViewModels
         private int _points;
         private string _message;
 
-        private Uri uri = new Uri(@"../../Resources/Media/Soundeffects/explosion.wav", UriKind.Relative);
-        private Uri uriEny = new Uri(@"../../Resources/Media/Soundeffects/hit.wav", UriKind.Relative);
+		#region Properties
 
-        #region Property Methods
-
-        public Canvas Canvas { get; private set; }
+		public Canvas Canvas { get; private set; }
         public Player Player { get; private set; }
 
         public int Points
@@ -70,7 +69,7 @@ namespace InvasionOfAldebaran.ViewModels
                 if (value == null)
                 {
                     this.GameEnded?.Invoke(this.Points);
-                    return;
+	                _currentQuestion = value;
                 }
                 _currentQuestion = value;
                 this.NotifyPropertyChanged(nameof(this.CurrentQuestion));
@@ -87,10 +86,9 @@ namespace InvasionOfAldebaran.ViewModels
             }
         }
 
-        #endregion Property Methods
+        #endregion Properties
 
         public delegate void GameEndedEventHandler(int points);
-
         public event GameEndedEventHandler GameEnded;
 
         public PlayViewModel(FrameWindowViewModel frameWindow)
@@ -105,7 +103,7 @@ namespace InvasionOfAldebaran.ViewModels
             this.Canvas = new Canvas()
             {
                 Height = 700,
-                Width = 500,
+                Width = 600,
                 Focusable = true,
                 Background = backgroundImage
             };
@@ -123,28 +121,28 @@ namespace InvasionOfAldebaran.ViewModels
             if (_currentWave >= maxWave)
                 _spawnAllowed = false;
 
-            if (_spawnAllowed && _nextpSpawn <= DateTime.Now)
-            {
-                var enemies = _spawner.SpawnEnemies(this.CurrentQuestion);
-                _objects.AddRange(enemies);
-                _enemies.AddRange(enemies);
-                _nextpSpawn = DateTime.Now.AddSeconds(8);
-                this.CurrentWave++;
-            }
-            if (!_spawnAllowed && _enemies.Count <= 0)
-            {
-                this.CurrentWave = 0;
-                this.CurrentQuestion = _spawner.GetQuestion();
-                //End game
-                if (this.CurrentQuestion == null)
-                {
-                    if (MessageBox.Show("You've defeated the Aldebarans!", "Congratulations", MessageBoxButton.OKCancel).Equals(MessageBoxResult.OK))
-                        this.EndGame();
-                }
-
-                _nextpSpawn = DateTime.Now.AddSeconds(5);
-                _spawnAllowed = true;
-            }
+	        if (_spawnAllowed && _nextpSpawn <= DateTime.Now)
+	        {
+		        var enemies = _spawner.SpawnEnemies(this.CurrentQuestion);
+				_objects.AddRange(enemies);
+				_enemies.AddRange(enemies);
+				_nextpSpawn = DateTime.Now.AddSeconds(8);
+		        this.CurrentWave++;
+			}
+	        if (!_spawnAllowed && _enemies.Count <= 0)
+	        {
+		        this.CurrentWave = 0;
+				this.CurrentQuestion = _spawner.GetQuestion();
+				// Ends the game once the questions run out
+		        if (this.CurrentQuestion == null)
+		        {
+			        var result = MessageBox.Show("You`ve won! Now fuck off!", "Congratulations", MessageBoxButton.OK);
+					if (result.Equals(MessageBoxResult.OK))
+						this.EndGame();
+				}
+		        _nextpSpawn = DateTime.Now.AddSeconds(5);
+		        _spawnAllowed = true;
+	        }
 
             foreach (var item in _objects)
             {
@@ -154,11 +152,11 @@ namespace InvasionOfAldebaran.ViewModels
                 {
                     _objectsToBeDeleted.Add(item);
 
-                    if (item.GetType() != typeof(Enemy)) continue;
+					if (item.GetType() != typeof(Enemy)) continue;
 
-                    var alienShip = item as Enemy;
-                    if (alienShip.GetType() == typeof(Enemy) && !alienShip.AlienName.Equals(this.CurrentQuestion.CorrectAnswer.Alien))
-                        this.Points--;
+					var ship = item as Enemy;
+	                if (ship.GetType() == typeof(Enemy) && !ship.AlienName.Equals(this.CurrentQuestion.CorrectAnswer.Alien))
+		                this.Points--;
                 }
             }
 
@@ -166,22 +164,22 @@ namespace InvasionOfAldebaran.ViewModels
             {
                 foreach (var missile in _objects.OfType<Missile>())
                 {
-                    if (!enemy.IntersectsWith(enemy.Image, missile.Image))
+                    if (!enemy.IntersectsWith(missile.Coords.X, missile.Coords.Y, enemy.Image, missile.Image))
                         continue;
 
                     if (enemy.AlienName.Equals(this.CurrentQuestion.CorrectAnswer.Alien))
                     {
-                        _soundEffect.Open(uri);
+                        _soundEffect.Open(_uri);
                         _soundEffect.Play();
                         _objectsToBeDeleted.Add(enemy);
                         _enemies.Remove(enemy);
                         _objectsToBeDeleted.Add(missile);
                         this.Message = "That was a friendly ship!";
-                        this.Points--;
+	                    this.Points = this.Points - 5;
                     }
                     else
                     {
-                        _soundEffect.Open(uriEny);
+                        _soundEffect.Open(_uriEny);
                         _soundEffect.Play();
                         _objectsToBeDeleted.Add(enemy);
                         _enemies.Remove(enemy);
@@ -233,7 +231,7 @@ namespace InvasionOfAldebaran.ViewModels
             _objects = new List<AnimatedObject>();
             _enemies = new List<AnimatedObject>();
             _objectsToBeDeleted = new List<AnimatedObject>();
-            _spawner = new SpawnHandler(this.Canvas.Width, this.Canvas.Height);
+            _spawner = new SpawnHandler(this.Canvas.Width, this.Canvas.Height, 4);
             _inputHandler = new InputHandler(this.Canvas);
 
             _timer.Tick += this.AnimateObjects;

@@ -16,10 +16,11 @@ namespace InvasionOfAldebaran.Models
         public bool MovesSideways { get; private set; }
         public string AlienName { get; private set; }
 
-        public Enemy(string alien, string imagePath, Coords coords, Speed speed, bool movesSideways) : base(imagePath, coords)
+        public Enemy(string alien, string imagePath, Coords coords, Speed speed, double moveAmount) : base(imagePath, coords)
         {
-            AlienName = alien;
-
+            this.AlienName = alien;
+	        _maxDeviation = moveAmount;
+            
             switch (speed)
             {
                 case Speed.Fast:
@@ -34,9 +35,8 @@ namespace InvasionOfAldebaran.Models
                     this.Vy = slowSpeed;
                     break;
             }
-            this.MovesSideways = movesSideways;
+            this.MovesSideways = RandomBool.Get();
             _movingLeft = RandomBool.Get();
-            _maxDeviation = 48;
             _initialPosX = coords.X;
         }
 
@@ -44,27 +44,27 @@ namespace InvasionOfAldebaran.Models
         {
             if (this.MovesSideways)
             {
-                this.MoveSideways();
+                this.MoveSideways(canvas);
             }
             canvas.Children.Add(this.Image);
             Canvas.SetLeft(this.Image, this.Coords.X);
             Canvas.SetTop(this.Image, this.Coords.Y);
         }
 
-        private void MoveSideways()
+        private void MoveSideways(Canvas canvas)
         {
             var pos = this.Coords.X - _initialPosX;
 
             if (_movingLeft)
             {
                 this.Vx = -this.Vy;
-                if (pos <= -_maxDeviation)
+                if (pos <= -_maxDeviation || this.Coords.X <= this.Image.ActualWidth / 2)
                     _movingLeft = false;
             }
             else
             {
                 this.Vx = this.Vy;
-                if (pos >= _maxDeviation)
+                if (pos >= _maxDeviation || this.Coords.X >= canvas.ActualWidth - this.Image.ActualWidth)
                     _movingLeft = true;
             }
         }

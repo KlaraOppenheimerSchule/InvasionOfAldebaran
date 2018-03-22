@@ -8,23 +8,23 @@ namespace InvasionOfAldebaran.Models
 {
     public abstract class AnimatedObject
     {
-        //private Brush _color;
-
-        public Coords Coords { get; protected set; }
+		public Coords Coords { get; protected set; }
         public double Vx { get; protected set; }
         public double Vy { get; protected set; }
         public bool ReachedEnd { get; protected set; }
         public Image Image { get; protected set; }
         public Uri ImagePath { get; protected set; }
 
-        protected AnimatedObject(string ImagePath, Coords coords)
+        protected AnimatedObject(string imagePath, Coords coords)
         {
-            var imageBitmap = new BitmapImage(new Uri(ImagePath, UriKind.Relative));
-            this.Image = new Image();
-            this.Image.Source = imageBitmap;
-            this.Image.Width = imageBitmap.Width;
-            this.Image.Height = imageBitmap.Height;
-            this.Coords = coords;
+            var imageBitmap = new BitmapImage(new Uri(imagePath, UriKind.Relative));
+	        this.Image = new Image
+	        {
+		        Source = imageBitmap,
+		        Width = imageBitmap.Width,
+		        Height = imageBitmap.Height
+	        };
+	        this.Coords = coords;
         }
 
         public abstract void Draw(Canvas canvas);
@@ -55,7 +55,7 @@ namespace InvasionOfAldebaran.Models
             }
         }
 
-        public bool IntersectsWith(Image alien, Image missile)
+        public bool IntersectsWith(double x, double y, Image alien, Image missile)
         {
             var x1 = Canvas.GetLeft(alien);
             var y1 = Canvas.GetTop(alien);

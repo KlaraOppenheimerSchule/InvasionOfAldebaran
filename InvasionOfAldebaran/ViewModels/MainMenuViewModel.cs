@@ -3,6 +3,7 @@ using InvasionOfAldebaran.Helper;
 using System;
 using System.Linq;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace InvasionOfAldebaran.ViewModels
 {
@@ -12,11 +13,16 @@ namespace InvasionOfAldebaran.ViewModels
         public ICommand CloseButtonCommand { get; set; }
         public string Highscore { get; set; }
 
+        //private MediaPlayer _mainThemePlayer;
+
         private readonly FrameWindowViewModel _frameModel;
 
         public MainMenuViewModel(FrameWindowViewModel frameModel)
         {
+            //_mainThemePlayer = new MediaPlayer();
             _frameModel = frameModel;
+            //_mainThemePlayer.Open(new Uri(@"../../Resources/themesong.mpeg", UriKind.Relative));
+            //_mainThemePlayer.Play();
 
             this.PlayButtonCommand = new RelayCommand(this.ChangeWindow);
             this.CloseButtonCommand = new RelayCommand(this.CloseWindow);

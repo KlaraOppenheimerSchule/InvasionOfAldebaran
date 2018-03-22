@@ -8,7 +8,7 @@ namespace InvasionOfAldebaran.Models
 {
     public class Question : NotifyPropertyChangedBase
     {
-        private Random _random = new Random();
+        private readonly Random _random = new Random();
 
         public string Text { get; private set; }
         public ObservableCollection<Answer> Answers { get; private set; }
@@ -37,7 +37,6 @@ namespace InvasionOfAldebaran.Models
 
         private void HandleAnswers(List<Answer> answers)
         {
-            //Todo: Fragen Farben müssen besser randomisiert^^ werden. Oft immer die gleiche
             if (answers == null)
                 throw new ArgumentNullException($@"The provided answerlist {answers} was null");
 
