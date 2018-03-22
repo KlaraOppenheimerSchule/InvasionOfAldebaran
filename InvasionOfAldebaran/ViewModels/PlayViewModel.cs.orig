@@ -12,6 +12,84 @@ using System.Windows.Threading;
 namespace InvasionOfAldebaran.ViewModels
 {
     public sealed class PlayViewModel : NotifyPropertyChangedBase, IScreenViewModel
+<<<<<<< HEAD
+    {
+	    private const int maxWave = 4;
+
+		private readonly FrameWindowViewModel _frameViewModel;
+		private readonly DispatcherTimer _timer = new DispatcherTimer();
+	    private SpawnHandler _spawner;
+	    private InputHandler _inputHandler;
+
+		private List<AnimatedObject> _objectsToBeDeleted;
+	    private List<AnimatedObject> _objects;
+	    private List<AnimatedObject> _enemies;
+
+		private Question _currentQuestion;
+	    private int _currentWave;
+	    private DateTime _nextpSpawn;
+	    private bool _spawnAllowed;
+
+	    private int _points;
+	    private string _message;
+
+	    public Canvas Canvas { get; private set; }
+	    public Player Player { get; private set; }
+
+	    public int Points
+	    {
+		    get { return this._points; }
+		    private set
+		    {
+			    this._points = value;
+			    this.NotifyPropertyChanged(nameof(this.Points));
+		    }
+	    }
+
+	    public string Message
+	    {
+		    get { return this._message; }
+		    private set
+		    {
+			    this._message = value;
+			    this.NotifyPropertyChanged(nameof(this.Message));
+		    }
+	    }
+
+		public Question CurrentQuestion
+	    {
+		    get { return _currentQuestion; }
+		    private set
+		    {
+			    if (value == null)
+			    {
+					this.EndGame();
+				    this.GameEnded?.Invoke(this.Points);
+				    return;
+			    }
+			    _currentQuestion = value;
+			    this.NotifyPropertyChanged(nameof(this.CurrentQuestion));
+		    }
+	    }
+	    public int CurrentWave
+	    {
+		    get { return _currentWave; }
+		    private set
+		    {
+			    _currentWave = value;
+			    this.NotifyPropertyChanged(nameof(this.CurrentWave));
+		    }
+	    }
+
+	    public delegate void GameEndedEventHandler(int points);
+	    public event GameEndedEventHandler GameEnded;
+
+	    public PlayViewModel( FrameWindowViewModel frameWindow)
+		{
+			_frameViewModel = frameWindow;
+
+			this.Canvas = new Canvas()
+=======
     {
         private const int maxWave = 4;
 
@@ -100,25 +178,27 @@ namespace InvasionOfAldebaran.ViewModels
             backgroundImage.ImageSource = imageBitmap;
 
             this.Canvas = new Canvas()
+>>>>>>> ImagesAndSoundeffects
             {
                 Height = 700,
                 Width = 500,
                 Focusable = true,
-                Background = backgroundImage
+<<<<<<< HEAD
+                Background = Brushes.DarkGray,
             };
-            this.Activated += this.StartGameEventHandler;
-        }
+			this.Activated += this.StartGameEventHandler;
+		}
 
-        private void AnimateObjects(object sender, EventArgs e)
+		private void AnimateObjects(object sender, EventArgs e)
         {
-            if (!this.Canvas.IsFocused)
-                this.Canvas.Focus();
+			if (!this.Canvas.IsFocused)
+				this.Canvas.Focus();
 
-            // Handles Input for the player
-            this.ApplyInputToPlayer();
+			// Handles Input for the player
+	        this.ApplyInputToPlayer();
 
-            if (_currentWave >= maxWave)
-                _spawnAllowed = false;
+	        if (_currentWave >= maxWave)
+		        _spawnAllowed = false;
 
 	        if (_spawnAllowed && _nextpSpawn <= DateTime.Now)
 	        {
@@ -143,6 +223,52 @@ namespace InvasionOfAldebaran.ViewModels
 		        _spawnAllowed = true;
 	        }
 
+			foreach (var item in _objects)
+            {
+                item.Animate(_timer.Interval, this.Canvas);
+
+	            if (item.ReachedEnd)
+	            {
+					_objectsToBeDeleted.Add(item);
+		            if (item.GetType() == typeof(Enemy) && !item.Color.Equals(this.CurrentQuestion.CorrectAnswer.Color))
+			            this.Points--;
+	            }
+					
+=======
+                Background = backgroundImage
+            };
+            this.Activated += this.StartGameEventHandler;
+        }
+
+        private void AnimateObjects(object sender, EventArgs e)
+        {
+            if (!this.Canvas.IsFocused)
+                this.Canvas.Focus();
+
+            // Handles Input for the player
+            this.ApplyInputToPlayer();
+
+            if (_currentWave >= maxWave)
+                _spawnAllowed = false;
+
+            if (_spawnAllowed && _nextpSpawn <= DateTime.Now)
+            {
+                _objects.AddRange(_spawner.SpawnEnemies(this.CurrentQuestion));
+                _nextpSpawn = DateTime.Now.AddSeconds(10);
+                this.CurrentWave++;
+            }
+            if (!_spawnAllowed)
+            {
+                this.CurrentWave = 0;
+                this.CurrentQuestion = _spawner.GetQuestion();
+                // Ends the game once the questions run out
+                if (this.CurrentQuestion == null)
+                    this.EndGame();
+
+                _nextpSpawn = DateTime.Now.AddSeconds(20);
+                _spawnAllowed = true;
+            }
+
             foreach (var item in _objects)
             {
                 item.Animate(_timer.Interval, this.Canvas);
@@ -155,6 +281,7 @@ namespace InvasionOfAldebaran.ViewModels
                     else
                         this.Points--;
                 }
+>>>>>>> ImagesAndSoundeffects
             }
 
             foreach (var enemy in _objects.OfType<Enemy>())

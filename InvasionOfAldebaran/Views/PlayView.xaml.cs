@@ -9,7 +9,7 @@ namespace InvasionOfAldebaran.Views
     {
         public PlayView()
         {
-	        this.InitializeComponent();
+            this.InitializeComponent();
         }
     }
 }
