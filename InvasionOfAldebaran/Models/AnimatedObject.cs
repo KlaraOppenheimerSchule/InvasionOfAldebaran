@@ -15,7 +15,8 @@ namespace InvasionOfAldebaran.Models
         public double Vy { get; protected set; }
         public bool ReachedEnd { get; protected set; }
         public Image Image { get; protected set; }
-        public string ImagePath { get; protected set; }
+        public Uri ImagePath { get; protected set; }
+
         //public Brush Color
         //{
         //	get { return _color; }

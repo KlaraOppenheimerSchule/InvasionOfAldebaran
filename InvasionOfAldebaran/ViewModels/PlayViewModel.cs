@@ -4,6 +4,7 @@ using InvasionOfAldebaran.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -33,9 +34,12 @@ namespace InvasionOfAldebaran.ViewModels
         private int _points;
         private string _message;
 
-        #region Properties
+	    private Uri uri = new Uri(@"../../Resources/Media/Soundeffects/explosion.wav", UriKind.Relative);
+	    private Uri uriEny = new Uri(@"../../Resources/Media/Soundeffects/hit.wav", UriKind.Relative);
 
-        public Canvas Canvas { get; private set; }
+		#region Properties
+
+		public Canvas Canvas { get; private set; }
         public Player Player { get; private set; }
 
         public int Points
@@ -65,7 +69,6 @@ namespace InvasionOfAldebaran.ViewModels
             {
                 if (value == null)
                 {
-                    this.EndGame();
                     this.GameEnded?.Invoke(this.Points);
                     return;
                 }
@@ -150,10 +153,12 @@ namespace InvasionOfAldebaran.ViewModels
                 if (item.ReachedEnd)
                 {
                     _objectsToBeDeleted.Add(item);
-                    if (item.GetType() == typeof(Enemy) && item.Image.Equals(this.CurrentQuestion.CorrectAnswer.Alien))
-                        this.Points++;
-                    else
-                        this.Points--;
+
+					if (item.GetType() != typeof(Enemy)) continue;
+
+					var ship = item as Enemy;
+	                if (ship.GetType() == typeof(Enemy) && !ship.AlienName.Equals(this.CurrentQuestion.CorrectAnswer.Alien))
+		                this.Points--;
                 }
             }
 
@@ -166,7 +171,6 @@ namespace InvasionOfAldebaran.ViewModels
 
                     if (enemy.AlienName.Equals(this.CurrentQuestion.CorrectAnswer.Alien))
                     {
-                        Uri uri = new Uri(@"../../Resources/Media/Soundeffects/explosion.wav", UriKind.Relative);
                         _soundEffect.Open(uri);
                         _soundEffect.Play();
                         _objectsToBeDeleted.Add(enemy);
@@ -177,8 +181,7 @@ namespace InvasionOfAldebaran.ViewModels
                     }
                     else
                     {
-                        Uri uri = new Uri(@"../../Resources/Media/Soundeffects/hit.wav", UriKind.Relative);
-                        _soundEffect.Open(uri);
+                        _soundEffect.Open(uriEny);
                         _soundEffect.Play();
                         _objectsToBeDeleted.Add(enemy);
                         _enemies.Remove(enemy);

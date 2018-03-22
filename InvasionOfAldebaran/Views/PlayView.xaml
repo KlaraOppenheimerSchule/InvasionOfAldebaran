@@ -31,20 +31,16 @@
         <!-- Answers -->
         <StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" CanVerticallyScroll="True"
 					Width="250">
-            <TextBlock Text="{Binding CurrentQuestion.Answers[0].Text}" FontSize="24" FontWeight="ExtraBold"
-					   Foreground="{Binding CurrentQuestion.Answers[0].Color}" />
+            <TextBlock Text="{Binding CurrentQuestion.Answers[0].Text}" FontSize="24" FontWeight="ExtraBold"/>
             <Image Source="{Binding CurrentQuestion.Answers[0].Source}" HorizontalAlignment="Right"   RenderOptions.BitmapScalingMode="Fant"
                    Stretch="Fill" Width="30" Height="30"></Image>
-            <TextBlock Text="{Binding CurrentQuestion.Answers[1].Text}" FontSize="24" FontWeight="ExtraBold"
-					   Foreground="{Binding CurrentQuestion.Answers[1].Color}" />
+            <TextBlock Text="{Binding CurrentQuestion.Answers[1].Text}" FontSize="24" FontWeight="ExtraBold"/>
             <Image Source="{Binding CurrentQuestion.Answers[1].Source}"  HorizontalAlignment="Right"  RenderOptions.BitmapScalingMode="Fant"
                    Stretch="Fill" Width="30" Height="30"></Image>
-            <TextBlock Text="{Binding CurrentQuestion.Answers[2].Text}" FontSize="24" FontWeight="ExtraBold"
-					   Foreground="{Binding CurrentQuestion.Answers[2].Color}" />
+            <TextBlock Text="{Binding CurrentQuestion.Answers[2].Text}" FontSize="24" FontWeight="ExtraBold"/>
             <Image Source="{Binding CurrentQuestion.Answers[2].Source}" HorizontalAlignment="Right"  RenderOptions.BitmapScalingMode="Fant"
                    Stretch="Fill" Width="30"  Height="30"></Image>
-            <TextBlock Text="{Binding CurrentQuestion.Answers[3].Text}" FontSize="24" FontWeight="ExtraBold"
-					   Foreground="{Binding CurrentQuestion.Answers[3].Color}" />
+            <TextBlock Text="{Binding CurrentQuestion.Answers[3].Text}" FontSize="24" FontWeight="ExtraBold"/>
             <Image Source="{Binding CurrentQuestion.Answers[3].Source}" HorizontalAlignment="Right"  RenderOptions.BitmapScalingMode="Fant"
                    Stretch="Fill" Width="30" Height="30"></Image>
         </StackPanel>
