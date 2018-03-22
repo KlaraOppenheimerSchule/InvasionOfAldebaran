@@ -15,6 +15,8 @@ namespace InvasionOfAldebaran.ViewModels
     public sealed class PlayViewModel : NotifyPropertyChangedBase, IScreenViewModel
     {
         private const int maxWave = 4;
+	    private const int spawnInterval = 6;
+	    private const int questionStartTime = 3;
 
         private readonly FrameWindowViewModel _frameViewModel;
         private readonly DispatcherTimer _timer = new DispatcherTimer();
@@ -126,7 +128,7 @@ namespace InvasionOfAldebaran.ViewModels
 		        var enemies = _spawner.SpawnEnemies(this.CurrentQuestion);
 				_objects.AddRange(enemies);
 				_enemies.AddRange(enemies);
-				_nextpSpawn = DateTime.Now.AddSeconds(8);
+				_nextpSpawn = DateTime.Now.AddSeconds(spawnInterval);
 		        this.CurrentWave++;
 			}
 	        if (!_spawnAllowed && _enemies.Count <= 0)
@@ -140,7 +142,7 @@ namespace InvasionOfAldebaran.ViewModels
 					if (result.Equals(MessageBoxResult.OK))
 						this.EndGame();
 				}
-		        _nextpSpawn = DateTime.Now.AddSeconds(5);
+		        _nextpSpawn = DateTime.Now.AddSeconds(questionStartTime);
 		        _spawnAllowed = true;
 	        }
 

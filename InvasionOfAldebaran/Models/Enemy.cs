@@ -9,9 +9,9 @@ namespace InvasionOfAldebaran.Models
         private readonly double _initialPosX;
         private bool _movingLeft;
 
-        private const double slowSpeed = 60;
-        private const double mediumSpeed = 140;
-        private const double fastSpeed = 220;
+        private const double slowSpeed = 90;
+        private const double mediumSpeed = 160;
+        private const double fastSpeed = 230;
 
         public bool MovesSideways { get; private set; }
         public string AlienName { get; private set; }

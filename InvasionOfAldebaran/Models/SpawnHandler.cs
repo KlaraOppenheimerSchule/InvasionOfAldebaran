@@ -45,7 +45,7 @@ namespace InvasionOfAldebaran.Models
 
             for (int i = 0; i < spawns; i++)
             {
-                Coords point = new Coords(canvasPos, 100);
+                Coords point = new Coords(canvasPos, 40);
                 _spawnPoints.Add(point);
                 canvasPos += _spawnGap;
             }
