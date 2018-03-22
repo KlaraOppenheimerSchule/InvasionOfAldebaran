@@ -55,7 +55,7 @@ namespace InvasionOfAldebaran.Models
             }
         }
 
-        public bool IntersectsWith(double x, double y, Image alien, Image missile)
+        public bool IntersectsWith(Image alien, Image missile)
         {
             var x1 = Canvas.GetLeft(alien);
             var y1 = Canvas.GetTop(alien);

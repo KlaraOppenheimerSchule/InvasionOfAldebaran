@@ -166,7 +166,7 @@ namespace InvasionOfAldebaran.ViewModels
             {
                 foreach (var missile in _objects.OfType<Missile>())
                 {
-                    if (!enemy.IntersectsWith(missile.Coords.X, missile.Coords.Y, enemy.Image, missile.Image))
+                    if (!enemy.IntersectsWith(enemy.Image, missile.Image))
                         continue;
 
                     if (enemy.AlienName.Equals(this.CurrentQuestion.CorrectAnswer.Alien))
