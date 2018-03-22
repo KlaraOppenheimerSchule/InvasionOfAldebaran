@@ -18,9 +18,9 @@ namespace InvasionOfAldebaran.ViewModels
 
         private readonly FrameWindowViewModel _frameViewModel;
         private readonly DispatcherTimer _timer = new DispatcherTimer();
-        private SpawnHandler _spawner;
+	    private readonly MediaPlayer _soundEffect;
+		private SpawnHandler _spawner;
         private InputHandler _inputHandler;
-        private MediaPlayer _soundEffect;
 
         private List<AnimatedObject> _objectsToBeDeleted;
         private List<AnimatedObject> _objects;
@@ -104,7 +104,7 @@ namespace InvasionOfAldebaran.ViewModels
             this.Canvas = new Canvas()
             {
                 Height = 700,
-                Width = 550,
+                Width = 600,
                 Focusable = true,
                 Background = backgroundImage
             };
@@ -232,7 +232,7 @@ namespace InvasionOfAldebaran.ViewModels
             _objects = new List<AnimatedObject>();
             _enemies = new List<AnimatedObject>();
             _objectsToBeDeleted = new List<AnimatedObject>();
-            _spawner = new SpawnHandler(this.Canvas.Width, this.Canvas.Height);
+            _spawner = new SpawnHandler(this.Canvas.Width, this.Canvas.Height, 4);
             _inputHandler = new InputHandler(this.Canvas);
 
             _timer.Tick += this.AnimateObjects;

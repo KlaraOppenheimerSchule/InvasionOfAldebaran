@@ -16,7 +16,7 @@
 		</Grid.RowDefinitions>
 
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="550" />
+			<ColumnDefinition Width="{Binding Canvas.Width}" />
 			<ColumnDefinition Width="*" />
 		</Grid.ColumnDefinitions>
 
@@ -31,8 +31,7 @@
 		</Canvas>
 
 		<!-- Answers -->
-		<StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Center" CanVerticallyScroll="True"
-					Width="250">
+		<StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Center" CanVerticallyScroll="True">
 			<!-- Points -->
 			<TextBlock Text="{Binding Points, StringFormat='Points:  {0}'}" Foreground="DodgerBlue" FontSize="28" FontWeight="Bold" 
 					   HorizontalAlignment="Center" Margin="0 30 0 0"/>

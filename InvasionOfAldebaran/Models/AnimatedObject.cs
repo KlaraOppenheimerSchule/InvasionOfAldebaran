@@ -8,24 +8,12 @@ namespace InvasionOfAldebaran.Models
 {
     public abstract class AnimatedObject
     {
-        //private Brush _color;
-
-        public Coords Coords { get; protected set; }
+		public Coords Coords { get; protected set; }
         public double Vx { get; protected set; }
         public double Vy { get; protected set; }
         public bool ReachedEnd { get; protected set; }
         public Image Image { get; protected set; }
         public Uri ImagePath { get; protected set; }
-
-        //public Brush Color
-        //{
-        //	get { return _color; }
-        //	protected set
-        //	{
-        //		_color = value ?? Brushes.AntiqueWhite;
-        //		this.Image.Fill = _color;
-        //	}
-        //}
 
         protected AnimatedObject(string ImagePath, Coords coords)
         {
@@ -34,7 +22,6 @@ namespace InvasionOfAldebaran.Models
             this.Image.Source = imageBitmap;
             this.Image.Width = imageBitmap.Width;
             this.Image.Height = imageBitmap.Height;
-            //this.Color = color;
             this.Coords = coords;
         }
 

@@ -12,9 +12,11 @@ namespace InvasionOfAldebaran.Models
         private readonly double _canvasHeight;
         private readonly Coords _playerSpawn;
         private readonly List<Coords> _spawnPoints;
-        private Random _r = new Random();
+        private readonly Random _r = new Random();
+	    private double _spawnGap;
 
-        private DateTime _lastMissile;
+
+		private DateTime _lastMissile;
         private readonly List<AnimatedObject> _missiles;
         private readonly List<Question> _questions;
 
@@ -22,7 +24,7 @@ namespace InvasionOfAldebaran.Models
 
         public event SpawnEventHandler ObjectsSpawned;
 
-        public SpawnHandler(double canvasWidth, double canvasHeight)
+        public SpawnHandler(double canvasWidth, double canvasHeight, int numberOfSpawns)
         {
             _canvasWidth = canvasWidth;
             _canvasHeight = canvasHeight;
@@ -31,23 +33,28 @@ namespace InvasionOfAldebaran.Models
 
             _missiles = new List<AnimatedObject>();
             _questions = this.MakeList();
+	        _spawnGap = 0;
 
-            this.PopulateSpawnPoints();
+            this.PopulateSpawnPoints(numberOfSpawns);
         }
 
-        private void PopulateSpawnPoints()
+        private void PopulateSpawnPoints(int spawns)
         {
-            double gap = (_canvasWidth - 100) / 4;
-            double canvasPos = 50;
+            _spawnGap = (_canvasWidth - 100) / spawns + 1;
+	        double canvasPos = _spawnGap;
 
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < spawns; i++)
             {
                 Coords point = new Coords(canvasPos, 100);
                 _spawnPoints.Add(point);
-                canvasPos += gap;
+                canvasPos += _spawnGap;
             }
         }
-
+		/// <summary>
+		/// Spawns a full Wave of enemies and returns a list containing them
+		/// </summary>
+		/// <param name="question"></param>
+		/// <returns></returns>
         public List<AnimatedObject> SpawnEnemies(Question question)
         {
             var enemies = new List<AnimatedObject>();
@@ -63,20 +70,22 @@ namespace InvasionOfAldebaran.Models
                 string alien = aliens[alienRandomizer];
                 string imagePath = @"../../Resources/Images/" + alien + ".png";
 
-                enemies.Add(new Enemy(alien, imagePath, spawns[rSpawns], (Speed)rSpeed, RandomBool.Get()));
+                enemies.Add(new Enemy(alien, imagePath, spawns[rSpawns], (Speed)rSpeed, _spawnGap));
 
                 aliens.RemoveAt(alienRandomizer);
                 spawns.RemoveAt(rSpawns);
             }
             return enemies;
         }
-
+		/// <summary>
+		/// Spawns and sets up the Player
+		/// </summary>
+		/// <returns></returns>
         public Player SpawnPlayer()
         {
             string imagePath = @"../../Resources/Images/playership.png";
             return new Player(imagePath, _playerSpawn);
         }
-
 		/// <summary>
 		/// Returns the next question from the questions array, null if there a no questions left.
 		/// </summary>
@@ -92,7 +101,11 @@ namespace InvasionOfAldebaran.Models
 			else
 				return null;
 		}
-
+		/// <summary>
+		/// Spawns a Missile directly at the players current position
+		/// </summary>
+		/// <param name="player"></param>
+		/// <param name="soundEffect"></param>
         public void SpawnMissile(Player player, MediaPlayer soundEffect)
         {
             _missiles.Clear();
