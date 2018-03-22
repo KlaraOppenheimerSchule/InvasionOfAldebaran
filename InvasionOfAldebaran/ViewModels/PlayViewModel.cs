@@ -70,7 +70,7 @@ namespace InvasionOfAldebaran.ViewModels
                 if (value == null)
                 {
                     this.GameEnded?.Invoke(this.Points);
-                    return;
+	                _currentQuestion = value;
                 }
                 _currentQuestion = value;
                 this.NotifyPropertyChanged(nameof(this.CurrentQuestion));
@@ -90,7 +90,6 @@ namespace InvasionOfAldebaran.ViewModels
         #endregion Properties
 
         public delegate void GameEndedEventHandler(int points);
-
         public event GameEndedEventHandler GameEnded;
 
         public PlayViewModel(FrameWindowViewModel frameWindow)
@@ -105,7 +104,7 @@ namespace InvasionOfAldebaran.ViewModels
             this.Canvas = new Canvas()
             {
                 Height = 700,
-                Width = 500,
+                Width = 550,
                 Focusable = true,
                 Background = backgroundImage
             };
@@ -138,10 +137,10 @@ namespace InvasionOfAldebaran.ViewModels
 				// Ends the game once the questions run out
 		        if (this.CurrentQuestion == null)
 		        {
-			       if( MessageBox.Show("You`ve won! Now fuck off!", "Congratulations", MessageBoxButton.OKCancel).Equals(MessageBoxResult.OK))
+			        var result = MessageBox.Show("You`ve won! Now fuck off!", "Congratulations", MessageBoxButton.OK);
+					if (result.Equals(MessageBoxResult.OK))
 						this.EndGame();
 				}
-
 		        _nextpSpawn = DateTime.Now.AddSeconds(5);
 		        _spawnAllowed = true;
 	        }
@@ -177,7 +176,7 @@ namespace InvasionOfAldebaran.ViewModels
                         _enemies.Remove(enemy);
                         _objectsToBeDeleted.Add(missile);
                         this.Message = "That was a friendly ship!";
-                        this.Points--;
+	                    this.Points = this.Points - 5;
                     }
                     else
                     {

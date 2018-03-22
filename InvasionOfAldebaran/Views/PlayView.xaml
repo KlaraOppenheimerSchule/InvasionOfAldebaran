@@ -8,44 +8,95 @@
              mc:Ignorable="d" Focusable="False"
 			 d:DataContext="{d:DesignInstance vm:PlayViewModel}"
              d:DesignHeight="850" d:DesignWidth="850">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="80" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="30" />
-        </Grid.RowDefinitions>
+	<Grid Background="DarkGray">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="80" />
+			<RowDefinition Height="*" />
+			<RowDefinition Height="40" />
+		</Grid.RowDefinitions>
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="500" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-        <!-- Question -->
-        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
-				   HorizontalAlignment="Stretch" VerticalAlignment="Top" Text="{Binding CurrentQuestion.Text}"
-				   FontSize="22" FontWeight="Bold" Foreground="Firebrick" />
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="550" />
+			<ColumnDefinition Width="*" />
+		</Grid.ColumnDefinitions>
 
-        <!-- Canvas -->
-        <Canvas Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <ContentPresenter Content="{Binding Canvas}" />
-        </Canvas>
-        <!-- Answers -->
-        <StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" CanVerticallyScroll="True"
+		<!-- Question -->
+		<Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Visibility="Visible" BorderBrush="Black" BorderThickness="3">
+			<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding CurrentQuestion.Text}"
+				   FontSize="22" FontWeight="Bold" Foreground="Red" />
+		</Border>
+		<!-- Canvas -->
+		<Canvas Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top">
+			<ContentPresenter Content="{Binding Canvas}" />
+		</Canvas>
+
+		<!-- Answers -->
+		<StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Center" CanVerticallyScroll="True"
 					Width="250">
-            <TextBlock Text="{Binding CurrentQuestion.Answers[0].Text}" FontSize="24" FontWeight="ExtraBold"/>
-            <Image Source="{Binding CurrentQuestion.Answers[0].Source}" HorizontalAlignment="Right"   RenderOptions.BitmapScalingMode="Fant"
-                   Stretch="Fill" Width="30" Height="30"></Image>
-            <TextBlock Text="{Binding CurrentQuestion.Answers[1].Text}" FontSize="24" FontWeight="ExtraBold"/>
-            <Image Source="{Binding CurrentQuestion.Answers[1].Source}"  HorizontalAlignment="Right"  RenderOptions.BitmapScalingMode="Fant"
-                   Stretch="Fill" Width="30" Height="30"></Image>
-            <TextBlock Text="{Binding CurrentQuestion.Answers[2].Text}" FontSize="24" FontWeight="ExtraBold"/>
-            <Image Source="{Binding CurrentQuestion.Answers[2].Source}" HorizontalAlignment="Right"  RenderOptions.BitmapScalingMode="Fant"
-                   Stretch="Fill" Width="30"  Height="30"></Image>
-            <TextBlock Text="{Binding CurrentQuestion.Answers[3].Text}" FontSize="24" FontWeight="ExtraBold"/>
-            <Image Source="{Binding CurrentQuestion.Answers[3].Source}" HorizontalAlignment="Right"  RenderOptions.BitmapScalingMode="Fant"
-                   Stretch="Fill" Width="30" Height="30"></Image>
-        </StackPanel>
-        <TextBlock Grid.Row="2" Grid.Column="0" Text="{Binding Message}" Foreground="Red" FontSize="20" />
-        <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Points}" Foreground="Red" FontSize="20" />
-        <TextBlock Grid.Row="2" Grid.Column="1" HorizontalAlignment="Right" Foreground="Blue" FontSize="20" Text="{Binding CurrentWave}" />
-    </Grid>
+			<!-- Points -->
+			<TextBlock Text="{Binding Points, StringFormat='Points:  {0}'}" Foreground="DodgerBlue" FontSize="28" FontWeight="Bold" 
+					   HorizontalAlignment="Center" Margin="0 30 0 0"/>
+			<!-- Answers -->
+			<ItemsControl Margin="0 50 0 0">
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="30" />
+						<ColumnDefinition Width="*" />
+					</Grid.ColumnDefinitions>
+					<Image Grid.Column="0" Grid.Row="0" Source="{Binding CurrentQuestion.Answers[0].Source}" 
+						   HorizontalAlignment="Right" RenderOptions.BitmapScalingMode="Fant" Stretch="Fill" Width="30" Height="30"/>
+					<TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding CurrentQuestion.Answers[0].Text}" FontSize="24" 
+							   FontWeight="ExtraBold" HorizontalAlignment="Center" Foreground="DodgerBlue"/>
+				</Grid>
+			</ItemsControl>
+			<Border Visibility="Visible" BorderBrush="Black" BorderThickness="1" Margin="0 10 0 10"/>
+			<ItemsControl>
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="30" />
+						<ColumnDefinition Width="*" />
+					</Grid.ColumnDefinitions>
+					<Image Grid.Column="0" Grid.Row="0" Source="{Binding CurrentQuestion.Answers[1].Source}" 
+			               HorizontalAlignment="Right" RenderOptions.BitmapScalingMode="Fant" Stretch="Fill" Width="30" Height="30"/>
+					<TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding CurrentQuestion.Answers[1].Text}" FontSize="24" 
+			                   FontWeight="ExtraBold" HorizontalAlignment="Center" Foreground="DodgerBlue"/>
+				</Grid>
+			</ItemsControl>
+			<Border Visibility="Visible" BorderBrush="Black" BorderThickness="1" Margin="0 10 0 10"/>
+			<ItemsControl >
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="30" />
+						<ColumnDefinition Width="*" />
+					</Grid.ColumnDefinitions>
+					<Image Grid.Column="0" Grid.Row="0" Source="{Binding CurrentQuestion.Answers[2].Source}" 
+					       HorizontalAlignment="Right" RenderOptions.BitmapScalingMode="Fant" Stretch="Fill" Width="30" Height="30"/>
+					<TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding CurrentQuestion.Answers[2].Text}" FontSize="24" 
+					           FontWeight="ExtraBold" HorizontalAlignment="Center" Foreground="DodgerBlue"/>
+				</Grid>
+			</ItemsControl>
+			<Border Visibility="Visible" BorderBrush="Black" BorderThickness="1" Margin="0 10 0 10"/>
+			<ItemsControl >
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="30" />
+						<ColumnDefinition Width="*" />
+					</Grid.ColumnDefinitions>
+					<Image Grid.Column="0" Grid.Row="0" Source="{Binding CurrentQuestion.Answers[3].Source}" 
+			               HorizontalAlignment="Right" RenderOptions.BitmapScalingMode="Fant" Stretch="Fill" Width="30" Height="30"/>
+					<TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding CurrentQuestion.Answers[3].Text}" FontSize="24" 
+			                   FontWeight="ExtraBold" HorizontalAlignment="Center" Foreground="DodgerBlue"/>
+				</Grid>
+			</ItemsControl>
+		</StackPanel>
+		<!-- Hit Messages & Wave Nmber -->
+		<Border Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" Visibility="Visible" BorderBrush="Black" BorderThickness="3" >
+			<Grid>
+				<TextBlock Text="{Binding Message}" Foreground="Red" FontSize="20" Margin="80 0"
+				           HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold"/>
+				<TextBlock Text="{Binding CurrentWave, StringFormat='Wave: {0}'}" HorizontalAlignment="Right" 
+						   VerticalAlignment="Center" Foreground="DodgerBlue" FontSize="20" Margin="80 0" FontWeight="Bold"/>
+			</Grid>
+		</Border>
+	</Grid>
 </UserControl>
