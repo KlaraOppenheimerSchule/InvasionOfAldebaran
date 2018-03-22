@@ -13,16 +13,16 @@ namespace InvasionOfAldebaran.ViewModels
         public ICommand CloseButtonCommand { get; set; }
         public string Highscore { get; set; }
 
-        private MediaPlayer mainMenuPlayer;
+        //private MediaPlayer _mainThemePlayer;
 
         private readonly FrameWindowViewModel _frameModel;
 
         public MainMenuViewModel(FrameWindowViewModel frameModel)
         {
-            mainMenuPlayer = new MediaPlayer();
+            //_mainThemePlayer = new MediaPlayer();
             _frameModel = frameModel;
-            mainMenuPlayer.Open(new Uri(@"../../Resources/themesong.mpeg", UriKind.Relative));
-            mainMenuPlayer.Play();
+            //_mainThemePlayer.Open(new Uri(@"../../Resources/themesong.mpeg", UriKind.Relative));
+            //_mainThemePlayer.Play();
 
             this.PlayButtonCommand = new RelayCommand(this.ChangeWindow);
             this.CloseButtonCommand = new RelayCommand(this.CloseWindow);
