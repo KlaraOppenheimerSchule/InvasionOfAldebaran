@@ -1,6 +1,7 @@
 ﻿using Caliburn.Micro;
 using System;
 using System.Linq;
+using System.Windows.Media;
 
 namespace InvasionOfAldebaran.ViewModels
 {
@@ -12,7 +13,7 @@ namespace InvasionOfAldebaran.ViewModels
         public FrameWindowViewModel()
         {
             string[] arguments = Environment.GetCommandLineArgs();
-
+            //private MediaPlayer _mainThemePlayer;
             if (arguments.Length > 2)
             {
                 this.Name = arguments[1];
@@ -20,7 +21,9 @@ namespace InvasionOfAldebaran.ViewModels
                 int.TryParse(arguments[2], out var points);
                 this.Points = points;
             }
-
+            //_mainThemePlayer = new MediaPlayer();
+            //_mainThemePlayer.Open(new Uri(@"../../Resources/themesong.mpeg", UriKind.Relative));
+            //_mainThemePlayer.Play();
             this.Items.Add(new MainMenuViewModel(this));
             this.Items.Add(new PlayViewModel(this));
             this.ActiveItem = this.Items.FirstOrDefault();
