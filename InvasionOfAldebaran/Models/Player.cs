@@ -10,9 +10,7 @@ namespace InvasionOfAldebaran.Models
 
         public Player(string imagePath, Coords coords) : base(imagePath, coords)
         {
-            //this.Image.Points.Add(new Point(0.0, -20.0));
-            //this.Image.Points.Add(new Point(10.0, 14.0));
-            //this.Image.Points.Add(new Point(-10.0, 14.0));
+ 
         }
 
         public override void Draw(Canvas canvas)
@@ -28,9 +26,9 @@ namespace InvasionOfAldebaran.Models
             this.Coords.X += this.Vx * interval.TotalSeconds;
             this.Coords.Y += this.Vy * interval.TotalSeconds;
 
-            if ((this.Coords.X + (Image.ActualWidth)) > canvas.ActualWidth)
+            if ((this.Coords.X + (this.Image.ActualWidth)) > canvas.ActualWidth)
             {
-                this.Coords.X = canvas.ActualWidth - (Image.ActualWidth);
+                this.Coords.X = canvas.ActualWidth - (this.Image.ActualWidth);
             }
             else if ((this.Coords.X) < 0)
             {
