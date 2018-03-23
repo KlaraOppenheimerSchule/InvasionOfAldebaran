@@ -13,16 +13,17 @@ namespace InvasionOfAldebaran.ViewModels
         public ICommand CloseButtonCommand { get; set; }
         public string Highscore { get; set; }
 
-        //private MediaPlayer _mainThemePlayer;
+        private MediaPlayer _mainThemePlayer;
 
         private readonly FrameWindowViewModel _frameModel;
 
         public MainMenuViewModel(FrameWindowViewModel frameModel)
         {
-            //_mainThemePlayer = new MediaPlayer();
+            _mainThemePlayer = new MediaPlayer();
             _frameModel = frameModel;
-            //_mainThemePlayer.Open(new Uri(@"../../Resources/themesong.mpeg", UriKind.Relative));
-            //_mainThemePlayer.Play();
+            _mainThemePlayer.Open(new Uri(@"../../Resources/Media/MainMenuTheme.mp3", UriKind.Relative));
+            _mainThemePlayer.Volume = 0.5;
+            _mainThemePlayer.Play();
 
             this.PlayButtonCommand = new RelayCommand(this.ChangeWindow);
             this.CloseButtonCommand = new RelayCommand(this.CloseWindow);
@@ -36,6 +37,7 @@ namespace InvasionOfAldebaran.ViewModels
 
         public void ChangeWindow()
         {
+            _mainThemePlayer.Stop();
             _frameModel.ActivateItem(_frameModel.Items.Single(s => s is PlayViewModel));
         }
     }

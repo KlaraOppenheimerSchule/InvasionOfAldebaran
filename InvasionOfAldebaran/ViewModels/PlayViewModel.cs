@@ -20,6 +20,7 @@ namespace InvasionOfAldebaran.ViewModels
         private SpawnHandler _spawner;
         private InputHandler _inputHandler;
         private MediaPlayer _soundEffect;
+        private MediaPlayer _ingameThemePlayer;
 
         private List<AnimatedObject> _objectsToBeDeleted;
         private List<AnimatedObject> _objects;
@@ -221,6 +222,9 @@ namespace InvasionOfAldebaran.ViewModels
 
         private void StartGameEventHandler(object sender, EventArgs e)
         {
+            _ingameThemePlayer = new MediaPlayer();
+            _ingameThemePlayer.Open(new Uri(@"../../Resources/Media/InGameTheme.mp3", UriKind.Relative));
+            _ingameThemePlayer.Play();
             // initialization
             _objects = new List<AnimatedObject>();
             _enemies = new List<AnimatedObject>();
