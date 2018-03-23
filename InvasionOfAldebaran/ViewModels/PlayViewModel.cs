@@ -229,7 +229,7 @@ namespace InvasionOfAldebaran.ViewModels
             _objects = new List<AnimatedObject>();
             _enemies = new List<AnimatedObject>();
             _objectsToBeDeleted = new List<AnimatedObject>();
-            _spawner = new SpawnHandler(this.Canvas.Width, this.Canvas.Height);
+            _spawner = new SpawnHandler(this.Canvas.Width, this.Canvas.Height, 4);
             _inputHandler = new InputHandler(this.Canvas);
 
             _timer.Tick += this.AnimateObjects;
