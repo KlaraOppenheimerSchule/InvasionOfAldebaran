@@ -138,7 +138,7 @@ namespace InvasionOfAldebaran.ViewModels
 				// Ends the game once the questions run out
 		        if (this.CurrentQuestion == null)
 		        {
-			        var result = MessageBox.Show("You`ve won! Now fuck off!", "Congratulations", MessageBoxButton.OK);
+			        var result = MessageBox.Show("You`ve won!", "Congratulations", MessageBoxButton.OK);
 					if (result.Equals(MessageBoxResult.OK))
 						this.EndGame();
 				}
@@ -157,7 +157,7 @@ namespace InvasionOfAldebaran.ViewModels
 					if (item.GetType() != typeof(Enemy)) continue;
 
 					var ship = item as Enemy;
-	                if (ship.GetType() == typeof(Enemy) && !ship.AlienName.Equals(this.CurrentQuestion.CorrectAnswer.Alien))
+	                if (ship?.GetType() == typeof(Enemy) && !ship.AlienName.Equals(this.CurrentQuestion?.CorrectAnswer.Alien))
 		                this.Points--;
                 }
             }
@@ -169,7 +169,7 @@ namespace InvasionOfAldebaran.ViewModels
                     if (!enemy.IntersectsWith(missile.Coords.X, missile.Coords.Y, enemy.Image, missile.Image))
                         continue;
 
-                    if (enemy.AlienName.Equals(this.CurrentQuestion.CorrectAnswer.Alien))
+                    if (enemy.AlienName.Equals(this.CurrentQuestion?.CorrectAnswer.Alien))
                     {
                         _soundEffect.Open(_uri);
                         _soundEffect.Play();
