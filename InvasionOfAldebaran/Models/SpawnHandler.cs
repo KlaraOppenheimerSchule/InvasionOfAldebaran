@@ -63,7 +63,6 @@ namespace InvasionOfAldebaran.Models
             List<string> aliens = question.Answers.Select(answer => answer.Alien).ToList();
             Shuffle(aliens);
             List<Coords> spawns = _spawnPoints.Select(point => new Coords(point.X, point.Y)).ToList();
-            var randy = new Random();
             for (int i = 0; i < 4; i++)
             {
                 int rSpawns = _r.Next(0, 3 - i);
