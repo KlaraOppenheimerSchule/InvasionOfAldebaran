@@ -7,4 +7,4 @@
 * Worttrennung erfolgt durch Groß-Kleinschreibung *VariablerName*
  
 ## Klassen
-* 
+* Klassennamen im CamelCase
