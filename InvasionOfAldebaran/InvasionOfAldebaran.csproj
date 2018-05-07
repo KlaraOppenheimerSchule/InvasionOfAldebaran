@@ -68,6 +68,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Helper\Serializer.cs" />
+    <Compile Include="Helper\Soundmanager.cs" />
     <Compile Include="Models\AnimatedObject.cs" />
     <Compile Include="Models\Answer.cs" />
     <Compile Include="Helper\Coords.cs" />
