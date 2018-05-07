@@ -12,6 +12,7 @@ namespace InvasionOfAldebaran.Helper
         private static MediaPlayer enemySoundeffect = new MediaPlayer();
         private static MediaPlayer friendlySoundeffect = new MediaPlayer();
         private static MediaPlayer mainThemeSoundeffect = new MediaPlayer();
+        private static MediaPlayer gameThemeSoundeffect = new MediaPlayer();
         private static MediaPlayer shotSoundeffect = new MediaPlayer();
 
         public static void PlayEnemyExplosion()
@@ -43,8 +44,19 @@ namespace InvasionOfAldebaran.Helper
                 mainThemeSoundeffect.Stop();
                 return;
             }
-            mainThemeSoundeffect.Open(new Uri(@"../../Resources/themesong.mpeg", UriKind.Relative));
+            mainThemeSoundeffect.Open(new Uri(@"../../Resources/MainMenuTheme.mp3", UriKind.Relative));
             mainThemeSoundeffect.Play();
+        }
+
+        public static void GameTheme(bool end)
+        {
+            if (end)
+            {
+                gameThemeSoundeffect.Stop();
+                return;
+            }
+            gameThemeSoundeffect.Open(new Uri(@"../../Resources/InGameTheme.mp3", UriKind.Relative));
+            gameThemeSoundeffect.Play();
         }
     }
 }

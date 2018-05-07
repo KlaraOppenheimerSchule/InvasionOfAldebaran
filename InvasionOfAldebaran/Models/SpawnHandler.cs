@@ -131,7 +131,7 @@ namespace InvasionOfAldebaran.Models
         /// </summary>
         /// <param name="player"></param>
         /// <param name="soundEffect"></param>
-        public void SpawnMissile(Player player, MediaPlayer soundEffect)
+        public void SpawnMissile(Player player)
         {
             _missiles.Clear();
             if (_lastMissile.AddSeconds(0.3) < DateTime.Now)

@@ -20,9 +20,6 @@ namespace InvasionOfAldebaran.ViewModels
 
         private readonly FrameWindowViewModel _frameViewModel;
         private readonly DispatcherTimer _timer = new DispatcherTimer();
-        private readonly MediaPlayer _soundEffect;
-        private readonly Uri _uri = new Uri(@"../../Resources/Media/Soundeffects/explosion.wav", UriKind.Relative);
-        private readonly Uri _uriEny = new Uri(@"../../Resources/Media/Soundeffects/hit.wav", UriKind.Relative);
         private SpawnHandler _spawner;
         private InputHandler _inputHandler;
 
@@ -96,12 +93,12 @@ namespace InvasionOfAldebaran.ViewModels
 
         public PlayViewModel(FrameWindowViewModel frameWindow)
         {
-            _soundEffect = new MediaPlayer();
             _frameViewModel = frameWindow;
             ImageBrush backgroundImage = new ImageBrush();
             string imagePath = @"../../Resources/Images/background.jpg";
             var imageBitmap = new BitmapImage(new Uri(imagePath, UriKind.Relative));
             backgroundImage.ImageSource = imageBitmap;
+            Soundmanager.PlayTheme(false);
 
             this.Canvas = new Canvas()
             {
@@ -204,7 +201,7 @@ namespace InvasionOfAldebaran.ViewModels
         private void ApplyInputToPlayer()
         {
             if (_inputHandler.SpacePressed)
-                this._spawner.SpawnMissile(this.Player, this._soundEffect);
+                this._spawner.SpawnMissile(this.Player);
 
             if (_inputHandler.LeftPressed && !_inputHandler.RightPressed)
                 this.Player.Move(Direction.Left);
@@ -273,6 +270,7 @@ namespace InvasionOfAldebaran.ViewModels
 
         private void ChangeWindow()
         {
+            Soundmanager.PlayTheme(true);
             _frameViewModel.SetScore(this.Points);
             _frameViewModel.ActivateItem(_frameViewModel.Items.Single(s => s is MainMenuViewModel));
         }
