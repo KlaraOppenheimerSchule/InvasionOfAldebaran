@@ -7,47 +7,44 @@ using System.Windows.Media;
 
 namespace InvasionOfAldebaran.Helper
 {
-    public class Soundmanager
+    public static class Soundmanager
     {
-        private MediaPlayer enemySoundeffect;
-        private MediaPlayer friendlySoundeffect;
-        private MediaPlayer mainThemeSoundeffect;
-        private MediaPlayer shotSoundeffect;
+        private static MediaPlayer enemySoundeffect = new MediaPlayer();
+        private static MediaPlayer friendlySoundeffect = new MediaPlayer();
+        private static MediaPlayer mainThemeSoundeffect = new MediaPlayer();
+        private static MediaPlayer shotSoundeffect = new MediaPlayer();
 
-        public Soundmanager()
-        {
-        }
-
-        public void PlayEnemyExplosion()
+        public static void PlayEnemyExplosion()
         {
             Uri _uriEny = new Uri(@"../../Resources/Media/Soundeffects/hit.wav", UriKind.Relative);
-            var soundEffect = new MediaPlayer();
-            soundEffect.Open(_uriEny);
-            soundEffect.Play();
+
+            enemySoundeffect.Open(_uriEny);
+            enemySoundeffect.Play();
         }
 
-        public void PlayFriendlyExplosion()
+        public static void PlayFriendlyExplosion()
         {
             Uri _uri = new Uri(@"../../Resources/Media/Soundeffects/explosion.wav", UriKind.Relative);
-            var soundEffect = new MediaPlayer();
-            soundEffect.Open(_uri);
-            soundEffect.Play();
-            soundEffect.Stop();
+            friendlySoundeffect.Open(_uri);
+            friendlySoundeffect.Play();
         }
 
-        public void PlayShotSound()
+        public static void PlayShotSound()
         {
-            var soundEffect = new MediaPlayer();
             Uri uri = new Uri(@"../../Resources/Media/Soundeffects/laser.wav", UriKind.Relative);
-            soundEffect.Open(uri);
-            soundEffect.Play();
+            shotSoundeffect.Open(uri);
+            shotSoundeffect.Play();
         }
 
-        public void PlayTheme()
+        public static void PlayTheme(bool end)
         {
-            var soundEffect = new MediaPlayer();
-            soundEffect.Open(new Uri(@"../../Resources/themesong.mpeg", UriKind.Relative));
-            soundEffect.Play();
+            if (end)
+            {
+                mainThemeSoundeffect.Stop();
+                return;
+            }
+            mainThemeSoundeffect.Open(new Uri(@"../../Resources/themesong.mpeg", UriKind.Relative));
+            mainThemeSoundeffect.Play();
         }
     }
 }

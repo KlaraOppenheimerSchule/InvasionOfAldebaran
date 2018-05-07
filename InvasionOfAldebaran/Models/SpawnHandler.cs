@@ -137,9 +137,7 @@ namespace InvasionOfAldebaran.Models
             if (_lastMissile.AddSeconds(0.3) < DateTime.Now)
             {
                 string imagePath = @"../../Resources/Images/laser.png";
-                Uri uri = new Uri(@"../../Resources/Media/Soundeffects/laser.wav", UriKind.Relative);
-                soundEffect.Open(uri);
-                soundEffect.Play();
+                Soundmanager.PlayShotSound();
                 var missileSpawn = new Coords((player.Coords.X + (player.Image.ActualWidth / 2)), player.Coords.Y);
                 var missile = new Missile(imagePath, missileSpawn);
 

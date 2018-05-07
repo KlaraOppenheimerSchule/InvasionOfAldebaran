@@ -15,15 +15,15 @@ namespace InvasionOfAldebaran.ViewModels
     public sealed class PlayViewModel : NotifyPropertyChangedBase
     {
         private const int maxWave = 4;
-	    private const int spawnInterval = 6;
-	    private const int questionStartTime = 3;
+        private const int spawnInterval = 6;
+        private const int questionStartTime = 3;
 
         private readonly FrameWindowViewModel _frameViewModel;
         private readonly DispatcherTimer _timer = new DispatcherTimer();
-	    private readonly MediaPlayer _soundEffect;
-	    private readonly Uri _uri = new Uri(@"../../Resources/Media/Soundeffects/explosion.wav", UriKind.Relative);
-	    private readonly Uri _uriEny = new Uri(@"../../Resources/Media/Soundeffects/hit.wav", UriKind.Relative);
-		private SpawnHandler _spawner;
+        private readonly MediaPlayer _soundEffect;
+        private readonly Uri _uri = new Uri(@"../../Resources/Media/Soundeffects/explosion.wav", UriKind.Relative);
+        private readonly Uri _uriEny = new Uri(@"../../Resources/Media/Soundeffects/hit.wav", UriKind.Relative);
+        private SpawnHandler _spawner;
         private InputHandler _inputHandler;
 
         private List<AnimatedObject> _objectsToBeDeleted;
@@ -38,9 +38,9 @@ namespace InvasionOfAldebaran.ViewModels
         private int _points;
         private string _message;
 
-		#region Properties
+        #region Properties
 
-		public Canvas Canvas { get; private set; }
+        public Canvas Canvas { get; private set; }
         public Player Player { get; private set; }
 
         public int Points
@@ -71,7 +71,7 @@ namespace InvasionOfAldebaran.ViewModels
                 if (value == null)
                 {
                     this.GameEnded?.Invoke(this.Points);
-	                _currentQuestion = value;
+                    _currentQuestion = value;
                 }
                 _currentQuestion = value;
                 this.NotifyPropertyChanged(nameof(this.CurrentQuestion));
@@ -91,6 +91,7 @@ namespace InvasionOfAldebaran.ViewModels
         #endregion Properties
 
         public delegate void GameEndedEventHandler(int points);
+
         public event GameEndedEventHandler GameEnded;
 
         public PlayViewModel(FrameWindowViewModel frameWindow)
@@ -123,28 +124,28 @@ namespace InvasionOfAldebaran.ViewModels
             if (_currentWave >= maxWave)
                 _spawnAllowed = false;
 
-	        if (_spawnAllowed && _nextpSpawn <= DateTime.Now)
-	        {
-		        var enemies = _spawner.SpawnEnemies(this.CurrentQuestion);
-				_objects.AddRange(enemies);
-				_enemies.AddRange(enemies);
-				_nextpSpawn = DateTime.Now.AddSeconds(spawnInterval);
-		        this.CurrentWave++;
-			}
-	        if (!_spawnAllowed && _enemies.Count <= 0)
-	        {
-		        this.CurrentWave = 0;
-				this.CurrentQuestion = _spawner.GetQuestion();
-				// Ends the game once the questions run out
-		        if (this.CurrentQuestion == null)
-		        {
-			        var result = MessageBox.Show("You`ve won!", "Congratulations", MessageBoxButton.OK);
-					if (result.Equals(MessageBoxResult.OK))
-						this.EndGame();
-				}
-		        _nextpSpawn = DateTime.Now.AddSeconds(questionStartTime);
-		        _spawnAllowed = true;
-	        }
+            if (_spawnAllowed && _nextpSpawn <= DateTime.Now)
+            {
+                var enemies = _spawner.SpawnEnemies(this.CurrentQuestion);
+                _objects.AddRange(enemies);
+                _enemies.AddRange(enemies);
+                _nextpSpawn = DateTime.Now.AddSeconds(spawnInterval);
+                this.CurrentWave++;
+            }
+            if (!_spawnAllowed && _enemies.Count <= 0)
+            {
+                this.CurrentWave = 0;
+                this.CurrentQuestion = _spawner.GetQuestion();
+                // Ends the game once the questions run out
+                if (this.CurrentQuestion == null)
+                {
+                    var result = MessageBox.Show("You`ve won!", "Congratulations", MessageBoxButton.OK);
+                    if (result.Equals(MessageBoxResult.OK))
+                        this.EndGame();
+                }
+                _nextpSpawn = DateTime.Now.AddSeconds(questionStartTime);
+                _spawnAllowed = true;
+            }
 
             foreach (var item in _objects)
             {
@@ -154,11 +155,11 @@ namespace InvasionOfAldebaran.ViewModels
                 {
                     _objectsToBeDeleted.Add(item);
 
-					if (item.GetType() != typeof(Enemy)) continue;
+                    if (item.GetType() != typeof(Enemy)) continue;
 
-					var ship = item as Enemy;
-	                if (ship?.GetType() == typeof(Enemy) && !ship.AlienName.Equals(this.CurrentQuestion?.CorrectAnswer.Alien))
-		                this.Points--;
+                    var ship = item as Enemy;
+                    if (ship?.GetType() == typeof(Enemy) && !ship.AlienName.Equals(this.CurrentQuestion?.CorrectAnswer.Alien))
+                        this.Points--;
                 }
             }
 
@@ -171,18 +172,16 @@ namespace InvasionOfAldebaran.ViewModels
 
                     if (enemy.AlienName.Equals(this.CurrentQuestion?.CorrectAnswer.Alien))
                     {
-                        _soundEffect.Open(_uri);
-                        _soundEffect.Play();
+                        Soundmanager.PlayFriendlyExplosion();
                         _objectsToBeDeleted.Add(enemy);
                         _enemies.Remove(enemy);
                         _objectsToBeDeleted.Add(missile);
                         this.Message = "That was a friendly ship!";
-	                    this.Points = this.Points - 5;
+                        this.Points = this.Points - 5;
                     }
                     else
                     {
-                        _soundEffect.Open(_uriEny);
-                        _soundEffect.Play();
+                        Soundmanager.PlayEnemyExplosion();
                         _objectsToBeDeleted.Add(enemy);
                         _enemies.Remove(enemy);
                         _objectsToBeDeleted.Add(missile);
@@ -274,7 +273,7 @@ namespace InvasionOfAldebaran.ViewModels
 
         private void ChangeWindow()
         {
-			_frameViewModel.SetScore(this.Points);
+            _frameViewModel.SetScore(this.Points);
             _frameViewModel.ActivateItem(_frameViewModel.Items.Single(s => s is MainMenuViewModel));
         }
     }
