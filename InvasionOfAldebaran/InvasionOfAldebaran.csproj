@@ -83,7 +83,6 @@
     <Compile Include="Helper\Direction.cs" />
     <Compile Include="Models\SpawnHandler.cs" />
     <Compile Include="Properties\Annotations.cs" />
-    <Compile Include="ViewModels\IScreenViewModel.cs" />
     <Compile Include="ViewModels\MainMenuViewModel.cs" />
     <Compile Include="ViewModels\FrameWindowViewModel.cs" />
     <Compile Include="ViewModels\NotifyPropertyChangedBase.cs" />

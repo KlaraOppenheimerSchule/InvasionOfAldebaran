@@ -2,18 +2,25 @@
 using InvasionOfAldebaran.Helper;
 using System;
 using System.Linq;
+using System.Security.RightsManagement;
 using System.Windows.Input;
 using System.Windows.Media;
 
 namespace InvasionOfAldebaran.ViewModels
 {
-    public class MainMenuViewModel : Screen, IScreenViewModel
+    public class MainMenuViewModel : Screen
     {
+	    private string _highScore;
         public ICommand PlayButtonCommand { get; set; }
         public ICommand CloseButtonCommand { get; set; }
-        public string Highscore { get; set; }
+		public int Points { get; set; }
+	    public string Highscore
+	    {
+		    get { return "HighScore: " + this.Points; }
+			set { this._highScore = value; }
+	    }
 
-        //private MediaPlayer _mainThemePlayer;
+	    //private MediaPlayer _mainThemePlayer;
 
         private readonly FrameWindowViewModel _frameModel;
 
@@ -29,14 +36,18 @@ namespace InvasionOfAldebaran.ViewModels
             this.Highscore = "HIGHSCORE: " + Convert.ToString(frameModel.Points);
         }
 
-        public void CloseWindow()
+		#region Interface Members
+
+		private void CloseWindow()
         {
             _frameModel.CloseItem(_frameModel);
         }
 
-        public void ChangeWindow()
+        private void ChangeWindow()
         {
             _frameModel.ActivateItem(_frameModel.Items.Single(s => s is PlayViewModel));
         }
-    }
+		
+		#endregion
+	}
 }

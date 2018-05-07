@@ -12,7 +12,7 @@ using System.Windows.Threading;
 
 namespace InvasionOfAldebaran.ViewModels
 {
-    public sealed class PlayViewModel : NotifyPropertyChangedBase, IScreenViewModel
+    public sealed class PlayViewModel : NotifyPropertyChangedBase
     {
         private const int maxWave = 4;
 	    private const int spawnInterval = 6;
@@ -267,18 +267,15 @@ namespace InvasionOfAldebaran.ViewModels
 
         #endregion EventHandler
 
-        #region Interface Members
-
-        public void CloseWindow()
+        private void CloseWindow()
         {
             _frameViewModel.CloseItem(_frameViewModel);
         }
 
-        public void ChangeWindow()
+        private void ChangeWindow()
         {
+			_frameViewModel.SetScore(this.Points);
             _frameViewModel.ActivateItem(_frameViewModel.Items.Single(s => s is MainMenuViewModel));
         }
-
-        #endregion Interface Members
     }
 }

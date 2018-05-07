@@ -35,5 +35,14 @@ namespace InvasionOfAldebaran.ViewModels
         {
             this.Points = points;
         }
+
+	    public void SetScore(int score)
+	    {
+		    var mainMenu = this.Items.SingleOrDefault(m => m is MainMenuViewModel) as MainMenuViewModel;
+
+			if(mainMenu != null)
+				mainMenu.Points = score;
+
+	    }
     }
 }
