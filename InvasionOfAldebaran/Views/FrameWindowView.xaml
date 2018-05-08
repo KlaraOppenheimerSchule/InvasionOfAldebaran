@@ -8,7 +8,7 @@
 		xmlns:vm="clr-namespace:InvasionOfAldebaran.ViewModels"
         mc:Ignorable="d"
 		d:DataContext="{d:DesignInstance vm:FrameWindowViewModel}"
-        Title="FrameWindowView" Height= "860" Width="850" ResizeMode="NoResize">
+        Title="FrameWindowView" Height= "860" Width="950" ResizeMode="NoResize">
     <Grid>
         <ContentControl cal:View.Model="{Binding ActiveItem}"></ContentControl>
     </Grid>

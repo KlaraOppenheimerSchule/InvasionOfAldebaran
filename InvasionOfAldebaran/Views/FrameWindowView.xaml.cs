@@ -15,11 +15,5 @@ namespace InvasionOfAldebaran.Views
             this.InitializeComponent();
             _ViewModel = new FrameWindowViewModel();
         }
-
-        //Todo: Was hats denn damit auf sich?
-        private void WindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            _ViewModel.WindowClosing(sender, e);
-        }
     }
 }
