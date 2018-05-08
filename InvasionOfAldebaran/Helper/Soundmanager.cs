@@ -15,11 +15,11 @@ namespace InvasionOfAldebaran.Helper
         private static MediaPlayer gameThemeSoundeffect = new MediaPlayer();
         private static MediaPlayer shotSoundeffect = new MediaPlayer();
         private static MediaPlayer questionSoundeffect = new MediaPlayer();
+        private static MediaPlayer screamSoundeffect = new MediaPlayer();
 
         public static void PlayEnemyExplosion()
         {
             Uri _uriEny = new Uri(@"../../Resources/Media/Soundeffects/hit.wav", UriKind.Relative);
-
             enemySoundeffect.Open(_uriEny);
             enemySoundeffect.Play();
         }
@@ -33,8 +33,11 @@ namespace InvasionOfAldebaran.Helper
 
         public static void PlayFriendlyExplosion()
         {
-            Uri _uri = new Uri(@"../../Resources/Media/Soundeffects/explosion.wav", UriKind.Relative);
-            friendlySoundeffect.Open(_uri);
+            Uri Uri = new Uri(@"../../Resources/Media/Soundeffects/hit.wav", UriKind.Relative);
+            Uri UriScream = new Uri(@"../../Resources/Media/Soundeffects/wilhemsscream.mp3", UriKind.Relative);
+            friendlySoundeffect.Open(Uri);
+            screamSoundeffect.Open(UriScream);
+            screamSoundeffect.Play();
             friendlySoundeffect.Play();
         }
 
