@@ -7,7 +7,7 @@
 			 xmlns:vm="clr-namespace:InvasionOfAldebaran.ViewModels"
              mc:Ignorable="d" Focusable="False"
 			 d:DataContext="{d:DesignInstance vm:PlayViewModel}"
-             d:DesignHeight="800" d:DesignWidth="850">
+             d:DesignHeight="800" d:DesignWidth="950">
 	<Grid Background="DarkGray">
 		<Grid.RowDefinitions>
 			<RowDefinition Height="80" />
@@ -30,7 +30,7 @@
 			<ContentPresenter Content="{Binding Canvas}" />
 		</Canvas>
 
-		<!-- Answers -->
+		<!-- Answer Panel -->
 		<StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Center" CanVerticallyScroll="True">
 			<!-- Points -->
 			<TextBlock Text="{Binding Points, StringFormat='Points:  {0}'}" Foreground="DodgerBlue" FontSize="28" FontWeight="Bold" 

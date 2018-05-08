@@ -97,7 +97,9 @@ namespace InvasionOfAldebaran.Models
         {
             if (_questions.Count > 0)
             {
-                var question = _questions.FirstOrDefault();
+	            int index = this._r.Next(0, _questions.Count);
+
+	            var question = _questions[index];
                 _questions.Remove(question);
                 return question;
             }
@@ -176,8 +178,44 @@ namespace InvasionOfAldebaran.Models
                     new Answer("DCMI : ^)", false),
                     new Answer("HSDPA", false),
                     new Answer("DisplayPort", true),
-                    Difficulty.Easy)
-            };
+                    Difficulty.Easy),
+
+	            new Question("Welche der folgenden Betriebssysteme bildet die Grundlage für Android?",
+		            new Answer("OSX", false),
+		            new Answer("Windows Mobile", false),
+		            new Answer("Linux", true),
+		            new Answer("OS/2", false),
+		            Difficulty.Easy),
+
+				new Question("Mit welchen der folgenden Hilfsmittel wird die Programmlogik dokumentiert?",
+					new Answer("Compiler", false),
+					new Answer("Interpreter", false),
+					new Answer("Struktogrammgenerator", true),
+					new Answer("Programmgenerator", false),
+					Difficulty.Easy),
+
+	            new Question("Welches Tool unterstützt bei einem Whitebox Test?",
+		            new Answer("File Editor", false),
+		            new Answer("Compiler", false),
+		            new Answer("Debugger", true),
+		            new Answer("Interpreter", false),
+		            Difficulty.Hard),
+
+				new Question("Wer war der erste Bundeskanzler",
+					new Answer("Konrad Adenauer", true),
+					new Answer("Ludwig Erhard", false),
+					new Answer("Willy Brandt", false),
+					new Answer("Friedrich Willhelm", false),
+					Difficulty.Hard),
+
+	            new Question("In welchem Fall liegt ein zweiseitiges Rechtsgeschäft vor",
+		            new Answer("Anfechtung", false),
+		            new Answer("Mahnung", false),
+		            new Answer("Vermietung", true),
+		            new Answer("Kündigung", false),
+		            Difficulty.Hard)
+
+			};
             return list;
         }
     }

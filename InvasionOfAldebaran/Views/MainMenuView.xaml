@@ -7,7 +7,7 @@
 			 xmlns:vm="clr-namespace:InvasionOfAldebaran.ViewModels"
              mc:Ignorable="d"
 			 d:DataContext="{d:DesignInstance vm:MainMenuViewModel}"
-             d:DesignHeight="850" d:DesignWidth="850">
+             d:DesignHeight="850" d:DesignWidth="950">
     <UserControl.Background>
         <ImageBrush ImageSource="../Resources/15-original.png"></ImageBrush>
     </UserControl.Background>
