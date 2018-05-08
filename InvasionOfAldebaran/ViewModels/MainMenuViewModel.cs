@@ -13,7 +13,7 @@ namespace InvasionOfAldebaran.ViewModels
 	    private string _highScore;
         public ICommand PlayButtonCommand { get; set; }
         public ICommand CloseButtonCommand { get; set; }
-		public int Points { get; set; }
+        public int Points { get; set; }
 	    public string Highscore
 	    {
 		    get { return "HighScore: " + this.Points; }
@@ -22,7 +22,7 @@ namespace InvasionOfAldebaran.ViewModels
 
 	    //private MediaPlayer _mainThemePlayer;
 
-        private readonly FrameWindowViewModel _frameModel;
+        private FrameWindowViewModel _frameModel;
 
         public MainMenuViewModel(FrameWindowViewModel frameModel)
         {
@@ -36,11 +36,27 @@ namespace InvasionOfAldebaran.ViewModels
             this.Highscore = "HIGHSCORE: " + Convert.ToString(frameModel.Points);
         }
 
+        public string returnHighscore()
+        {
+            return _highScore;
+        }
+
+        public void setHighscore(int score)
+        {
+            this.Points = score;
+        }
 		#region Interface Members
 
 		private void CloseWindow()
         {
+            sendPointsToTRT();
+            
             _frameModel.CloseItem(_frameModel);
+        }
+
+        public void sendPointsToTRT( )
+        {
+            Environment.ExitCode = this.Points;
         }
 
         private void ChangeWindow()

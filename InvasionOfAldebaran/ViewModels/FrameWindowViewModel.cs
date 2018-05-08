@@ -26,22 +26,14 @@ namespace InvasionOfAldebaran.ViewModels
             this.ActiveItem = this.Items.FirstOrDefault();
         }
 
-        public void WindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            Environment.ExitCode = this.Points;
-        }
-		//Todo: Das sollten wir besser per Event machen
-        public void PointsAchieved(int points)
-        {
-            this.Points = points;
-        }
-
 	    public void SetScore(int score)
 	    {
-		    var mainMenu = this.Items.SingleOrDefault(m => m is MainMenuViewModel) as MainMenuViewModel;
+
+            var mainMenu = this.Items.SingleOrDefault(m => m is MainMenuViewModel) as MainMenuViewModel;
+
 
 			if(mainMenu != null)
-				mainMenu.Points = score;
+				mainMenu.setHighscore( score );
 
 	    }
     }
