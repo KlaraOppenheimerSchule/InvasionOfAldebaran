@@ -98,7 +98,7 @@ namespace InvasionOfAldebaran.ViewModels
         {
             _frameViewModel = frameWindow;
             ImageBrush backgroundImage = new ImageBrush();
-            string imagePath = @"../../Resources/Images/background.jpg";
+            string imagePath = @"../../Resources/Images/IngameBackground.jpg";
             var imageBitmap = new BitmapImage(new Uri(imagePath, UriKind.Relative));
             backgroundImage.ImageSource = imageBitmap;
             
@@ -211,11 +211,14 @@ namespace InvasionOfAldebaran.ViewModels
             if (_inputHandler.SpacePressed)
                 this._spawner.SpawnMissile(this.Player);
 
-            if (_inputHandler.LeftPressed)
+            if (_inputHandler.LeftPressed && !_inputHandler.RightPressed)
                 this.Player.Move(Direction.Left);
 
-            else if (_inputHandler.RightPressed )
+            else if (_inputHandler.RightPressed && !_inputHandler.LeftPressed)
                 this.Player.Move(Direction.Right);
+
+            else
+				this.Player.Move(Direction.Down);
         }
 
         //todo evtl gar nicht benötigt aber dann müssen die Eventhandler woanders deabonniert werden

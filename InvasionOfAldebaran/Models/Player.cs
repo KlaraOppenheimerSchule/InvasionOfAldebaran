@@ -27,11 +27,11 @@ namespace InvasionOfAldebaran.Models
 
             if ((this.Coords.X + (this.Image.ActualWidth)) > canvas.ActualWidth)
             {
-                this.Coords.X = canvas.ActualWidth - (this.Image.ActualWidth);
+                this.Coords.X = canvas.ActualWidth - (this.Image.ActualWidth) -3;
             }
             else if ((this.Coords.X) < 0)
             {
-                this.Coords.X = 0;
+                this.Coords.X = 3;
             }
 
             if (this.Coords.Y > canvas.ActualHeight)
