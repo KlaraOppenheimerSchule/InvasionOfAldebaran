@@ -20,9 +20,7 @@ namespace InvasionOfAldebaran.ViewModels
 
         private readonly FrameWindowViewModel _frameViewModel;
         private readonly DispatcherTimer _timer = new DispatcherTimer();
-        private readonly MediaPlayer _soundEffect;
-        private readonly Uri _uri = new Uri(@"../../Resources/Media/Soundeffects/explosion.wav", UriKind.Relative);
-        private readonly Uri _uriEny = new Uri(@"../../Resources/Media/Soundeffects/hit.wav", UriKind.Relative);
+        
         private SpawnHandler _spawner;
         private InputHandler _inputHandler;
 
@@ -49,6 +47,8 @@ namespace InvasionOfAldebaran.ViewModels
             private set
             {
                 this._points = value;
+	            if (this._points < 0)
+		            this._points = 0;
                 this.NotifyPropertyChanged(nameof(this.Points));
             }
         }
@@ -96,7 +96,6 @@ namespace InvasionOfAldebaran.ViewModels
 
         public PlayViewModel(FrameWindowViewModel frameWindow)
         {
-            _soundEffect = new MediaPlayer();
             _frameViewModel = frameWindow;
             ImageBrush backgroundImage = new ImageBrush();
             string imagePath = @"../../Resources/Images/background.jpg";
@@ -155,11 +154,15 @@ namespace InvasionOfAldebaran.ViewModels
                 {
                     _objectsToBeDeleted.Add(item);
 
-                    if (item.GetType() != typeof(Enemy)) continue;
+	                if (item.GetType() != typeof(Enemy))
+		                continue;
 
                     var ship = item as Enemy;
-                    if (ship?.GetType() == typeof(Enemy) && !ship.AlienName.Equals(this.CurrentQuestion?.CorrectAnswer.Alien))
-                        this.Points--;
+	                if (ship?.GetType() == typeof(Enemy) &&
+	                    !ship.AlienName.Equals(this.CurrentQuestion?.CorrectAnswer.Alien))
+	                {
+		                this.Points = this.Points - 10;
+	                }    
                 }
             }
 
@@ -204,14 +207,13 @@ namespace InvasionOfAldebaran.ViewModels
         private void ApplyInputToPlayer()
         {
             if (_inputHandler.SpacePressed)
-                this._spawner.SpawnMissile(this.Player, this._soundEffect);
+                this._spawner.SpawnMissile(this.Player);
 
-            if (_inputHandler.LeftPressed && !_inputHandler.RightPressed)
+            if (_inputHandler.LeftPressed)
                 this.Player.Move(Direction.Left);
-            else if (_inputHandler.RightPressed && !_inputHandler.LeftPressed)
+
+            else if (_inputHandler.RightPressed )
                 this.Player.Move(Direction.Right);
-            else if (_inputHandler.LeftPressed && _inputHandler.RightPressed)
-                this.Player.Move(Direction.Down);
         }
 
         //todo evtl gar nicht benötigt aber dann müssen die Eventhandler woanders deabonniert werden

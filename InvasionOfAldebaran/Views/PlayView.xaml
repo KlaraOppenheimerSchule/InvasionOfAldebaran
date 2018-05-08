@@ -7,7 +7,7 @@
 			 xmlns:vm="clr-namespace:InvasionOfAldebaran.ViewModels"
              mc:Ignorable="d" Focusable="False"
 			 d:DataContext="{d:DesignInstance vm:PlayViewModel}"
-             d:DesignHeight="850" d:DesignWidth="850">
+             d:DesignHeight="800" d:DesignWidth="850">
 	<Grid Background="DarkGray">
 		<Grid.RowDefinitions>
 			<RowDefinition Height="80" />
