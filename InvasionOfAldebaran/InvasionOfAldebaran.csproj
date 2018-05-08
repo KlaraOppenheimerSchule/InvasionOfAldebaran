@@ -162,6 +162,7 @@
     <Resource Include="Resources\Images\alien3.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\Media\Soundeffects\wilhelmscream.mp3" />
     <Resource Include="Resources\Images\background.JPG" />
     <Resource Include="Resources\Images\laser.png" />
     <Content Include="Resources\InGameTheme.mp3" />
