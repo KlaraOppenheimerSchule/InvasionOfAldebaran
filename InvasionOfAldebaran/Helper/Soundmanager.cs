@@ -14,6 +14,7 @@ namespace InvasionOfAldebaran.Helper
         private static MediaPlayer mainThemeSoundeffect = new MediaPlayer();
         private static MediaPlayer gameThemeSoundeffect = new MediaPlayer();
         private static MediaPlayer shotSoundeffect = new MediaPlayer();
+        private static MediaPlayer questionSoundeffect = new MediaPlayer();
 
         public static void PlayEnemyExplosion()
         {
@@ -21,6 +22,13 @@ namespace InvasionOfAldebaran.Helper
 
             enemySoundeffect.Open(_uriEny);
             enemySoundeffect.Play();
+        }
+
+        public static void PlayNewQuestion()
+        {
+            Uri _uriEny = new Uri(@"../../Resources/Media/Soundeffects/question.wav", UriKind.Relative);
+            questionSoundeffect.Open(_uriEny);
+            questionSoundeffect.Play();
         }
 
         public static void PlayFriendlyExplosion()

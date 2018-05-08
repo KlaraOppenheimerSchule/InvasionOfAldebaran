@@ -133,6 +133,7 @@ namespace InvasionOfAldebaran.ViewModels
             {
                 this.CurrentWave = 0;
                 this.CurrentQuestion = _spawner.GetQuestion();
+                Soundmanager.PlayNewQuestion();
                 // Ends the game once the questions run out
                 if (this.CurrentQuestion == null)
                 {
