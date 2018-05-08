@@ -9,6 +9,7 @@ namespace InvasionOfAldebaran.Helper
 {
     public static class Soundmanager
     {
+		private static Random r = new Random();
         private static MediaPlayer enemySoundeffect = new MediaPlayer();
         private static MediaPlayer friendlySoundeffect = new MediaPlayer();
         private static MediaPlayer mainThemeSoundeffect = new MediaPlayer();
@@ -19,8 +20,13 @@ namespace InvasionOfAldebaran.Helper
 
         public static void PlayEnemyExplosion()
         {
-            Uri _uriEny = new Uri(@"../../Resources/Media/Soundeffects/explosion.wav", UriKind.Relative);
-            enemySoundeffect.Open(_uriEny);
+	        var index = r.Next(0, 2);
+	        Uri uriEny;
+
+			uriEny = index == 0 ? new Uri(@"../../Resources/Media/Soundeffects/explosion.wav", UriKind.Relative) 
+				: new Uri(@"../../Resources/Media/Soundeffects/hit.wav", UriKind.Relative);
+
+			enemySoundeffect.Open(uriEny);
             enemySoundeffect.Play();
         }
 

@@ -101,7 +101,7 @@ namespace InvasionOfAldebaran.ViewModels
             string imagePath = @"../../Resources/Images/background.jpg";
             var imageBitmap = new BitmapImage(new Uri(imagePath, UriKind.Relative));
             backgroundImage.ImageSource = imageBitmap;
-            Soundmanager.PlayTheme(false);
+            
 
             this.Canvas = new Canvas()
             {
@@ -241,9 +241,10 @@ namespace InvasionOfAldebaran.ViewModels
 
             _timer.Tick += this.AnimateObjects;
             _spawner.ObjectsSpawned += this.AddObjectEventHandler;
+	        Soundmanager.PlayTheme(false);
 
-            // Setup for Gameplay
-            this.Player = _spawner.SpawnPlayer();
+			// Setup for Gameplay
+			this.Player = _spawner.SpawnPlayer();
             _objects.Add(this.Player);
             this.CurrentQuestion = _spawner.GetQuestion();
             // First Spawn after this amount of seconds
