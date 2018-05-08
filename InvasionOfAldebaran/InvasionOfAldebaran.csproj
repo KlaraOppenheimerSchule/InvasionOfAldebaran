@@ -164,6 +164,9 @@
   <ItemGroup>
     <Resource Include="Resources\Images\IngameBackground.jpg" />
     <Resource Include="Resources\Images\MainMenuBackground.jpg" />
+    <Resource Include="Resources\Images\FreddyPower.png" />
+    <Resource Include="Resources\Images\Ship.png" />
+    <Resource Include="Resources\Images\Background.png" />
     <Content Include="Resources\Media\Soundeffects\wilhelmscream.mp3" />
     <Resource Include="Resources\Images\background.JPG" />
     <Resource Include="Resources\Images\laser.png" />
