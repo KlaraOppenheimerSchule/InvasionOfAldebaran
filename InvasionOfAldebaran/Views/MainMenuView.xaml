@@ -9,7 +9,7 @@
 			 d:DataContext="{d:DesignInstance vm:MainMenuViewModel}"
              d:DesignHeight="850" d:DesignWidth="950">
     <UserControl.Background>
-        <ImageBrush ImageSource="../Resources/Images/MainMenuBackground.jpg"></ImageBrush>
+        <ImageBrush ImageSource="../Resources/Images/Background.jpg"></ImageBrush>
     </UserControl.Background>
     <Grid>
         <Button x:Name="PlayButton" Content="Play" HorizontalAlignment="Center" Margin="0, 300" VerticalAlignment="Top" Width="150" Height="30" Command="{Binding PlayButtonCommand}" />
