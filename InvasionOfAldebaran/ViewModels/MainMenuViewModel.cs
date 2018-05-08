@@ -21,14 +21,12 @@ namespace InvasionOfAldebaran.ViewModels
             set { this._highScore = value; }
         }
 
-        //private MediaPlayer _mainThemePlayer;
-
         private readonly FrameWindowViewModel _frameModel;
 
         public MainMenuViewModel(FrameWindowViewModel frameModel)
         {
             _frameModel = frameModel;
-            Soundmanager.PlayTheme(false);
+            Soundmanager.GameTheme(false);
 
             this.PlayButtonCommand = new RelayCommand(this.ChangeWindow);
             this.CloseButtonCommand = new RelayCommand(this.CloseWindow);
@@ -44,7 +42,7 @@ namespace InvasionOfAldebaran.ViewModels
 
         private void ChangeWindow()
         {
-            Soundmanager.PlayTheme(true);
+            Soundmanager.GameTheme(true);
             _frameModel.ActivateItem(_frameModel.Items.Single(s => s is PlayViewModel));
         }
 

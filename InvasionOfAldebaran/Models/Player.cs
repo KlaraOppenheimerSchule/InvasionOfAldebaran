@@ -10,7 +10,6 @@ namespace InvasionOfAldebaran.Models
 
         public Player(string imagePath, Coords coords) : base(imagePath, coords)
         {
- 
         }
 
         public override void Draw(Canvas canvas)

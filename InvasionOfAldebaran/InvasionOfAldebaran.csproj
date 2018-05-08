@@ -162,8 +162,12 @@
     <Resource Include="Resources\Images\alien3.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\Media\Soundeffects\wilhelmscream.mp3" />
     <Resource Include="Resources\Images\background.JPG" />
     <Resource Include="Resources\Images\laser.png" />
+    <Content Include="Resources\InGameTheme.mp3" />
+    <Content Include="Resources\MainMenuTheme.mp3" />
+    <Content Include="Resources\Media\Soundeffects\question.wav" />
     <Content Include="Resources\Media\Soundeffects\explosion.wav" />
     <Content Include="Resources\Media\Soundeffects\hit.wav" />
     <Content Include="Resources\Media\Soundeffects\laser.wav" />

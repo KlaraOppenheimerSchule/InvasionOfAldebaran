@@ -101,6 +101,7 @@ namespace InvasionOfAldebaran.ViewModels
             string imagePath = @"../../Resources/Images/background.jpg";
             var imageBitmap = new BitmapImage(new Uri(imagePath, UriKind.Relative));
             backgroundImage.ImageSource = imageBitmap;
+            Soundmanager.PlayTheme(false);
 
             this.Canvas = new Canvas()
             {
@@ -135,6 +136,7 @@ namespace InvasionOfAldebaran.ViewModels
             {
                 this.CurrentWave = 0;
                 this.CurrentQuestion = _spawner.GetQuestion();
+                Soundmanager.PlayNewQuestion();
                 // Ends the game once the questions run out
                 if (this.CurrentQuestion == null)
                 {
@@ -275,6 +277,7 @@ namespace InvasionOfAldebaran.ViewModels
 
         private void ChangeWindow()
         {
+            Soundmanager.PlayTheme(true);
             _frameViewModel.SetScore(this.Points);
             _frameViewModel.ActivateItem(_frameViewModel.Items.Single(s => s is MainMenuViewModel));
         }
