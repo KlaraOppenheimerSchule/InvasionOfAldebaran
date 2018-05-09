@@ -35,12 +35,12 @@ namespace InvasionOfAldebaran.ViewModels
             this.Highscore = "HIGHSCORE: " + Convert.ToString(frameModel.Points);
         }
 
-        public string returnHighscore()
+        public string ReturnHighscore()
         {
             return _highScore;
         }
 
-        public void setHighscore(int score)
+        public void SetHighscore(int score)
         {
             this.Points = score;
         }
@@ -49,12 +49,12 @@ namespace InvasionOfAldebaran.ViewModels
 
         private void CloseWindow()
         {
-            sendPointsToTRT();
+            SendPointsToTRT();
 
             _frameModel.CloseItem(_frameModel);
         }
 
-        public void sendPointsToTRT()
+        public void SendPointsToTRT()
         {
             Environment.ExitCode = this.Points;
         }

@@ -30,15 +30,12 @@ namespace InvasionOfAldebaran.ViewModels
             this.ActiveItem = this.Items.FirstOrDefault();
         }
 
-	    public void SetScore(int score)
-	    {
-
+        public void SetScore(int score)
+        {
             var mainMenu = this.Items.SingleOrDefault(m => m is MainMenuViewModel) as MainMenuViewModel;
 
-
-			if(mainMenu != null)
-				mainMenu.setHighscore( score );
-
-	    }
+            if (mainMenu != null)
+                mainMenu.SetHighscore(score);
+        }
     }
 }
