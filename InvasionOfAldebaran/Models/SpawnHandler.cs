@@ -213,9 +213,78 @@ namespace InvasionOfAldebaran.Models
 		            new Answer("Mahnung", false),
 		            new Answer("Vermietung", true),
 		            new Answer("Kündigung", false),
-		            Difficulty.Hard)
+		            Difficulty.Hard),
 
-			};
+                new Question("Auf welcher ISO/OSI-Schicht arbeitet das Protokoll „SMTP“?",
+                    new Answer("1", false),
+                    new Answer("3", false),
+                    new Answer("4", false),
+                    new Answer("7", true),
+                    Difficulty.Medium),
+
+                new Question("Aus wie vielen Schichten besteht das ISO/OSI-Schichtenmodell?",
+                    new Answer("5", false),
+                    new Answer("6", false),
+                    new Answer("7", true),
+                    new Answer("8", false),
+                    Difficulty.Medium),
+
+                new Question("Wie lautet die englische Bezeichnung der Sicherungsschicht (2) des ISO/OSI-Modells?",
+                    new Answer("Data Link Layer", true),
+                    new Answer("Security Layer", false),
+                    new Answer("Network Layer", false),
+                    new Answer("Physical Layer", false),
+                    Difficulty.Medium),
+
+                new Question("Auf welchem Port arbeitet das HTTPS-Protokoll standardmäßig?",
+                    new Answer("80", false),
+                    new Answer("443", true),
+                    new Answer("21", false),
+                    new Answer("53", false),
+                    Difficulty.Easy),
+
+                new Question("Welches Protokoll nutzt standardmäßig den Port 22?",
+                    new Answer("DNS", false),
+                    new Answer("SSH", true),
+                    new Answer("SMTP", false),
+                    new Answer("FTP", false),
+                    Difficulty.Medium),
+
+                new Question("Mit welchem Befehl lässt sich unter Windows der Weg eines IP-Pakets nachverfolgen?",
+                    new Answer("ping", false),
+                    new Answer("ipconfig", false),
+                    new Answer("showroute", false),
+                    new Answer("tracert", true),
+                    Difficulty.Medium),
+
+                new Question("Welcher HTTP-Statuscode signalisiert 'Alles OK!'?",
+                    new Answer("200", true),
+                    new Answer("300", false),
+                    new Answer("400", false),
+                    new Answer("500", false),
+                    Difficulty.Medium),
+
+                new Question("Welchen Dezimalwert stellt der Hexadezimalwert 'A1' dar?",
+                    new Answer("143", false),
+                    new Answer("161", true),
+                    new Answer("191", false),
+                    new Answer("224", false),
+                    Difficulty.Hard),
+
+                new Question("Welche IPv6-Adresse zeigt auf den 'localhost'?",
+                    new Answer("2002::", false),
+                    new Answer("2003::", false),
+                    new Answer("::0", false),
+                    new Answer("::1", true),
+                    Difficulty.Medium),
+
+                new Question("Wie lautet die Standard-Subnetzmaske eines Klasse-C-Netzes?",
+                    new Answer("255.0.0.0", false),
+                    new Answer("255.255.0.0", false),
+                    new Answer("255.255.255.0", true),
+                    new Answer("255.255.255.255", false),
+                    Difficulty.Medium)
+            };
             return list;
         }
     }
