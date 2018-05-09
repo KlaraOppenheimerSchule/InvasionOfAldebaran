@@ -1,6 +1,7 @@
 ﻿using Caliburn.Micro;
 using System;
 using System.Linq;
+using System.Windows;
 
 namespace InvasionOfAldebaran.ViewModels
 {
@@ -8,6 +9,8 @@ namespace InvasionOfAldebaran.ViewModels
     {
         public string Name { get; set; }
         public int Points { get; set; }
+		public double Height { get; set; }
+		public double Width { get; set; }
 
         public FrameWindowViewModel()
         {
@@ -20,6 +23,7 @@ namespace InvasionOfAldebaran.ViewModels
                 int.TryParse(arguments[2], out var points);
                 this.Points = points;
             }
+	        this.Height = SystemParameters.WorkArea.Height;
 
             this.Items.Add(new MainMenuViewModel(this));
             this.Items.Add(new PlayViewModel(this));

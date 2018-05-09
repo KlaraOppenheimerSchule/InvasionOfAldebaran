@@ -7,8 +7,8 @@
 			 xmlns:vm="clr-namespace:InvasionOfAldebaran.ViewModels"
              mc:Ignorable="d" Focusable="False"
 			 d:DataContext="{d:DesignInstance vm:PlayViewModel}"
-             d:DesignHeight="800" d:DesignWidth="950">
-	<Grid Background="DarkGray">
+            >
+	<Grid Background="Black">
 		<Grid.RowDefinitions>
 			<RowDefinition Height="80" />
 			<RowDefinition Height="*" />
@@ -16,24 +16,35 @@
 		</Grid.RowDefinitions>
 
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="{Binding Canvas.Width}" />
+			<ColumnDefinition Width="*" />
+			<ColumnDefinition Width="{Binding PlayAreaWidth}" />
 			<ColumnDefinition Width="*" />
 		</Grid.ColumnDefinitions>
 
 		<!-- Question -->
-		<Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Visibility="Visible" BorderBrush="Black" BorderThickness="3">
+		<Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Visibility="Visible" BorderBrush="DarkMagenta" BorderThickness="3">
 			<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding CurrentQuestion.Text}"
-				   FontSize="22" FontWeight="Bold" Foreground="Red" />
+				   FontSize="22" FontWeight="Bold" Foreground="Silver" FontStyle="Oblique"/>
+		</Border>
+		<!-- Instructions -->
+		<Border Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" ClipToBounds="True" Visibility="Visible" BorderBrush="DarkMagenta" BorderThickness="3">
+			<StackPanel>
+				<TextBlock HorizontalAlignment="Left" FontSize="22" FontWeight="Bold" Foreground="Silver" 
+					   Text="Hier stehen die Instruktionen"/>
+			</StackPanel>
 		</Border>
 		<!-- Canvas -->
-		<Canvas Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top">
-			<ContentPresenter Content="{Binding Canvas}" />
-		</Canvas>
+		<Border Grid.Row="1" Grid.Column="1" Visibility="Visible" BorderBrush="DarkMagenta" BorderThickness="3">
+			<Canvas HorizontalAlignment="Left" VerticalAlignment="Top">
+				<ContentPresenter Content="{Binding Canvas}" />
+			</Canvas>
+		</Border>
 
 		<!-- Answer Panel -->
-		<StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Center" CanVerticallyScroll="True">
+		<Border Grid.Row="1" Grid.Column="2" Grid.RowSpan="2" Visibility="Visible" BorderBrush="DarkMagenta" BorderThickness="3">
+		<StackPanel Grid.Row="1" Grid.Column="2" VerticalAlignment="Top" HorizontalAlignment="Center" CanVerticallyScroll="True">
 			<!-- Points -->
-			<TextBlock Text="{Binding Points, StringFormat='Points:  {0}'}" Foreground="DodgerBlue" FontSize="28" FontWeight="Bold" 
+			<TextBlock Text="{Binding Points, StringFormat='Points:  {0}'}" Foreground="Silver" FontSize="28" FontWeight="Bold" 
 					   HorizontalAlignment="Center" Margin="0 30 0 0"/>
 			<!-- Answers -->
 			<ItemsControl Margin="0 50 0 0">
@@ -45,10 +56,10 @@
 					<Image Grid.Column="0" Grid.Row="0" Source="{Binding CurrentQuestion.Answers[0].Source}" Margin="5 0"
 						   HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="Fant" Stretch="Fill" Width="30" Height="30"/>
 					<TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding CurrentQuestion.Answers[0].Text}" FontSize="24" 
-							   FontWeight="Bold" HorizontalAlignment="Left" Foreground="DodgerBlue"/>
+							   FontWeight="Bold" HorizontalAlignment="Left" Foreground="Silver"/>
 				</Grid>
 			</ItemsControl>
-			<Border Visibility="Visible" BorderBrush="Black" BorderThickness="1" Margin="0 10 0 10"/>
+			<Border Visibility="Visible" BorderBrush="DarkMagenta" BorderThickness="1" Margin="0 10 0 10"/>
 			<ItemsControl>
 				<Grid>
 					<Grid.ColumnDefinitions>
@@ -58,10 +69,10 @@
 					<Image Grid.Column="0" Grid.Row="0" Source="{Binding CurrentQuestion.Answers[1].Source}" Margin="5 0"
 			               HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="Fant" Stretch="Fill" Width="30" Height="30"/>
 					<TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding CurrentQuestion.Answers[1].Text}" FontSize="24" 
-			                   FontWeight="Bold" HorizontalAlignment="Left" Foreground="DodgerBlue"/>
+			                   FontWeight="Bold" HorizontalAlignment="Left" Foreground="Silver"/>
 				</Grid>
 			</ItemsControl>
-			<Border Visibility="Visible" BorderBrush="Black" BorderThickness="1" Margin="0 10 0 10"/>
+			<Border Visibility="Visible" BorderBrush="DarkMagenta" BorderThickness="1" Margin="0 10 0 10"/>
 			<ItemsControl >
 				<Grid>
 					<Grid.ColumnDefinitions>
@@ -71,10 +82,10 @@
 					<Image Grid.Column="0" Grid.Row="0" Source="{Binding CurrentQuestion.Answers[2].Source}" Margin="5 0"
 					       HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="Fant" Stretch="Fill" Width="30" Height="30"/>
 					<TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding CurrentQuestion.Answers[2].Text}" FontSize="24" 
-					           FontWeight="Bold" HorizontalAlignment="Left" Foreground="DodgerBlue"/>
+					           FontWeight="Bold" HorizontalAlignment="Left" Foreground="Silver"/>
 				</Grid>
 			</ItemsControl>
-			<Border Visibility="Visible" BorderBrush="Black" BorderThickness="1" Margin="0 10 0 10"/>
+			<Border Visibility="Visible" BorderBrush="DarkMagenta" BorderThickness="1" Margin="0 10 0 10"/>
 			<ItemsControl >
 				<Grid>
 					<Grid.ColumnDefinitions>
@@ -84,17 +95,18 @@
 					<Image Grid.Column="0" Grid.Row="0" Source="{Binding CurrentQuestion.Answers[3].Source}" Margin="5 0"
 			               HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="Fant" Stretch="Fill" Width="30" Height="30"/>
 					<TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding CurrentQuestion.Answers[3].Text}" FontSize="24" 
-			                   FontWeight="Bold" HorizontalAlignment="Left" Foreground="DodgerBlue"/>
+			                   FontWeight="Bold" HorizontalAlignment="Left" Foreground="Silver"/>
 				</Grid>
 			</ItemsControl>
 		</StackPanel>
+		</Border>
 		<!-- Hit Messages & Wave Number -->
-		<Border Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" Visibility="Visible" BorderBrush="Black" BorderThickness="3" >
+		<Border Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="1" Visibility="Visible" BorderBrush="DarkMagenta" BorderThickness="3" >
 			<Grid>
-				<TextBlock Text="{Binding Message}" Foreground="Red" FontSize="20" Margin="80 0"
+				<TextBlock Text="{Binding Message}" Foreground="Silver" FontSize="20" Margin="80 0"
 				           HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold"/>
 				<TextBlock Text="{Binding CurrentWave, StringFormat='Wave: {0}'}" HorizontalAlignment="Right" 
-						   VerticalAlignment="Center" Foreground="DodgerBlue" FontSize="20" Margin="80 0" FontWeight="Bold"/>
+						   VerticalAlignment="Center" Foreground="Silver" FontSize="20" Margin="80 0" FontWeight="Bold"/>
 			</Grid>
 		</Border>
 	</Grid>

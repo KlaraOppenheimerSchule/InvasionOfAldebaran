@@ -16,7 +16,7 @@ namespace InvasionOfAldebaran.ViewModels
     {
         private const int maxWave = 4;
         private const int spawnInterval = 6;
-        private const int questionStartTime = 3;
+        private const int questionStartTime = 5;
 
         private readonly FrameWindowViewModel _frameViewModel;
         private readonly DispatcherTimer _timer = new DispatcherTimer();
@@ -35,8 +35,9 @@ namespace InvasionOfAldebaran.ViewModels
 
         private int _points;
         private string _message;
+	    private double _playAreaWidth;
 
-        #region Properties
+	    #region Properties
 
         public Canvas Canvas { get; private set; }
         public Player Player { get; private set; }
@@ -77,7 +78,6 @@ namespace InvasionOfAldebaran.ViewModels
                 this.NotifyPropertyChanged(nameof(this.CurrentQuestion));
             }
         }
-
         public int CurrentWave
         {
             get { return _currentWave; }
@@ -87,8 +87,9 @@ namespace InvasionOfAldebaran.ViewModels
                 this.NotifyPropertyChanged(nameof(this.CurrentWave));
             }
         }
+	    public double PlayAreaWidth => this.Canvas.Width + 6;
 
-        #endregion Properties
+	    #endregion Properties
 
         public delegate void GameEndedEventHandler(int points);
 
@@ -137,7 +138,7 @@ namespace InvasionOfAldebaran.ViewModels
                 this.CurrentQuestion = _spawner.GetQuestion();
                 Soundmanager.PlayNewQuestion();
                 // Ends the game once the questions run out
-                if (this.CurrentQuestion == null)
+                if (this.CurrentQuestion == null || this.Points == 100)
                 {
                     var result = MessageBox.Show("You`ve won!", "Congratulations", MessageBoxButton.OK);
                     if (result.Equals(MessageBoxResult.OK))
@@ -162,7 +163,7 @@ namespace InvasionOfAldebaran.ViewModels
                     if (ship?.GetType() == typeof(Enemy) &&
                         !ship.AlienName.Equals(this.CurrentQuestion?.CorrectAnswer.Alien))
                     {
-                        this.Points = this.Points - 10;
+                        this.Points = this.Points - 3;
                     }
                 }
             }
@@ -181,7 +182,7 @@ namespace InvasionOfAldebaran.ViewModels
                         _enemies.Remove(enemy);
                         _objectsToBeDeleted.Add(missile);
                         this.Message = "That was a friendly ship!";
-                        this.Points = this.Points - 5;
+                        this.Points = this.Points - 6;
                     }
                     else
                     {
@@ -254,7 +255,7 @@ namespace InvasionOfAldebaran.ViewModels
             this.Points = 0;
             this.Message = "Shoot the wrong answers!";
 
-            _timer.Interval = TimeSpan.FromSeconds(0.005);
+            _timer.Interval = TimeSpan.FromSeconds(0.003);
             _timer.Start();
         }
 
