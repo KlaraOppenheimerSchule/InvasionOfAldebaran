@@ -10,16 +10,17 @@ namespace InvasionOfAldebaran.ViewModels
 {
     public class MainMenuViewModel : Screen
     {
+        public string Name { get; set; }
         private string _highScore;
         public ICommand PlayButtonCommand { get; set; }
         public ICommand CloseButtonCommand { get; set; }
         public int Points { get; set; }
-
-        public string Highscore
-        {
-            get { return "HighScore: " + this.Points; }
-            set { this._highScore = value; }
-        }
+        public int NewPoints { get; set; }
+	    public string Highscore
+	    {
+		    get { return "HighScore: " + this.Points; }
+			set { this._highScore = value; }
+	    }
 
         //private MediaPlayer _mainThemePlayer;
 
@@ -27,6 +28,16 @@ namespace InvasionOfAldebaran.ViewModels
 
         public MainMenuViewModel(FrameWindowViewModel frameModel)
         {
+          string[] arguments = Environment.GetCommandLineArgs();
+
+            if (arguments.Length > 2)
+            {
+                this.Name = arguments[1];
+
+                int.TryParse(arguments[2], out var points);
+                this.Points = points;
+            }
+
             _frameModel = frameModel;
             Soundmanager.PlayMainMenuTheme(false);
 
@@ -40,12 +51,16 @@ namespace InvasionOfAldebaran.ViewModels
             return _highScore;
         }
 
-        public void SetHighscore(int score)
+        public void setScore(int score)
         {
-            this.Points = score;
-        }
+            this.NewPoints = score;
+            if( this.Points < score )
+                {
+                this.Points = score;
+                }
 
-        #region Interface Members
+        }
+		#region Interface Members
 
         private void CloseWindow()
         {
@@ -56,7 +71,10 @@ namespace InvasionOfAldebaran.ViewModels
 
         public void SendPointsToTRT()
         {
-            Environment.ExitCode = this.Points;
+            if( NewPoints > 0 && NewPoints < 100 )
+                {
+                Environment.ExitCode = this.NewPoints;
+                }
         }
 
         private void ChangeWindow()

@@ -35,8 +35,9 @@ namespace InvasionOfAldebaran.ViewModels
         {
             var mainMenu = this.Items.SingleOrDefault(m => m is MainMenuViewModel) as MainMenuViewModel;
 
-            if (mainMenu != null)
-                mainMenu.SetHighscore(score);
-        }
+			if(mainMenu != null)
+				mainMenu.setScore( score );
+
+	    }
     }
 }
