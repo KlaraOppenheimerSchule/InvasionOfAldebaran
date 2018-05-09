@@ -6,14 +6,13 @@
              xmlns:local="clr-namespace:InvasionOfAldebaran.Views"
 			 xmlns:vm="clr-namespace:InvasionOfAldebaran.ViewModels"
              mc:Ignorable="d" Focusable="False"
-			 d:DataContext="{d:DesignInstance vm:PlayViewModel}"
-             d:DesignHeight="800" d:DesignWidth="950">
-    <UserControl.Resources>
+			 d:DataContext="{d:DesignInstance vm:PlayViewModel}">
+	<UserControl.Resources>
         <Style TargetType="{x:Type TextBlock}" x:Key="NewFontStyle">
             <Setter Property="FontFamily" Value="../../Resources/Fonts/#Good Times Rg" />
         </Style>
     </UserControl.Resources>
-    <Grid Background="DarkGray">
+    <Grid Background="Black">
         <Grid.RowDefinitions>
             <RowDefinition Height="80" />
             <RowDefinition Height="*" />
@@ -29,13 +28,13 @@
 		<!-- Question -->
 		<Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Visibility="Visible" BorderBrush="DarkMagenta" BorderThickness="3">
 			<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding CurrentQuestion.Text}"
-				   FontSize="22" FontWeight="Bold" Foreground="Silver" FontStyle="Oblique"/>
+				   FontSize="22" FontWeight="Bold" Foreground="Silver" Style="{StaticResource NewFontStyle}"/>
 		</Border>
 		<!-- Instructions -->
 		<Border Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" ClipToBounds="True" Visibility="Visible" BorderBrush="DarkMagenta" BorderThickness="3">
 			<StackPanel>
 				<TextBlock HorizontalAlignment="Left" FontSize="22" FontWeight="Bold" Foreground="Silver" 
-					   Text="Hier stehen die Instruktionen"/>
+					   Text="Hier stehen die Instruktionen" Style="{StaticResource NewFontStyle}"/>
 			</StackPanel>
 		</Border>
 		<!-- Canvas -->
@@ -50,7 +49,7 @@
 		<StackPanel Grid.Row="1" Grid.Column="2" VerticalAlignment="Top" HorizontalAlignment="Center" CanVerticallyScroll="True">
 			<!-- Points -->
 			<TextBlock Text="{Binding Points, StringFormat='Points:  {0}'}" Foreground="Silver" FontSize="28" FontWeight="Bold" 
-					   HorizontalAlignment="Center" Margin="0 30 0 0"/>
+					   HorizontalAlignment="Center" Margin="0 30 0 0" Style="{StaticResource NewFontStyle}"/>
 			<!-- Answers -->
 			<ItemsControl Margin="0 50 0 0">
 				<Grid>
@@ -61,7 +60,7 @@
 					<Image Grid.Column="0" Grid.Row="0" Source="{Binding CurrentQuestion.Answers[0].Source}" Margin="5 0"
 						   HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="Fant" Stretch="Fill" Width="30" Height="30"/>
 					<TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding CurrentQuestion.Answers[0].Text}" FontSize="24" 
-							   FontWeight="Bold" HorizontalAlignment="Left" Foreground="Silver"/>
+							   FontWeight="Bold" HorizontalAlignment="Left" Style="{StaticResource NewFontStyle}" Foreground="Silver"/>
 				</Grid>
 			</ItemsControl>
 			<Border Visibility="Visible" BorderBrush="DarkMagenta" BorderThickness="1" Margin="0 10 0 10"/>
@@ -74,7 +73,7 @@
 					<Image Grid.Column="0" Grid.Row="0" Source="{Binding CurrentQuestion.Answers[1].Source}" Margin="5 0"
 			               HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="Fant" Stretch="Fill" Width="30" Height="30"/>
 					<TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding CurrentQuestion.Answers[1].Text}" FontSize="24" 
-			                   FontWeight="Bold" HorizontalAlignment="Left" Foreground="Silver"/>
+			                   FontWeight="Bold" HorizontalAlignment="Left" Foreground="Silver" Style="{StaticResource NewFontStyle}"/>
 				</Grid>
 			</ItemsControl>
 			<Border Visibility="Visible" BorderBrush="DarkMagenta" BorderThickness="1" Margin="0 10 0 10"/>
@@ -87,7 +86,7 @@
 					<Image Grid.Column="0" Grid.Row="0" Source="{Binding CurrentQuestion.Answers[2].Source}" Margin="5 0"
 					       HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="Fant" Stretch="Fill" Width="30" Height="30"/>
 					<TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding CurrentQuestion.Answers[2].Text}" FontSize="24" 
-					           FontWeight="Bold" HorizontalAlignment="Left" Foreground="Silver"/>
+					           FontWeight="Bold" HorizontalAlignment="Left" Foreground="Silver" Style="{StaticResource NewFontStyle}"/>
 				</Grid>
 			</ItemsControl>
 			<Border Visibility="Visible" BorderBrush="DarkMagenta" BorderThickness="1" Margin="0 10 0 10"/>
@@ -100,7 +99,7 @@
 					<Image Grid.Column="0" Grid.Row="0" Source="{Binding CurrentQuestion.Answers[3].Source}" Margin="5 0"
 			               HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="Fant" Stretch="Fill" Width="30" Height="30"/>
 					<TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding CurrentQuestion.Answers[3].Text}" FontSize="24" 
-			                   FontWeight="Bold" HorizontalAlignment="Left" Foreground="Silver"/>
+			                   FontWeight="Bold" HorizontalAlignment="Left" Foreground="Silver" Style="{StaticResource NewFontStyle}"/>
 				</Grid>
 			</ItemsControl>
 		</StackPanel>
@@ -108,10 +107,10 @@
 		<!-- Hit Messages & Wave Number -->
 		<Border Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="1" Visibility="Visible" BorderBrush="DarkMagenta" BorderThickness="3" >
 			<Grid>
-				<TextBlock Text="{Binding Message}" Foreground="Silver" FontSize="20" Margin="80 0"
-				           HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold"/>
+				<TextBlock Text="{Binding Message}" Foreground="Silver" FontSize="16" Margin="80 0"
+				           HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Style="{StaticResource NewFontStyle}"/>
 				<TextBlock Text="{Binding CurrentWave, StringFormat='Wave: {0}'}" HorizontalAlignment="Right" 
-						   VerticalAlignment="Center" Foreground="Silver" FontSize="20" Margin="80 0" FontWeight="Bold"/>
+						   VerticalAlignment="Center" Foreground="Silver" FontSize="16" Margin="80 0" FontWeight="Bold" Style="{StaticResource NewFontStyle}"/>
 			</Grid>
 		</Border>
 	</Grid>
