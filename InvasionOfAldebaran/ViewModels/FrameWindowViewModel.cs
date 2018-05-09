@@ -15,6 +15,7 @@ namespace InvasionOfAldebaran.ViewModels
         public FrameWindowViewModel()
         {
             string[] arguments = Environment.GetCommandLineArgs();
+	        this.Name = "Invasion of Aldebaran";
 
             if (arguments.Length > 2)
             {

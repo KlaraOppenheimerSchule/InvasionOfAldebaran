@@ -15,8 +15,10 @@ namespace InvasionOfAldebaran.ViewModels
     public sealed class PlayViewModel : NotifyPropertyChangedBase
     {
         private const int maxWave = 4;
-        private const int spawnInterval = 6;
-        private const int questionStartTime = 5;
+        private const int spawnInterval = 4;
+        private const int questionStartTime = 8;
+	    private const int maxPoints = 100;
+		private const double timerInterval = 0.016;
 
         private readonly FrameWindowViewModel _frameViewModel;
         private readonly DispatcherTimer _timer = new DispatcherTimer();
@@ -124,6 +126,13 @@ namespace InvasionOfAldebaran.ViewModels
             if (_currentWave >= maxWave)
                 _spawnAllowed = false;
 
+	        if (this.Points >= maxPoints)
+	        {
+				var result = MessageBox.Show("You`ve won!", "Congratulations", MessageBoxButton.OK);
+		        if (result.Equals(MessageBoxResult.OK))
+			        this.EndGame();
+			}
+				
             if (_spawnAllowed && _nextpSpawn <= DateTime.Now)
             {
                 var enemies = _spawner.SpawnEnemies(this.CurrentQuestion);
@@ -138,7 +147,7 @@ namespace InvasionOfAldebaran.ViewModels
                 this.CurrentQuestion = _spawner.GetQuestion();
                 Soundmanager.PlayNewQuestion();
                 // Ends the game once the questions run out
-                if (this.CurrentQuestion == null || this.Points == 100)
+                if (this.CurrentQuestion == null)
                 {
                     var result = MessageBox.Show("You`ve won!", "Congratulations", MessageBoxButton.OK);
                     if (result.Equals(MessageBoxResult.OK))
@@ -255,7 +264,7 @@ namespace InvasionOfAldebaran.ViewModels
             this.Points = 0;
             this.Message = "Shoot the wrong answers!";
 
-            _timer.Interval = TimeSpan.FromSeconds(0.015);
+            _timer.Interval = TimeSpan.FromSeconds(timerInterval);
             _timer.Start();
         }
 

@@ -39,15 +39,15 @@ namespace InvasionOfAldebaran.Models
         {
             switch (e.Key)
             {
-                case Key.Left:
-                    LeftPressed = false;
-                    break;
+				case Key.Left:
+					LeftPressed = false;
+					break;
 
-                case Key.Right:
-                    RightPressed = false;
-                    break;
+				case Key.Right:
+					RightPressed = false;
+					break;
 
-                case Key.Space:
+				case Key.Space:
                     SpacePressed = false;
                     break;
             }
