@@ -283,7 +283,28 @@ namespace InvasionOfAldebaran.Models
                     new Answer("255.255.0.0", false),
                     new Answer("255.255.255.0", true),
                     new Answer("255.255.255.255", false),
-                    Difficulty.Medium)
+                    Difficulty.Medium),
+
+                new Question("Auf welcher ISO/OSI-Schicht arbeitet ein Router normalerweise?",
+                    new Answer("1", false),
+                    new Answer("2", false),
+                    new Answer("3", true),
+                    new Answer("4", false),
+                    Difficulty.Medium),
+
+                new Question("Auf welcher ISO/OSI-Schicht arbeitet ein Switch normalerweise?",
+                    new Answer("1", false),
+                    new Answer("2", true),
+                    new Answer("3", false),
+                    new Answer("4", false),
+                    Difficulty.Medium),
+
+                new Question("Bei welcher IPv4-Adresse handelt es sich NICHT um eine private Adresse?",
+                    new Answer("10.255.255.1", false),
+                    new Answer("172.32.1.2", true),
+                    new Answer("192.168.2.1", false),
+                    new Answer("192.168.255.254", false),
+                    Difficulty.Hard)
             };
             return list;
         }
