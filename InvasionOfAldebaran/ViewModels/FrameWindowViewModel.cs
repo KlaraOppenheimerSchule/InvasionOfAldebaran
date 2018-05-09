@@ -2,6 +2,7 @@
 using System;
 using System.Linq;
 using System.Windows;
+using InvasionOfAldebaran.Helper;
 
 namespace InvasionOfAldebaran.ViewModels
 {
@@ -28,7 +29,7 @@ namespace InvasionOfAldebaran.ViewModels
 
             this.Items.Add(new MainMenuViewModel(this));
             this.Items.Add(new PlayViewModel(this));
-            this.ActiveItem = this.Items.FirstOrDefault();
+            this.ChangeScreen(typeof(MainMenuViewModel));
         }
 
         public void SetScore(int score)
@@ -36,8 +37,24 @@ namespace InvasionOfAldebaran.ViewModels
             var mainMenu = this.Items.SingleOrDefault(m => m is MainMenuViewModel) as MainMenuViewModel;
 
 			if(mainMenu != null)
-				mainMenu.setScore( score );
+				mainMenu.SetScore( score );
+	    }
 
+	    public void ChangeScreen(Type screen)
+	    {
+		    
+		    if (screen == typeof(MainMenuViewModel))
+		    {
+				Soundmanager.PlayInGameTheme(false);
+				this.ActivateItem(this.Items.Single(s => s is MainMenuViewModel));
+				Soundmanager.PlayMainMenuTheme(true);
+			}
+		    if (screen == typeof(PlayViewModel))
+		    {
+			    Soundmanager.PlayMainMenuTheme(false);
+				this.ActivateItem(this.Items.Single(s => s is PlayViewModel));
+				Soundmanager.PlayInGameTheme(true);
+		    }
 	    }
     }
 }

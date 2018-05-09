@@ -19,8 +19,9 @@ namespace InvasionOfAldebaran.Models
         private DateTime _lastMissile;
         private readonly List<AnimatedObject> _missiles;
         private readonly List<Question> _questions;
+	    private int _questionCounter;
 
-        public delegate void SpawnEventHandler(List<AnimatedObject> spawns);
+	    public delegate void SpawnEventHandler(List<AnimatedObject> spawns);
 
         public event SpawnEventHandler ObjectsSpawned;
 
@@ -34,6 +35,7 @@ namespace InvasionOfAldebaran.Models
             _missiles = new List<AnimatedObject>();
             _questions = this.MakeList();
             _spawnGap = 0;
+	        _questionCounter = 0;
 
             this.PopulateSpawnPoints(numberOfSpawns);
         }
@@ -95,12 +97,14 @@ namespace InvasionOfAldebaran.Models
         /// <returns></returns>
         public Question GetQuestion()
         {
-            if (_questions.Count > 0)
+            if (_questions.Count > 0 && this._questionCounter <= 10)
             {
 	            int index = this._r.Next(0, _questions.Count);
 
 	            var question = _questions[index];
                 _questions.Remove(question);
+
+	            this._questionCounter++;
                 return question;
             }
             else

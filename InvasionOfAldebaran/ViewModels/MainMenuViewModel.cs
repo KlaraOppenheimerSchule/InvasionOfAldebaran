@@ -19,10 +19,8 @@ namespace InvasionOfAldebaran.ViewModels
 	    public string Highscore
 	    {
 		    get { return "HighScore: " + this.Points; }
-			set { this._highScore = value; }
+			set { _highScore = value; }
 	    }
-
-        //private MediaPlayer _mainThemePlayer;
 
         private FrameWindowViewModel _frameModel;
 
@@ -39,7 +37,6 @@ namespace InvasionOfAldebaran.ViewModels
             }
 
             _frameModel = frameModel;
-            Soundmanager.PlayMainMenuTheme(false);
 
             this.PlayButtonCommand = new RelayCommand(this.ChangeWindow);
             this.CloseButtonCommand = new RelayCommand(this.CloseWindow);
@@ -51,7 +48,7 @@ namespace InvasionOfAldebaran.ViewModels
             return _highScore;
         }
 
-        public void setScore(int score)
+        public void SetScore(int score)
         {
             this.NewPoints = score;
             if( this.Points < score )
@@ -64,14 +61,14 @@ namespace InvasionOfAldebaran.ViewModels
 
         private void CloseWindow()
         {
-            SendPointsToTRT();
+            this.SendPointsToTrt();
 
             _frameModel.CloseItem(_frameModel);
         }
 
-        public void SendPointsToTRT()
+        public void SendPointsToTrt()
         {
-            if( NewPoints > 0 && NewPoints < 100 )
+            if(this.NewPoints > 0 && this.NewPoints < 100 )
                 {
                 Environment.ExitCode = this.NewPoints;
                 }
@@ -79,8 +76,7 @@ namespace InvasionOfAldebaran.ViewModels
 
         private void ChangeWindow()
         {
-            Soundmanager.PlayMainMenuTheme(true);
-            _frameModel.ActivateItem(_frameModel.Items.Single(s => s is PlayViewModel));
+			_frameModel.ChangeScreen(typeof(PlayViewModel));
         }
 
         #endregion Interface Members

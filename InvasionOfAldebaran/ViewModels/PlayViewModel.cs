@@ -14,11 +14,13 @@ namespace InvasionOfAldebaran.ViewModels
 {
     public sealed class PlayViewModel : NotifyPropertyChangedBase
     {
-        private const int maxWave = 4;
+        private const int maxWave = 3;
         private const int spawnInterval = 5;
         private const int questionStartTime = 8;
 	    private const int maxPoints = 100;
-		private const double timerInterval = 0.013;
+	    private const int friendlyFirePenalty = 3;
+	    private const int enemyEscapePenalty = 1;
+		private const double timerInterval = 0.015;
 
         private readonly FrameWindowViewModel _frameViewModel;
         private readonly DispatcherTimer _timer = new DispatcherTimer();
@@ -105,11 +107,14 @@ namespace InvasionOfAldebaran.ViewModels
             var imageBitmap = new BitmapImage(new Uri(imagePath, UriKind.Relative));
             backgroundImage.ImageSource = imageBitmap;
 
+	        double canvasHeight = SystemParameters.WorkArea.Height - 160;
+	        double canvasWidth = (int)SystemParameters.WorkArea.Width / 2.55;
+
             this.Canvas = new Canvas()
             {
-                Height = 700,
-                Width = 600,
-                Focusable = true,
+				Height = canvasHeight,
+				Width = canvasWidth,
+				Focusable = true,
                 Background = backgroundImage
             };
             this.Activated += this.StartGameEventHandler;
@@ -126,12 +131,12 @@ namespace InvasionOfAldebaran.ViewModels
             if (_currentWave >= maxWave)
                 _spawnAllowed = false;
 
-			if (this.Points >= maxPoints)
-			{
-				var result = MessageBox.Show("You`ve won!", "Congratulations", MessageBoxButton.OK);
-				if (result.Equals(MessageBoxResult.OK))
-					this.EndGame();
-			}
+			//if (this.Points >= maxPoints)
+			//{
+			//	var result = MessageBox.Show("You`ve won!", "Congratulations", MessageBoxButton.OK);
+			//	if (result.Equals(MessageBoxResult.OK))
+			//		this.EndGame();
+			//}
 
 			if (_spawnAllowed && _nextpSpawn <= DateTime.Now)
             {
@@ -146,10 +151,12 @@ namespace InvasionOfAldebaran.ViewModels
                 this.CurrentWave = 0;
                 this.CurrentQuestion = _spawner.GetQuestion();
                 Soundmanager.PlayNewQuestion();
-                // Ends the game once the questions run out
+                // Ends the game once the maximum question counter is reached
                 if (this.CurrentQuestion == null)
                 {
-                    var result = MessageBox.Show("You`ve won!", "Congratulations", MessageBoxButton.OK);
+                    var result = MessageBox.Show("The Invasion has ended!\n" +
+                                                 "The forces of Aldebaran have been beaten!\n" +
+                                                 $"Your Score: {this.Points}", "Congratulations", MessageBoxButton.OK);
                     if (result.Equals(MessageBoxResult.OK))
                         this.EndGame();
                 }
@@ -172,7 +179,7 @@ namespace InvasionOfAldebaran.ViewModels
                     if (ship?.GetType() == typeof(Enemy) &&
                         !ship.AlienName.Equals(this.CurrentQuestion?.CorrectAnswer.Alien))
                     {
-                        this.Points = this.Points - 3;
+                        this.Points -= enemyEscapePenalty;
                     }
                 }
             }
@@ -191,7 +198,7 @@ namespace InvasionOfAldebaran.ViewModels
                         _enemies.Remove(enemy);
                         _objectsToBeDeleted.Add(missile);
                         this.Message = "That was a friendly ship!";
-                        this.Points = this.Points - 6;
+                        this.Points -= friendlyFirePenalty;
                     }
                     else
                     {
@@ -224,6 +231,8 @@ namespace InvasionOfAldebaran.ViewModels
                 this.Player.Move(Direction.Left);
             else if (_inputHandler.RightPressed && !_inputHandler.LeftPressed)
                 this.Player.Move(Direction.Right);
+			else if(_inputHandler.EscapePressed)
+				this.EndGame();
             else
                 this.Player.Move(Direction.Down);
         }
@@ -251,7 +260,6 @@ namespace InvasionOfAldebaran.ViewModels
 
             _timer.Tick += this.AnimateObjects;
             _spawner.ObjectsSpawned += this.AddObjectEventHandler;
-            Soundmanager.PlayInGameTheme(false);
 
             // Setup for Gameplay
             this.Player = _spawner.SpawnPlayer();
@@ -261,7 +269,7 @@ namespace InvasionOfAldebaran.ViewModels
             _nextpSpawn = DateTime.Now.AddSeconds(spawnInterval);
             this.CurrentWave = 0;
             _spawnAllowed = true;
-            this.Points = 0;
+            this.Points = 1;
             this.Message = "Shoot the wrong answers!";
 
             _timer.Interval = TimeSpan.FromSeconds(timerInterval);
@@ -288,9 +296,8 @@ namespace InvasionOfAldebaran.ViewModels
 
         private void ChangeWindow()
         {
-            Soundmanager.PlayInGameTheme(true);
             _frameViewModel.SetScore(this.Points);
-            _frameViewModel.ActivateItem(_frameViewModel.Items.Single(s => s is MainMenuViewModel));
+			_frameViewModel.ChangeScreen(typeof(MainMenuViewModel));
         }
     }
 }

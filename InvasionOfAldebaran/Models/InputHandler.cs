@@ -8,6 +8,7 @@ namespace InvasionOfAldebaran.Models
         public bool LeftPressed;
         public bool RightPressed;
         public bool SpacePressed;
+	    public bool EscapePressed;
 
         public InputHandler(IInputElement canvas)
         {
@@ -32,6 +33,10 @@ namespace InvasionOfAldebaran.Models
                 case Key.Space:
                     SpacePressed = true;
                     break;
+
+				case Key.Escape:
+					EscapePressed = true;
+					break;
             }
         }
 
@@ -50,6 +55,10 @@ namespace InvasionOfAldebaran.Models
 				case Key.Space:
                     SpacePressed = false;
                     break;
+
+				case Key.Escape:
+					EscapePressed = false;
+					break;
             }
         }
     }
