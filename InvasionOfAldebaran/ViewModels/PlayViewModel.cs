@@ -255,7 +255,7 @@ namespace InvasionOfAldebaran.ViewModels
             this.Points = 0;
             this.Message = "Shoot the wrong answers!";
 
-            _timer.Interval = TimeSpan.FromSeconds(0.003);
+            _timer.Interval = TimeSpan.FromSeconds(0.009);
             _timer.Start();
         }
 

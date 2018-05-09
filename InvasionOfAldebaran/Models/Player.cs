@@ -6,7 +6,7 @@ namespace InvasionOfAldebaran.Models
 {
     public class Player : AnimatedObject
     {
-        private const double speed = 1200;
+        private const double speed = 900;
 
         public Player(string imagePath, Coords coords) : base(imagePath, coords)
         {
