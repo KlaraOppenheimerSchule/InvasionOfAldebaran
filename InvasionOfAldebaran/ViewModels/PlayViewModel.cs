@@ -126,12 +126,12 @@ namespace InvasionOfAldebaran.ViewModels
             if (_currentWave >= maxWave)
                 _spawnAllowed = false;
 
-	        if (this.Points >= maxPoints)
-	        {
-				var result = MessageBox.Show("You`ve won!", "Congratulations", MessageBoxButton.OK);
-		        if (result.Equals(MessageBoxResult.OK))
-			        this.EndGame();
-			}
+	  //      if (this.Points >= maxPoints)
+	  //      {
+			//	var result = MessageBox.Show("You`ve won!", "Congratulations", MessageBoxButton.OK);
+		 //       if (result.Equals(MessageBoxResult.OK))
+			//        this.EndGame();
+			//}
 				
             if (_spawnAllowed && _nextpSpawn <= DateTime.Now)
             {
@@ -264,7 +264,7 @@ namespace InvasionOfAldebaran.ViewModels
             this.Points = 0;
             this.Message = "Shoot the wrong answers!";
 
-            _timer.Interval = TimeSpan.FromSeconds(timerInterval);
+            _timer.Interval = TimeSpan.FromSeconds(0.016);
             _timer.Start();
         }
 
