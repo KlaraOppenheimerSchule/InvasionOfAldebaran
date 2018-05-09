@@ -21,10 +21,12 @@ namespace InvasionOfAldebaran.Models
             {
                 case Key.Left:
                     LeftPressed = true;
+	                RightPressed = false;
                     break;
 
                 case Key.Right:
                     RightPressed = true;
+	                LeftPressed = false;
                     break;
 
                 case Key.Space:

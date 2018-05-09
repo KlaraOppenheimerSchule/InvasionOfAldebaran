@@ -20,7 +20,7 @@ namespace InvasionOfAldebaran.ViewModels
 
         private readonly FrameWindowViewModel _frameViewModel;
         private readonly DispatcherTimer _timer = new DispatcherTimer();
-        
+
         private SpawnHandler _spawner;
         private InputHandler _inputHandler;
 
@@ -47,8 +47,8 @@ namespace InvasionOfAldebaran.ViewModels
             private set
             {
                 this._points = value;
-	            if (this._points < 0)
-		            this._points = 0;
+                if (this._points < 0)
+                    this._points = 0;
                 this.NotifyPropertyChanged(nameof(this.Points));
             }
         }
@@ -101,7 +101,6 @@ namespace InvasionOfAldebaran.ViewModels
             string imagePath = @"../../Resources/Images/IngameBackground.jpg";
             var imageBitmap = new BitmapImage(new Uri(imagePath, UriKind.Relative));
             backgroundImage.ImageSource = imageBitmap;
-            
 
             this.Canvas = new Canvas()
             {
@@ -156,15 +155,15 @@ namespace InvasionOfAldebaran.ViewModels
                 {
                     _objectsToBeDeleted.Add(item);
 
-	                if (item.GetType() != typeof(Enemy))
-		                continue;
+                    if (item.GetType() != typeof(Enemy))
+                        continue;
 
                     var ship = item as Enemy;
-	                if (ship?.GetType() == typeof(Enemy) &&
-	                    !ship.AlienName.Equals(this.CurrentQuestion?.CorrectAnswer.Alien))
-	                {
-		                this.Points = this.Points - 10;
-	                }    
+                    if (ship?.GetType() == typeof(Enemy) &&
+                        !ship.AlienName.Equals(this.CurrentQuestion?.CorrectAnswer.Alien))
+                    {
+                        this.Points = this.Points - 10;
+                    }
                 }
             }
 
@@ -213,12 +212,10 @@ namespace InvasionOfAldebaran.ViewModels
 
             if (_inputHandler.LeftPressed && !_inputHandler.RightPressed)
                 this.Player.Move(Direction.Left);
-
             else if (_inputHandler.RightPressed && !_inputHandler.LeftPressed)
                 this.Player.Move(Direction.Right);
-
             else
-				this.Player.Move(Direction.Down);
+                this.Player.Move(Direction.Down);
         }
 
         //todo evtl gar nicht benötigt aber dann müssen die Eventhandler woanders deabonniert werden
@@ -244,10 +241,10 @@ namespace InvasionOfAldebaran.ViewModels
 
             _timer.Tick += this.AnimateObjects;
             _spawner.ObjectsSpawned += this.AddObjectEventHandler;
-	        Soundmanager.PlayTheme(false);
+            Soundmanager.PlayInGameTheme(false);
 
-			// Setup for Gameplay
-			this.Player = _spawner.SpawnPlayer();
+            // Setup for Gameplay
+            this.Player = _spawner.SpawnPlayer();
             _objects.Add(this.Player);
             this.CurrentQuestion = _spawner.GetQuestion();
             // First Spawn after this amount of seconds
@@ -281,7 +278,7 @@ namespace InvasionOfAldebaran.ViewModels
 
         private void ChangeWindow()
         {
-            Soundmanager.PlayTheme(true);
+            Soundmanager.PlayInGameTheme(true);
             _frameViewModel.SetScore(this.Points);
             _frameViewModel.ActivateItem(_frameViewModel.Items.Single(s => s is MainMenuViewModel));
         }

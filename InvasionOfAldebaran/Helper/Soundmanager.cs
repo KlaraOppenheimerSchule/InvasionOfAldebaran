@@ -9,7 +9,7 @@ namespace InvasionOfAldebaran.Helper
 {
     public static class Soundmanager
     {
-		private static Random r = new Random();
+        private static Random r = new Random();
         private static MediaPlayer enemySoundeffect = new MediaPlayer();
         private static MediaPlayer friendlySoundeffect = new MediaPlayer();
         private static MediaPlayer mainThemeSoundeffect = new MediaPlayer();
@@ -20,13 +20,13 @@ namespace InvasionOfAldebaran.Helper
 
         public static void PlayEnemyExplosion()
         {
-	        var index = r.Next(0, 2);
-	        Uri uriEny;
+            var index = r.Next(0, 2);
+            Uri uriEny;
 
-			uriEny = index == 0 ? new Uri(@"../../Resources/Media/Soundeffects/explosion.wav", UriKind.Relative) 
-				: new Uri(@"../../Resources/Media/Soundeffects/hit.wav", UriKind.Relative);
+            uriEny = index == 0 ? new Uri(@"../../Resources/Media/Soundeffects/explosion.wav", UriKind.Relative)
+                : new Uri(@"../../Resources/Media/Soundeffects/hit.wav", UriKind.Relative);
 
-			enemySoundeffect.Open(uriEny);
+            enemySoundeffect.Open(uriEny);
             enemySoundeffect.Play();
         }
 
@@ -54,26 +54,40 @@ namespace InvasionOfAldebaran.Helper
             shotSoundeffect.Play();
         }
 
-        public static void PlayTheme(bool end)
+        public static void PlayInGameTheme(bool end)
         {
             if (end)
             {
                 mainThemeSoundeffect.Stop();
                 return;
             }
-            mainThemeSoundeffect.Open(new Uri(@"../../Resources/MainMenuTheme.mp3", UriKind.Relative));
+            mainThemeSoundeffect.Open(new Uri(@"../../Resources/InGameTheme.mp3", UriKind.Relative));
+            mainThemeSoundeffect.MediaEnded += new EventHandler(InGameTheme_Ended);
             mainThemeSoundeffect.Play();
         }
 
-        public static void GameTheme(bool end)
+        public static void PlayMainMenuTheme(bool end)
         {
             if (end)
             {
                 gameThemeSoundeffect.Stop();
                 return;
             }
-            gameThemeSoundeffect.Open(new Uri(@"../../Resources/InGameTheme.mp3", UriKind.Relative));
+            gameThemeSoundeffect.Open(new Uri(@"../../Resources/MenuTheme.mp3", UriKind.Relative));
+            gameThemeSoundeffect.MediaEnded += new EventHandler(MenuTheme_Ended);
             gameThemeSoundeffect.Play();
+        }
+
+        private static void MenuTheme_Ended(object sender, EventArgs e)
+        {
+            gameThemeSoundeffect.Position = TimeSpan.Zero;
+            gameThemeSoundeffect.Play();
+        }
+
+        private static void InGameTheme_Ended(object sender, EventArgs e)
+        {
+            mainThemeSoundeffect.Position = TimeSpan.Zero;
+            mainThemeSoundeffect.Play();
         }
     }
 }

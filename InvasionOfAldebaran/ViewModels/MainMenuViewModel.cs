@@ -14,52 +14,54 @@ namespace InvasionOfAldebaran.ViewModels
         public ICommand PlayButtonCommand { get; set; }
         public ICommand CloseButtonCommand { get; set; }
         public int Points { get; set; }
-	    public string Highscore
-	    {
-		    get { return "HighScore: " + this.Points; }
-			set { this._highScore = value; }
-	    }
 
-	    //private MediaPlayer _mainThemePlayer;
+        public string Highscore
+        {
+            get { return "HighScore: " + this.Points; }
+            set { this._highScore = value; }
+        }
+
+        //private MediaPlayer _mainThemePlayer;
 
         private FrameWindowViewModel _frameModel;
 
         public MainMenuViewModel(FrameWindowViewModel frameModel)
         {
             _frameModel = frameModel;
-            Soundmanager.GameTheme(false);
+            Soundmanager.PlayMainMenuTheme(false);
 
             this.PlayButtonCommand = new RelayCommand(this.ChangeWindow);
             this.CloseButtonCommand = new RelayCommand(this.CloseWindow);
             this.Highscore = "HIGHSCORE: " + Convert.ToString(frameModel.Points);
         }
 
-        public string returnHighscore()
+        public string ReturnHighscore()
         {
             return _highScore;
         }
 
-        public void setHighscore(int score)
+        public void SetHighscore(int score)
         {
             this.Points = score;
         }
-		#region Interface Members
+
+        #region Interface Members
 
         private void CloseWindow()
         {
-            sendPointsToTRT();
-            
+            SendPointsToTRT();
+
             _frameModel.CloseItem(_frameModel);
         }
 
-        public void sendPointsToTRT( )
+        public void SendPointsToTRT()
         {
             Environment.ExitCode = this.Points;
         }
 
         private void ChangeWindow()
         {
-            Soundmanager.GameTheme(true);
+            Soundmanager.PlayMainMenuTheme(true);
             _frameModel.ActivateItem(_frameModel.Items.Single(s => s is PlayViewModel));
         }
 
