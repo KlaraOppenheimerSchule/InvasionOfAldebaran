@@ -8,7 +8,7 @@
 		xmlns:vm="clr-namespace:InvasionOfAldebaran.ViewModels"
         mc:Ignorable="d"
 		d:DataContext="{d:DesignInstance vm:FrameWindowViewModel}"
-        Title="FrameWindowView" Height= "{Binding Height}" ResizeMode="CanResizeWithGrip" 
+        Title="{Binding Name}" Height= "{Binding Height}" ResizeMode="CanResizeWithGrip" 
 		WindowState="Maximized" WindowStartupLocation="CenterScreen"
 		MinHeight="860" MinWidth="1100">
 	<Grid>

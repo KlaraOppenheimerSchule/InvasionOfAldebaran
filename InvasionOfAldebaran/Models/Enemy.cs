@@ -5,34 +5,39 @@ namespace InvasionOfAldebaran.Models
 {
     public class Enemy : AnimatedObject
     {
-        private readonly double _maxDeviation;
+		public static double CanvasHeight;
+		private const double _slowSpeedFactor = 0.05555;
+		private const double _mediumSpeedFactor = 0.09999;
+		private const double _fastSpeedFactor = 0.17777;
+
+		private readonly double _maxDeviation;
         private readonly double _initialPosX;
         private bool _movingLeft;
 
-        private const double slowSpeed = 40;
-        private const double mediumSpeed = 80;
-        private const double fastSpeed = 150;
+		private double _slowSpeed = _slowSpeedFactor * CanvasHeight;
+		private double _mediumSpeed = _mediumSpeedFactor * CanvasHeight;
+		private double _fastSpeed = _fastSpeedFactor * CanvasHeight;
 
-        public bool MovesSideways { get; private set; }
+		public bool MovesSideways { get; private set; }
         public string AlienName { get; private set; }
 
         public Enemy(string alien, string imagePath, Coords coords, Speed speed, double moveAmount) : base(imagePath, coords)
         {
             this.AlienName = alien;
 	        _maxDeviation = moveAmount;
-            
-            switch (speed)
+
+			switch (speed)
             {
                 case Speed.Fast:
-                    this.Vy = fastSpeed;
+                    this.Vy = _slowSpeed;
                     break;
 
                 case Speed.Medium:
-                    this.Vy = mediumSpeed;
+                    this.Vy = _mediumSpeed;
                     break;
 
                 case Speed.Slow:
-                    this.Vy = slowSpeed;
+                    this.Vy = _fastSpeed;
                     break;
             }
             this.MovesSideways = RandomBool.Get();

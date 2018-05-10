@@ -20,7 +20,7 @@ namespace InvasionOfAldebaran.ViewModels
 	    private const int maxPoints = 100;
 	    private const int friendlyFirePenalty = 3;
 	    private const int enemyEscapePenalty = 1;
-		private const double timerInterval = 0.015;
+		private const double timerInterval = 0.014;
 
         private readonly FrameWindowViewModel _frameViewModel;
         private readonly DispatcherTimer _timer = new DispatcherTimer();
@@ -39,14 +39,26 @@ namespace InvasionOfAldebaran.ViewModels
 
         private int _points;
         private string _message;
-	    private double _playAreaWidth;
+		private int _questionCounter;
 
-	    #region Properties
+		#region Properties
 
-        public Canvas Canvas { get; private set; }
+		public Canvas Canvas { get; private set; }
         public Player Player { get; private set; }
 
-        public int Points
+		public int QuestionCounter {
+			get
+			{
+				return this._questionCounter;
+			}
+			private set
+			{
+				this._questionCounter = value;
+				this.NotifyPropertyChanged(nameof(this.QuestionCounter));
+			}
+		}
+
+		public int Points
         {
             get { return this._points; }
             private set
@@ -131,13 +143,6 @@ namespace InvasionOfAldebaran.ViewModels
             if (_currentWave >= maxWave)
                 _spawnAllowed = false;
 
-			//if (this.Points >= maxPoints)
-			//{
-			//	var result = MessageBox.Show("You`ve won!", "Congratulations", MessageBoxButton.OK);
-			//	if (result.Equals(MessageBoxResult.OK))
-			//		this.EndGame();
-			//}
-
 			if (_spawnAllowed && _nextpSpawn <= DateTime.Now)
             {
                 var enemies = _spawner.SpawnEnemies(this.CurrentQuestion);
@@ -154,12 +159,13 @@ namespace InvasionOfAldebaran.ViewModels
                 // Ends the game once the maximum question counter is reached
                 if (this.CurrentQuestion == null)
                 {
-                    var result = MessageBox.Show("The Invasion has ended!\n" +
-                                                 "The forces of Aldebaran have been beaten!\n" +
-                                                 $"Your Score: {this.Points}", "Congratulations", MessageBoxButton.OK);
+                    var result = MessageBox.Show("Die Invasion ist zu Ende!\n" +
+                                                 "Die Aldebaranische Flotte ist geschlagen!\n" +
+                                                 $"Deine Punkte: {this.Points}", "Gratulation", MessageBoxButton.OK);
                     if (result.Equals(MessageBoxResult.OK))
                         this.EndGame();
                 }
+				this.QuestionCounter++;
                 _nextpSpawn = DateTime.Now.AddSeconds(questionStartTime);
                 _spawnAllowed = true;
             }
@@ -270,6 +276,7 @@ namespace InvasionOfAldebaran.ViewModels
             this.CurrentWave = 0;
             _spawnAllowed = true;
             this.Points = 1;
+			this.QuestionCounter = 1;
             this.Message = "Shoot the wrong answers!";
 
             _timer.Interval = TimeSpan.FromSeconds(timerInterval);

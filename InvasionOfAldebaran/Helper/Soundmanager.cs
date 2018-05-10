@@ -18,30 +18,35 @@ namespace InvasionOfAldebaran.Helper
         private static readonly MediaPlayer questionSoundeffect = new MediaPlayer();
         private static readonly MediaPlayer screamSoundeffect = new MediaPlayer();
 
-        public static void PlayEnemyExplosion()
+		private static Uri hitSound = new Uri(@"../../Resources/Media/Soundeffects/hit.wav", UriKind.Relative);
+		private static Uri newQuestion = new Uri(@"../../Resources/Media/Soundeffects/question.wav", UriKind.Relative);
+		private static Uri explosion = new Uri(@"../../Resources/Media/Soundeffects/explosion.wav", UriKind.Relative);
+		private static Uri uriScream = new Uri(@"../../Resources/Media/Soundeffects/wilhelmscream.mp3", UriKind.Relative);
+		private static Uri laser = new Uri(@"../../Resources/Media/Soundeffects/laser.wav", UriKind.Relative);
+		private static Uri inGameTheme = new Uri(@"../../Resources/InGameTheme.mp3", UriKind.Relative);
+		private static Uri menuTheme = new Uri(@"../../Resources/MenuTheme.mp3", UriKind.Relative);
+
+		public static void PlayEnemyExplosion()
         {
             var index = r.Next(0, 2);
-            Uri uriEny;
+			Uri sound;
 
-            uriEny = index == 0 ? new Uri(@"../../Resources/Media/Soundeffects/explosion.wav", UriKind.Relative)
-                : new Uri(@"../../Resources/Media/Soundeffects/hit.wav", UriKind.Relative);
+			sound = index == 0 ? explosion : hitSound;
 
-            enemySoundeffect.Open(uriEny);
+            enemySoundeffect.Open(sound);
             enemySoundeffect.Play();
         }
 
         public static void PlayNewQuestion()
         {
-            Uri uriEny = new Uri(@"../../Resources/Media/Soundeffects/question.wav", UriKind.Relative);
-            questionSoundeffect.Open(uriEny);
+            questionSoundeffect.Open(newQuestion);
             questionSoundeffect.Play();
         }
 
         public static void PlayFriendlyExplosion()
         {
-            Uri uri = new Uri(@"../../Resources/Media/Soundeffects/explosion.wav", UriKind.Relative);
-            Uri uriScream = new Uri(@"../../Resources/Media/Soundeffects/wilhelmscream.mp3", UriKind.Relative);
-            friendlySoundeffect.Open(uri);
+            
+            friendlySoundeffect.Open(explosion);
             screamSoundeffect.Open(uriScream);
             friendlySoundeffect.Play();
             screamSoundeffect.Play();
@@ -49,8 +54,8 @@ namespace InvasionOfAldebaran.Helper
 
         public static void PlayShotSound()
         {
-            Uri uri = new Uri(@"../../Resources/Media/Soundeffects/laser.wav", UriKind.Relative);
-            shotSoundeffect.Open(uri);
+            
+            shotSoundeffect.Open(laser);
             shotSoundeffect.Play();
         }
 
@@ -61,7 +66,7 @@ namespace InvasionOfAldebaran.Helper
                 mainThemeSoundeffect.Stop();
                 return;
             }
-            mainThemeSoundeffect.Open(new Uri(@"../../Resources/InGameTheme.mp3", UriKind.Relative));
+            mainThemeSoundeffect.Open(inGameTheme);
             mainThemeSoundeffect.MediaEnded += InGameTheme_Ended;
             mainThemeSoundeffect.Play();
         }
@@ -73,7 +78,7 @@ namespace InvasionOfAldebaran.Helper
                 gameThemeSoundeffect.Stop();
                 return;
             }
-            gameThemeSoundeffect.Open(new Uri(@"../../Resources/MenuTheme.mp3", UriKind.Relative));
+            gameThemeSoundeffect.Open(menuTheme);
             gameThemeSoundeffect.MediaEnded += MenuTheme_Ended;
             gameThemeSoundeffect.Play();
         }
@@ -82,12 +87,14 @@ namespace InvasionOfAldebaran.Helper
         {
             gameThemeSoundeffect.Position = TimeSpan.Zero;
             gameThemeSoundeffect.Play();
+			gameThemeSoundeffect.MediaEnded -= MenuTheme_Ended;
         }
 
         private static void InGameTheme_Ended(object sender, EventArgs e)
         {
             mainThemeSoundeffect.Position = TimeSpan.Zero;
             mainThemeSoundeffect.Play();
+			mainThemeSoundeffect.MediaEnded -= InGameTheme_Ended;
         }
     }
 }
