@@ -6,10 +6,13 @@ namespace InvasionOfAldebaran.Models
 {
     public class Player : AnimatedObject
     {
-        private const double speed = 600;
+		private const double speedFactor = 0.66667;
+
+		private double _speed;	
 
         public Player(string imagePath, Coords coords) : base(imagePath, coords)
         {
+			this._speed = speedFactor * CanvasHeight;
         }
 
         public override void Draw(Canvas canvas)
@@ -49,11 +52,11 @@ namespace InvasionOfAldebaran.Models
             switch (direction)
             {
                 case Direction.Left:
-                    this.Vx = -speed;
+                    this.Vx = -_speed;
                     break;
 
                 case Direction.Right:
-                    this.Vx = speed;
+                    this.Vx = _speed;
                     break;
 
                 default:

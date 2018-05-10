@@ -7,6 +7,7 @@ namespace InvasionOfAldebaran.Helper
     {
         private readonly Action _action;
         private readonly Action<string> _parameterAction;
+		private readonly Action<object, EventArgs> _eventHandlerAction;
 
         public RelayCommand(Action action)
         {
@@ -17,6 +18,11 @@ namespace InvasionOfAldebaran.Helper
         {
             _parameterAction = parameterAction;
         }
+
+		public RelayCommand(Action<object, EventArgs> eventHandlerAction)
+		{
+			this._eventHandlerAction = eventHandlerAction;
+		}
 
         public bool CanExecute(object parameter)
         {

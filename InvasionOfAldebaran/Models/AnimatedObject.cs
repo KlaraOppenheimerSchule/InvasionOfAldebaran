@@ -8,6 +8,8 @@ namespace InvasionOfAldebaran.Models
 {
     public abstract class AnimatedObject
     {
+		public static double CanvasHeight;
+
 		public Coords Coords { get; protected set; }
         public double Vx { get; protected set; }
         public double Vy { get; protected set; }

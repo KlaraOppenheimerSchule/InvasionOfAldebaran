@@ -3,6 +3,7 @@ using System;
 using System.Linq;
 using System.Windows;
 using InvasionOfAldebaran.Helper;
+using System.Windows.Input;
 
 namespace InvasionOfAldebaran.ViewModels
 {
@@ -10,8 +11,8 @@ namespace InvasionOfAldebaran.ViewModels
     {
         public string Name { get; set; }
         public int Points { get; set; }
-		public double Height { get; set; }
-		public double Width { get; set; }
+		public double Height { get; private set; }
+		public double Width { get; private set; }
 
         public FrameWindowViewModel()
         {
@@ -26,6 +27,7 @@ namespace InvasionOfAldebaran.ViewModels
                 this.Points = points;
             }
 	        this.Height = SystemParameters.WorkArea.Height;
+			this.Width = SystemParameters.WorkArea.Width;
 
             this.Items.Add(new MainMenuViewModel(this));
             this.Items.Add(new PlayViewModel(this));

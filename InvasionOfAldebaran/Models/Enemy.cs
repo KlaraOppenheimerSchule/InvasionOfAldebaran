@@ -5,7 +5,6 @@ namespace InvasionOfAldebaran.Models
 {
     public class Enemy : AnimatedObject
     {
-		public static double CanvasHeight;
 		private const double _slowSpeedFactor = 0.05555;
 		private const double _mediumSpeedFactor = 0.09999;
 		private const double _fastSpeedFactor = 0.17777;

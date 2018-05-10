@@ -1,19 +1,30 @@
-﻿using System.Windows;
+﻿using InvasionOfAldebaran.Helper;
+using InvasionOfAldebaran.ViewModels;
+using System.Windows;
 using System.Windows.Input;
 
 namespace InvasionOfAldebaran.Models
 {
     public class InputHandler
     {
+		private Player _playerInstance;
+		private SpawnHandler _spawnerInstance;
+
         public bool LeftPressed;
         public bool RightPressed;
         public bool SpacePressed;
 	    public bool EscapePressed;
 
-        public InputHandler(IInputElement canvas)
+		public delegate void EscapeKeyEventHandler();
+		public event EscapeKeyEventHandler EscapeKeyPressed;
+
+        public InputHandler(IInputElement canvas, Player player, SpawnHandler spawner )
         {
-            canvas.PreviewKeyDown += this.OnKeyDownHandler;
-            canvas.PreviewKeyUp += this.OnKeyUpDownHandler;
+			this._playerInstance = player;
+			this._spawnerInstance = spawner;
+
+            canvas.KeyDown += this.OnKeyDownHandler;
+            canvas.KeyUp += this.OnKeyUpDownHandler;
         }
 
         private void OnKeyDownHandler(object sender, KeyEventArgs e)
@@ -37,6 +48,9 @@ namespace InvasionOfAldebaran.Models
 				case Key.Escape:
 					EscapePressed = true;
 					break;
+
+				case (default):
+					break;
             }
         }
 
@@ -59,7 +73,25 @@ namespace InvasionOfAldebaran.Models
 				case Key.Escape:
 					EscapePressed = false;
 					break;
-            }
+
+				case (default):
+					break;
+			}
         }
+		public void ApplyInput()
+		{
+			if (this.SpacePressed)
+				this._spawnerInstance.SpawnMissile(this._playerInstance);
+
+			if (this.LeftPressed)
+				this._playerInstance.Move(Direction.Left);
+
+			if (this.RightPressed)
+				this._playerInstance.Move(Direction.Right);
+
+			if (this.EscapePressed)
+				this.EscapeKeyPressed?.Invoke();
+			
+		}
     }
 }

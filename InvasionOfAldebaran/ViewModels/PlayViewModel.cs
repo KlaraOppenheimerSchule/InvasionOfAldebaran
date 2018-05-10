@@ -119,10 +119,11 @@ namespace InvasionOfAldebaran.ViewModels
             var imageBitmap = new BitmapImage(new Uri(imagePath, UriKind.Relative));
             backgroundImage.ImageSource = imageBitmap;
 
-	        double canvasHeight = SystemParameters.WorkArea.Height - 160;
-	        double canvasWidth = (int)SystemParameters.WorkArea.Width / 2.55;
+	        double canvasHeight = this._frameViewModel.Height - 164;
+	        double canvasWidth = this._frameViewModel.Width / 2.55;
+			AnimatedObject.CanvasHeight = canvasHeight;
 
-            this.Canvas = new Canvas()
+			this.Canvas = new Canvas()
             {
 				Height = canvasHeight,
 				Width = canvasWidth,
@@ -138,7 +139,7 @@ namespace InvasionOfAldebaran.ViewModels
                 this.Canvas.Focus();
 
             // Handles Input for the player
-            this.ApplyInputToPlayer();
+            this._inputHandler.ApplyInput();
 
             if (_currentWave >= maxWave)
                 _spawnAllowed = false;
@@ -228,23 +229,7 @@ namespace InvasionOfAldebaran.ViewModels
             _objects.ForEach(item => item.Draw(this.Canvas));
         }
 
-        private void ApplyInputToPlayer()
-        {
-            if (_inputHandler.SpacePressed)
-                this._spawner.SpawnMissile(this.Player);
-
-            if (_inputHandler.LeftPressed && !_inputHandler.RightPressed)
-                this.Player.Move(Direction.Left);
-            else if (_inputHandler.RightPressed && !_inputHandler.LeftPressed)
-                this.Player.Move(Direction.Right);
-			else if(_inputHandler.EscapePressed)
-				this.EndGame();
-            else
-                this.Player.Move(Direction.Down);
-        }
-
-        //todo evtl gar nicht benötigt aber dann müssen die Eventhandler woanders deabonniert werden
-        private void EndGame()
+        public void EndGame()
         {
             _timer.Tick -= this.AnimateObjects;
             _spawner.ObjectsSpawned -= this.AddObjectEventHandler;
@@ -262,13 +247,14 @@ namespace InvasionOfAldebaran.ViewModels
             _enemies = new List<AnimatedObject>();
             _objectsToBeDeleted = new List<AnimatedObject>();
             _spawner = new SpawnHandler(this.Canvas.Width, this.Canvas.Height, 4);
-            _inputHandler = new InputHandler(this.Canvas);
+			this.Player = _spawner.SpawnPlayer();
+			_inputHandler = new InputHandler(this.Canvas, this.Player, this._spawner);
 
             _timer.Tick += this.AnimateObjects;
             _spawner.ObjectsSpawned += this.AddObjectEventHandler;
+			_inputHandler.EscapeKeyPressed += this.EndGame;
 
             // Setup for Gameplay
-            this.Player = _spawner.SpawnPlayer();
             _objects.Add(this.Player);
             this.CurrentQuestion = _spawner.GetQuestion();
             // First Spawn after this amount of seconds

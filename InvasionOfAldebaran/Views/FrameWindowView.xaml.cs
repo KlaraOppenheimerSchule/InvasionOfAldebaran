@@ -8,12 +8,9 @@ namespace InvasionOfAldebaran.Views
     /// </summary>
     public partial class FrameWindowView : Window
     {
-        private FrameWindowViewModel _ViewModel;
-
         public FrameWindowView()
         {
             this.InitializeComponent();
-            _ViewModel = new FrameWindowViewModel();
         }
-    }
+	}
 }

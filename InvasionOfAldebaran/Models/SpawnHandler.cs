@@ -51,7 +51,6 @@ namespace InvasionOfAldebaran.Models
                 _spawnPoints.Add(point);
                 canvasPos += _spawnGap;
             }
-	        Enemy.CanvasHeight = this._canvasHeight;
         }
 
         /// <summary>
