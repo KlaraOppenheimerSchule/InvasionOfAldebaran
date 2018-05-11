@@ -308,7 +308,85 @@ namespace InvasionOfAldebaran.Models
                     new Answer("172.32.1.2", true),
                     new Answer("192.168.2.1", false),
                     new Answer("192.168.255.254", false),
-                    Difficulty.Hard)
+                    Difficulty.Hard),
+
+                new Question("Wie viele Lesungen muss es im Bundestag mindestens geben bis es zum Gesetzesentwurf kommt?",
+                    new Answer("2", false),
+                    new Answer("3", true),
+                    new Answer("5", false),
+                    new Answer("6", false),
+                    Difficulty.Easy),
+
+                new Question("Welcher Begriff gehört nicht zur Gewaltenteilung?",
+                    new Answer("Exikutive", false),
+                    new Answer("Evaluative", true),
+                    new Answer("Legislative", false),
+                    new Answer("Judikative", false),
+                    Difficulty.Easy),
+
+                new Question("Wie lange kann der Bundespräsident maximal in seinem Amt bleiben?",
+                    new Answer("5 Jahre", false),
+                    new Answer("10 Jahre", true),
+                    new Answer("8 Jahre", false),
+                    new Answer("5 Monate", false),
+                    Difficulty.Easy),
+
+                new Question("Wie oft werden die bayrischen Kommunalwahlen durchgeführt?",
+                    new Answer("2", false),
+                    new Answer("4", false),
+                    new Answer("6", true),
+                    new Answer("5", false),
+                    Difficulty.Easy),
+
+                new Question("Wer schlägt die Minister vor?",
+                    new Answer("Bundespräsident", false),
+                    new Answer("Bundesrat", false),
+                    new Answer("Bundestag", false),
+                    new Answer("Bundeskanzler", true),
+                    Difficulty.Easy),
+
+                new Question("Wofür steht RFCs?",
+                    new Answer("Request for Communications", false),
+                    new Answer("Request for Comments", true),
+                    new Answer("Request for Changes", false),
+                    new Answer("Request for Charges", false),
+                    Difficulty.Medium),
+
+                new Question("An was wird der View im MVVM-Pattern gebunden?",
+                    new Answer("Nichts", false),
+                    new Answer("Model", false),
+                    new Answer("ModelView", false),
+                    new Answer("ViewModel", true),
+                    Difficulty.Easy),
+
+                new Question("Was bewirkt der Befehl AVG in einer Datenbank abfrage?",
+                    new Answer("Ermittelt das Niedrigste", false),
+                    new Answer("Ermittelt das Höchste", true),
+                    new Answer("Ermittelt den Durchsnitt", false),
+                    new Answer("Ermittelt die Summe", false),
+                    Difficulty.Easy),
+
+                new Question("Welcher Befehl wird bei einer Datenbank abfrage als erstes durchlaufen?",
+                    new Answer("FROM", true),
+                    new Answer("WHERE", false),
+                    new Answer("SELECT", false),
+                    new Answer("GROUP BY", false),
+                    Difficulty.Easy),
+
+                new Question("Warum führt man Scrum ein?",
+                    new Answer("Effiziens steigerung", false),
+                    new Answer("Qualitäts steigerung", false),
+                    new Answer("Quantitäts steigerung", false),
+                    new Answer("Kommunikations steigerung", true),
+                    Difficulty.Easy),
+
+                new Question("Welche Syntax deklariert XML richtig?",
+                    new Answer("<?xml version='1.0'?>", true),
+                    new Answer("<xml version='1,0'>", false),
+                    new Answer("<?xml version='1,0'>", false),
+                    new Answer("<?xml version='1.0'?/>", false),
+                    Difficulty.Easy)
+
             };
             return list;
         }
