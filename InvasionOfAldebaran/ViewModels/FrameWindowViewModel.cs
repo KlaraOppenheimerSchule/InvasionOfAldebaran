@@ -49,8 +49,6 @@ namespace InvasionOfAldebaran.ViewModels
 			{
 				Soundmanager.PlayMainMenuTheme(true);
 				this.ActivateItem(this.Items.Single(s => s is IntroViewModel));
-				//var intro = this.Items.Single(s => s is IntroViewModel) as IntroViewModel;
-				//intro.StartIntro();
 			}
 			if (screen == typeof(MainMenuViewModel) && from != null && from == typeof(IntroViewModel))
 		    {
