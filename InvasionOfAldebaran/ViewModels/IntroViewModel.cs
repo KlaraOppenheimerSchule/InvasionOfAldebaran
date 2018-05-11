@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace InvasionOfAldebaran.ViewModels
@@ -32,8 +33,8 @@ namespace InvasionOfAldebaran.ViewModels
 		public IntroViewModel(FrameWindowViewModel frameWindow)
 		{
 			this._frameWindow = frameWindow;
-			this.Width = frameWindow.Width;
-			this.Height = frameWindow.Height;
+			this.Width = SystemParameters.MaximizedPrimaryScreenWidth;
+			this.Height = SystemParameters.MaximizedPrimaryScreenHeight;
 
 			this.VideoSource = new Uri(@"..\..\Resources\Media\introvegas.wmv", UriKind.Relative);
 			this.MediaElement = new MediaElement
@@ -41,7 +42,7 @@ namespace InvasionOfAldebaran.ViewModels
 				Source = this.VideoSource,
 				Height = this.Height,
 				Width = this.Width,
-				SpeedRatio = 1.11,
+				SpeedRatio = 1.12,
 			LoadedBehavior = MediaState.Manual
 			};
 
