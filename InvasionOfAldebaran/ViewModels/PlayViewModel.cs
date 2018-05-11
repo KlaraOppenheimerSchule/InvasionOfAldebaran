@@ -34,7 +34,7 @@ namespace InvasionOfAldebaran.ViewModels
 
         private Question _currentQuestion;
         private int _currentWave;
-        private DateTime _nextpSpawn;
+        private DateTime _nextSpawn;
         private bool _spawnAllowed;
 
         private int _points;
@@ -144,12 +144,12 @@ namespace InvasionOfAldebaran.ViewModels
             if (_currentWave >= maxWave)
                 _spawnAllowed = false;
 
-			if (_spawnAllowed && _nextpSpawn <= DateTime.Now)
+			if (_spawnAllowed && _nextSpawn <= DateTime.Now)
             {
                 var enemies = _spawner.SpawnEnemies(this.CurrentQuestion);
                 _objects.AddRange(enemies);
                 _enemies.AddRange(enemies);
-                _nextpSpawn = DateTime.Now.AddSeconds(spawnInterval);
+                _nextSpawn = DateTime.Now.AddSeconds(spawnInterval);
                 this.CurrentWave++;
             }
             if (!_spawnAllowed && _enemies.Count <= 0)
@@ -167,7 +167,7 @@ namespace InvasionOfAldebaran.ViewModels
                         this.EndGame();
                 }
 				this.QuestionCounter++;
-                _nextpSpawn = DateTime.Now.AddSeconds(questionStartTime);
+                _nextSpawn = DateTime.Now.AddSeconds(questionStartTime);
                 _spawnAllowed = true;
             }
 
@@ -258,7 +258,7 @@ namespace InvasionOfAldebaran.ViewModels
             _objects.Add(this.Player);
             this.CurrentQuestion = _spawner.GetQuestion();
             // First Spawn after this amount of seconds
-            _nextpSpawn = DateTime.Now.AddSeconds(spawnInterval);
+            _nextSpawn = DateTime.Now.AddSeconds(spawnInterval);
             this.CurrentWave = 0;
             _spawnAllowed = true;
             this.Points = 1;

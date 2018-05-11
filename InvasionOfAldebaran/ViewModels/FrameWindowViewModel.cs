@@ -31,7 +31,8 @@ namespace InvasionOfAldebaran.ViewModels
 
             this.Items.Add(new MainMenuViewModel(this));
             this.Items.Add(new PlayViewModel(this));
-            this.ChangeScreen(typeof(MainMenuViewModel));
+			this.Items.Add(new IntroViewModel(this));
+            this.ChangeScreen(typeof(IntroViewModel));
         }
 
         public void SetScore(int score)
@@ -42,16 +43,26 @@ namespace InvasionOfAldebaran.ViewModels
 				mainMenu.SetScore( score );
 	    }
 
-	    public void ChangeScreen(Type screen)
+	    public void ChangeScreen(Type screen, Type from = null)
 	    {
-		    
-		    if (screen == typeof(MainMenuViewModel))
+			if (screen == typeof(IntroViewModel))
+			{
+				Soundmanager.PlayMainMenuTheme(true);
+				this.ActivateItem(this.Items.Single(s => s is IntroViewModel));
+				var intro = this.Items.Single(s => s is IntroViewModel) as IntroViewModel;
+				intro.StartIntro();
+			}
+			if (screen == typeof(MainMenuViewModel) && from != null && from == typeof(IntroViewModel))
 		    {
+				this.ActivateItem(this.Items.Single(s => s is MainMenuViewModel));
+			}
+			else if (screen == typeof(MainMenuViewModel))
+			{
 				Soundmanager.PlayInGameTheme(false);
 				this.ActivateItem(this.Items.Single(s => s is MainMenuViewModel));
 				Soundmanager.PlayMainMenuTheme(true);
 			}
-		    if (screen == typeof(PlayViewModel))
+			if (screen == typeof(PlayViewModel))
 		    {
 			    Soundmanager.PlayMainMenuTheme(false);
 				this.ActivateItem(this.Items.Single(s => s is PlayViewModel));

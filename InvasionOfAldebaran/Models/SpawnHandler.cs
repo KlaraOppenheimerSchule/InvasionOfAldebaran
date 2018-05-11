@@ -205,14 +205,14 @@ namespace InvasionOfAldebaran.Models
 		            new Answer("Interpreter", false),
 		            Difficulty.Hard),
 
-				new Question("Wer war der erste Bundeskanzler",
+				new Question("Wer war der erste Bundeskanzler?",
 					new Answer("Konrad Adenauer", true),
 					new Answer("Ludwig Erhard", false),
 					new Answer("Willy Brandt", false),
 					new Answer("Friedrich Willhelm", false),
 					Difficulty.Hard),
 
-	            new Question("In welchem Fall liegt ein zweiseitiges Rechtsgeschäft vor",
+	            new Question("In welchem Fall liegt ein zweiseitiges Rechtsgeschäft vor?",
 		            new Answer("Anfechtung", false),
 		            new Answer("Mahnung", false),
 		            new Answer("Vermietung", true),

@@ -35,22 +35,22 @@
             <StackPanel>
                 <TextBlock HorizontalAlignment="Center" FontSize="28" FontWeight="Bold" Foreground="LightGray" 
 					   Text="Spielregeln" Style="{StaticResource NewFontStyle}" Padding="0 40"/>
-                <TextBlock HorizontalAlignment="Left" FontSize="20" FontWeight="Bold" Foreground="LightGray" 
+                <TextBlock HorizontalAlignment="Left" FontSize="16" FontWeight="Bold" Foreground="LightGray" 
 					   Text="- Bewege dein Schiff mit den Pfeiltasten!" Style="{StaticResource NewFontStyle}" Padding="0 20"/>
                 <Border Visibility="Visible" BorderBrush="DarkMagenta" BorderThickness="1" Margin="0 10 0 10"/>
-                <TextBlock HorizontalAlignment="Left" FontSize="18" FontWeight="Bold" Foreground="LightGray" 
+				<TextBlock HorizontalAlignment="Left" FontSize="16" FontWeight="Bold" Foreground="LightGray" 
 					   Text="- Schieße mit der Leertaste!" Style="{StaticResource NewFontStyle}" Padding="0 20"/>
                 <Border Visibility="Visible" BorderBrush="DarkMagenta" BorderThickness="1" Margin="0 10 0 10"/>
-                <TextBlock HorizontalAlignment="Left" FontSize="18" FontWeight="Bold" Foreground="LightGray" 
+				<TextBlock HorizontalAlignment="Left" FontSize="16" FontWeight="Bold" Foreground="LightGray" 
 					   Text="- Schieße auf die falschen Antworten!" Style="{StaticResource NewFontStyle}" Padding="0 20"/>
                 <Border Visibility="Visible" BorderBrush="DarkMagenta" BorderThickness="1" Margin="0 10 0 10"/>
-                <TextBlock HorizontalAlignment="Left" FontSize="18" FontWeight="Bold" Foreground="LightGray" 
+				<TextBlock HorizontalAlignment="Left" FontSize="16" FontWeight="Bold" Foreground="LightGray" 
 					   Text="- Lasse die richtigen Antworten durch!" Style="{StaticResource NewFontStyle}" Padding="0 20"/>
                 <Border Visibility="Visible" BorderBrush="DarkMagenta" BorderThickness="1" Margin="0 10 0 10"/>
-                <TextBlock HorizontalAlignment="Left" FontSize="18" FontWeight="Bold" Foreground="LightGray" 
+				<TextBlock HorizontalAlignment="Left" FontSize="16" FontWeight="Bold" Foreground="LightGray" 
 					   Text="- Nach 11 Fragen endet das Spiel!" Style="{StaticResource NewFontStyle}" Padding="0 20"/>
                 <Border Visibility="Visible" BorderBrush="DarkMagenta" BorderThickness="1" Margin="0 10 0 10"/>
-                <TextBlock HorizontalAlignment="Left" FontSize="18" FontWeight="Bold" Foreground="LightGray" 
+				<TextBlock HorizontalAlignment="Left" FontSize="16" FontWeight="Bold" Foreground="LightGray" 
 					   Text="- Versuche 100 Punkte zu erreichen!" Style="{StaticResource NewFontStyle}" Padding="0 20"/>
             </StackPanel>
 		</Border>
@@ -126,8 +126,8 @@
 			<Grid>
                 <TextBlock Text="{Binding Message}" Foreground="LightGray" FontSize="16" Margin="10 0"
 				           HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Style="{StaticResource NewFontStyle}"/>
-                <TextBlock Text="{Binding CurrentWave, StringFormat='Wave: {0} / 3'}" HorizontalAlignment="Center" 
-						   VerticalAlignment="Center" Foreground="LightGray" FontSize="16" Margin="10 0" FontWeight="Bold" Style="{StaticResource NewFontStyle}"/>
+                <!--<TextBlock Text="{Binding CurrentWave, StringFormat='Wave: {0} / 3'}" HorizontalAlignment="Center" 
+						   VerticalAlignment="Center" Foreground="LightGray" FontSize="16" Margin="10 0" FontWeight="Bold" Style="{StaticResource NewFontStyle}"/>-->
                 <TextBlock Text="{Binding QuestionCounter, StringFormat='Question: {0} / 11'}" HorizontalAlignment="Right" 
 						   VerticalAlignment="Center" Foreground="LightGray" FontSize="16" Margin="10 0" FontWeight="Bold" Style="{StaticResource NewFontStyle}"/>
 				
