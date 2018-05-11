@@ -16,7 +16,7 @@ namespace InvasionOfAldebaran.ViewModels
     {
         private const int maxWave = 3;
         private const int spawnInterval = 5;
-        private const int questionStartTime = 8;
+        private const int questionStartTime = 7;
 	    private const int maxPoints = 100;
 	    private const int friendlyFirePenalty = 3;
 	    private const int enemyEscapePenalty = 1;
