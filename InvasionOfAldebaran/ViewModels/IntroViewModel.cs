@@ -35,19 +35,21 @@ namespace InvasionOfAldebaran.ViewModels
 			this.Width = frameWindow.Width;
 			this.Height = frameWindow.Height;
 
-			this.VideoSource = new Uri(@"C:\Git\InvasionOfAldebaran\InvasionOfAldebaran\Resources\Media", UriKind.Absolute);
+			this.VideoSource = new Uri(@"..\..\Resources\Media\introvegas.wmv", UriKind.Relative);
 			this.MediaElement = new MediaElement
 			{
 				Source = this.VideoSource,
 				Height = this.Height,
 				Width = this.Width,
-				LoadedBehavior = MediaState.Manual
+				SpeedRatio = 1.11,
+			LoadedBehavior = MediaState.Manual
 			};
 
 			this.MediaElement.MediaEnded += IntroEndedEventHandler;
+			this.Activated += StartIntro;
 		}
 
-		public void StartIntro()
+		public void StartIntro(object sender, EventArgs eventArgs)
 		{
 			this.MediaElement.Play();
 			this.MediaElement.Volume = 0;

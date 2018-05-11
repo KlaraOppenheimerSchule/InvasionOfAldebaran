@@ -9,6 +9,6 @@
 			 d:DataContext="{d:DesignInstance vm:IntroViewModel}"
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-		<MediaElement Source="{Binding MediaElement}"/>   
+		<ContentControl Content="{Binding MediaElement}"/>   
 	</Grid>
 </UserControl>
