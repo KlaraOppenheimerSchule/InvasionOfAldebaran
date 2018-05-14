@@ -361,8 +361,8 @@ namespace InvasionOfAldebaran.Models
 
                 new Question("Was bewirkt der Befehl AVG in einer Datenbank abfrage?",
                     new Answer("Ermittelt das Niedrigste", false),
-                    new Answer("Ermittelt das Höchste", true),
-                    new Answer("Ermittelt den Durchsnitt", false),
+                    new Answer("Ermittelt das Höchste", false),
+                    new Answer("Ermittelt den Durchsnitt", true),
                     new Answer("Ermittelt die Summe", false),
                     Difficulty.Easy),
 
