@@ -1,6 +1,7 @@
 ﻿using Caliburn.Micro;
 using InvasionOfAldebaran.Helper;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.RightsManagement;
 using System.Windows.Input;
@@ -16,11 +17,7 @@ namespace InvasionOfAldebaran.ViewModels
         public ICommand CloseButtonCommand { get; set; }
         public int Points { get; set; }
         public int NewPoints { get; set; }
-	    public string Highscore
-	    {
-		    get { return "HighScore: " + this.Points; }
-			set { _highScore = value; }
-	    }
+	    public List<Score> Highscore { get; set; }
 
         private FrameWindowViewModel _frameModel;
 
@@ -28,19 +25,20 @@ namespace InvasionOfAldebaran.ViewModels
         {
           string[] arguments = Environment.GetCommandLineArgs();
 
-            if (arguments.Length > 2)
-            {
-                this.Name = arguments[1];
+            //if (arguments.Length > 2)
+            //{
+            //    this.Name = arguments[1];
 
-                int.TryParse(arguments[2], out var points);
-                this.Points = points;
-            }
+            //    int.TryParse(arguments[2], out var points);
+            //    this.Points = points;
+            //}
 
             _frameModel = frameModel;
 
             this.PlayButtonCommand = new RelayCommand(this.ChangeWindow);
             this.CloseButtonCommand = new RelayCommand(this.CloseWindow);
-            this.Highscore = "HIGHSCORE: " + Convert.ToString(frameModel.Points);
+			this.Highscore = new List<Score>();
+			this.Highscore.Add(new Score(50, "Ein Spieler"));
         }
 
         public string ReturnHighscore()
@@ -48,7 +46,7 @@ namespace InvasionOfAldebaran.ViewModels
             return _highScore;
         }
 
-        public void SetScore(int score)
+        public void SetScore(int score, string name)
         {
             this.NewPoints = score;
             if( this.Points < score )
@@ -61,18 +59,9 @@ namespace InvasionOfAldebaran.ViewModels
 
         private void CloseWindow()
         {
-            this.SendPointsToTrt();
-
             _frameModel.CloseItem(_frameModel);
         }
 
-        public void SendPointsToTrt()
-        {
-            if(this.NewPoints > 0 && this.NewPoints < 100 )
-                {
-                Environment.ExitCode = this.NewPoints;
-                }
-        }
 
         private void ChangeWindow()
         {

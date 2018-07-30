@@ -86,10 +86,15 @@
     <Compile Include="Helper\Direction.cs" />
     <Compile Include="Models\SpawnHandler.cs" />
     <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="ViewModels\AddScoreViewModel.cs" />
     <Compile Include="ViewModels\IntroViewModel.cs" />
     <Compile Include="ViewModels\MainMenuViewModel.cs" />
     <Compile Include="ViewModels\FrameWindowViewModel.cs" />
     <Compile Include="ViewModels\NotifyPropertyChangedBase.cs" />
+    <Compile Include="Models\Score.cs" />
+    <Compile Include="Views\AddScoreView.xaml.cs">
+      <DependentUpon>AddScoreView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\FrameWindowView.xaml.cs">
       <DependentUpon>FrameWindowView.xaml</DependentUpon>
     </Compile>
@@ -102,6 +107,10 @@
     <Compile Include="Views\PlayView.xaml.cs">
       <DependentUpon>PlayView.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\AddScoreView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\FrameWindowView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

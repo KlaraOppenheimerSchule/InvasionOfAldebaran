@@ -160,9 +160,7 @@ namespace InvasionOfAldebaran.ViewModels
                 // Ends the game once the maximum question counter is reached
                 if (this.CurrentQuestion == null)
                 {
-                    var result = MessageBox.Show("Die Invasion ist zu Ende!\n" +
-                                                 "Die Aldebaranische Flotte ist geschlagen!\n" +
-                                                 $"Deine Punkte: {this.Points}", "Gratulation", MessageBoxButton.OK);
+                    var result = MessageBox.Show($"Deine Punkte: {this.Points}", "Gratulation", MessageBoxButton.OK);
                     if (result.Equals(MessageBoxResult.OK))
                         this.EndGame();
                 }
@@ -234,9 +232,9 @@ namespace InvasionOfAldebaran.ViewModels
             _timer.Tick -= this.AnimateObjects;
             _spawner.ObjectsSpawned -= this.AddObjectEventHandler;
 
-            //todo evtl per enum ziel festlegen oder event nehmen
-            this.ChangeWindow();
-        }
+			// todo: evtl gehts nicht
+			_frameViewModel.DisplayAddScoreScreen(this.Points);
+		}
 
         #region EventHandler
 
@@ -289,7 +287,6 @@ namespace InvasionOfAldebaran.ViewModels
 
         private void ChangeWindow()
         {
-            _frameViewModel.SetScore(this.Points);
 			_frameViewModel.ChangeScreen(typeof(MainMenuViewModel));
         }
     }

@@ -32,15 +32,15 @@ namespace InvasionOfAldebaran.ViewModels
             this.Items.Add(new MainMenuViewModel(this));
             this.Items.Add(new PlayViewModel(this));
 			this.Items.Add(new IntroViewModel(this));
-            this.ChangeScreen(typeof(IntroViewModel));
+            this.ChangeScreen(typeof(MainMenuViewModel));
         }
 
-        public void SetScore(int score)
+        public void DisplayAddScoreScreen(int score)
         {
-            var mainMenu = this.Items.SingleOrDefault(m => m is MainMenuViewModel) as MainMenuViewModel;
+			// Todo: Neue Instanz von AddScore erstellen und anzeigen lassen, anschließend Highscore im MainMenu aktualisieren
+			var AddScore = new AddScoreViewModel(score);
 
-			if(mainMenu != null)
-				mainMenu.SetScore( score );
+			this.ActivateItem(AddScore);
 	    }
 
 	    public void ChangeScreen(Type screen, Type from = null)
