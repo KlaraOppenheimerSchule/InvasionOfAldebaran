@@ -12,22 +12,23 @@ namespace InvasionOfAldebaran.Models
         private readonly double _canvasHeight;
         private readonly Coords _playerSpawn;
         private readonly List<Coords> _spawnPoints;
-        private readonly Random _r = new Random();
-		private List<string> _alienNames;
+		private readonly List<AnimatedObject> _missiles;
+		private readonly Random _r = new Random();
 
+		private List<string> _alienNames;
 		private double _spawnGap;
 		private DateTime _lastMissile;
-        private readonly List<AnimatedObject> _missiles;
-        private readonly List<Question> _questions;
-	    private int _questionCounter;
-
-	    public delegate void SpawnEventHandler(List<AnimatedObject> spawns);
+	    private int _waveCounter;
+		private double _speedMultiplier = 1;
+		private double _multiplierStep = 0.25;
+		
+		public delegate void SpawnEventHandler(List<AnimatedObject> spawns);
 
         public event SpawnEventHandler ObjectsSpawned;
 
         public SpawnHandler(double canvasWidth, double canvasHeight, int numberOfSpawns)
         {
-            _canvasWidth = canvasWidth;
+			_canvasWidth = canvasWidth;
             _canvasHeight = canvasHeight;
             _playerSpawn = new Coords(_canvasWidth / 2, _canvasHeight - 65);
             _spawnPoints = new List<Coords>();
@@ -37,9 +38,8 @@ namespace InvasionOfAldebaran.Models
 			{
 				"alien1", "alien2", "alien3", "alien4"
 			};
-            _questions = this.MakeList();
             _spawnGap = 0;
-	        _questionCounter = 0;
+	        _waveCounter = 0;
 
             this.PopulateSpawnPoints(numberOfSpawns);
         }
@@ -65,8 +65,13 @@ namespace InvasionOfAldebaran.Models
         {
             var enemies = new List<AnimatedObject>();
 
-			List<string> aliens = this._alienNames;
-            Shuffle(aliens);
+			List<string> aliens = new List<string>();
+			aliens.AddRange(this._alienNames);
+			Shuffle(aliens);
+
+			if (_waveCounter % 5 == 0)
+				this._speedMultiplier += this._multiplierStep;
+
             List<Coords> spawns = _spawnPoints.Select(point => new Coords(point.X, point.Y)).ToList();
             for (int i = 0; i < 4; i++)
             {
@@ -76,12 +81,14 @@ namespace InvasionOfAldebaran.Models
                 string alien = aliens[alienRandomizer];
                 string imagePath = @"../../Resources/Images/" + alien + ".png";
 
-                enemies.Add(new Enemy(alien, imagePath, spawns[rSpawns], (Speed)rSpeed, _spawnGap));
+                enemies.Add(new Enemy(alien, imagePath, spawns[rSpawns], (Speed)rSpeed, _speedMultiplier, _spawnGap));
 
                 aliens.RemoveAt(alienRandomizer);
                 spawns.RemoveAt(rSpawns);
             }
-            return enemies;
+			this._waveCounter++;
+
+			return enemies;
         }
 
         /// <summary>
@@ -92,26 +99,6 @@ namespace InvasionOfAldebaran.Models
         {
             string imagePath = @"../../Resources/Images/playership.png";
             return new Player(imagePath, _playerSpawn);
-        }
-
-        /// <summary>
-        /// Returns the next question from the questions array, null if there a no questions left.
-        /// </summary>
-        /// <returns></returns>
-        public Question GetQuestions()
-        {
-            if (_questions.Count > 0 && this._questionCounter <= 10)
-            {
-	            int index = this._r.Next(0, _questions.Count);
-
-	            var question = _questions[index];
-                _questions.Remove(question);
-
-	            this._questionCounter++;
-                return question;
-            }
-            else
-                return null;
         }
 
         /// <summary>
@@ -154,244 +141,5 @@ namespace InvasionOfAldebaran.Models
 				list[listCount] = value;
 			}
 		}
-
-		private List<Question> MakeList()
-        {
-            var list = new List<Question>()
-            {
-                new Question("Wie viel Bits hat ein Byte?",
-                    new Answer("2", false),
-                    new Answer("4", false),
-                    new Answer("8", true),
-                    new Answer("16", false),
-                    Difficulty.Easy),
-
-                new Question("Wie lang ist eine IPv4 Adresse?",
-                    new Answer("16 Bit", false),
-                    new Answer("32 Bit", true),
-                    new Answer("64 Bit", false),
-                    new Answer("128 Bit", false),
-                    Difficulty.Easy),
-
-                new Question("Wie viele Sitze hat der Bundesrat?",
-                    new Answer("69", true),
-                    new Answer("72", false),
-                    new Answer("98", false),
-                    new Answer("112", false),
-                    Difficulty.Easy),
-
-                new Question("Worüber kann man einen Monitor am PC anschließen?",
-                    new Answer("USB", false),
-                    new Answer("DCMI : ^)", false),
-                    new Answer("HSDPA", false),
-                    new Answer("DisplayPort", true),
-                    Difficulty.Easy),
-
-	            new Question("Welche der folgenden Betriebssysteme bildet die Grundlage für Android?",
-		            new Answer("OSX", false),
-		            new Answer("Windows Mobile", false),
-		            new Answer("Linux", true),
-		            new Answer("OS/2", false),
-		            Difficulty.Easy),
-
-				new Question("Mit welchen der folgenden Hilfsmittel wird die Programmlogik dokumentiert?",
-					new Answer("Compiler", false),
-					new Answer("Interpreter", false),
-					new Answer("Struktogrammgenerator", true),
-					new Answer("Programmgenerator", false),
-					Difficulty.Easy),
-
-	            new Question("Welches Tool unterstützt bei einem Whitebox Test?",
-		            new Answer("File Editor", false),
-		            new Answer("Compiler", false),
-		            new Answer("Debugger", true),
-		            new Answer("Interpreter", false),
-		            Difficulty.Hard),
-
-				new Question("Wer war der erste Bundeskanzler?",
-					new Answer("Konrad Adenauer", true),
-					new Answer("Ludwig Erhard", false),
-					new Answer("Willy Brandt", false),
-					new Answer("Friedrich Willhelm", false),
-					Difficulty.Hard),
-
-	            new Question("In welchem Fall liegt ein zweiseitiges Rechtsgeschäft vor?",
-		            new Answer("Anfechtung", false),
-		            new Answer("Mahnung", false),
-		            new Answer("Vermietung", true),
-		            new Answer("Kündigung", false),
-		            Difficulty.Hard),
-
-                new Question("Auf welcher ISO/OSI-Schicht arbeitet das Protokoll „SMTP“?",
-                    new Answer("1", false),
-                    new Answer("3", false),
-                    new Answer("4", false),
-                    new Answer("7", true),
-                    Difficulty.Medium),
-
-                new Question("Aus wie vielen Schichten besteht das ISO/OSI-Schichtenmodell?",
-                    new Answer("5", false),
-                    new Answer("6", false),
-                    new Answer("7", true),
-                    new Answer("8", false),
-                    Difficulty.Medium),
-
-                new Question("Wie lautet die englische Bezeichnung der Sicherungsschicht (2) des ISO/OSI-Modells?",
-                    new Answer("Data Link Layer", true),
-                    new Answer("Security Layer", false),
-                    new Answer("Network Layer", false),
-                    new Answer("Physical Layer", false),
-                    Difficulty.Medium),
-
-                new Question("Auf welchem Port arbeitet das HTTPS-Protokoll standardmäßig?",
-                    new Answer("80", false),
-                    new Answer("443", true),
-                    new Answer("21", false),
-                    new Answer("53", false),
-                    Difficulty.Easy),
-
-                new Question("Welches Protokoll nutzt standardmäßig den Port 22?",
-                    new Answer("DNS", false),
-                    new Answer("SSH", true),
-                    new Answer("SMTP", false),
-                    new Answer("FTP", false),
-                    Difficulty.Medium),
-
-                new Question("Mit welchem Befehl lässt sich unter Windows der Weg eines IP-Pakets nachverfolgen?",
-                    new Answer("ping", false),
-                    new Answer("ipconfig", false),
-                    new Answer("showroute", false),
-                    new Answer("tracert", true),
-                    Difficulty.Medium),
-
-                new Question("Welcher HTTP-Statuscode signalisiert 'Alles OK!'?",
-                    new Answer("200", true),
-                    new Answer("300", false),
-                    new Answer("400", false),
-                    new Answer("500", false),
-                    Difficulty.Medium),
-
-                new Question("Welchen Dezimalwert stellt der Hexadezimalwert 'A1' dar?",
-                    new Answer("143", false),
-                    new Answer("161", true),
-                    new Answer("191", false),
-                    new Answer("224", false),
-                    Difficulty.Hard),
-
-                new Question("Welche IPv6-Adresse zeigt auf den 'localhost'?",
-                    new Answer("2002::", false),
-                    new Answer("2003::", false),
-                    new Answer("::0", false),
-                    new Answer("::1", true),
-                    Difficulty.Medium),
-
-                new Question("Wie lautet die Standard-Subnetzmaske eines Klasse-C-Netzes?",
-                    new Answer("255.0.0.0", false),
-                    new Answer("255.255.0.0", false),
-                    new Answer("255.255.255.0", true),
-                    new Answer("255.255.255.255", false),
-                    Difficulty.Medium),
-
-                new Question("Auf welcher ISO/OSI-Schicht arbeitet ein Router normalerweise?",
-                    new Answer("1", false),
-                    new Answer("2", false),
-                    new Answer("3", true),
-                    new Answer("4", false),
-                    Difficulty.Medium),
-
-                new Question("Auf welcher ISO/OSI-Schicht arbeitet ein Switch normalerweise?",
-                    new Answer("1", false),
-                    new Answer("2", true),
-                    new Answer("3", false),
-                    new Answer("4", false),
-                    Difficulty.Medium),
-
-                new Question("Bei welcher IPv4-Adresse handelt es sich NICHT um eine private Adresse?",
-                    new Answer("10.255.255.1", false),
-                    new Answer("172.32.1.2", true),
-                    new Answer("192.168.2.1", false),
-                    new Answer("192.168.255.254", false),
-                    Difficulty.Hard),
-
-                new Question("Wie viele Lesungen muss es im Bundestag mindestens geben bis es zum Gesetzesentwurf kommt?",
-                    new Answer("2", false),
-                    new Answer("3", true),
-                    new Answer("5", false),
-                    new Answer("6", false),
-                    Difficulty.Easy),
-
-                new Question("Welcher Begriff gehört nicht zur Gewaltenteilung?",
-                    new Answer("Exikutive", false),
-                    new Answer("Evaluative", true),
-                    new Answer("Legislative", false),
-                    new Answer("Judikative", false),
-                    Difficulty.Easy),
-
-                new Question("Wie lange kann der Bundespräsident maximal in seinem Amt bleiben?",
-                    new Answer("5 Jahre", false),
-                    new Answer("10 Jahre", true),
-                    new Answer("8 Jahre", false),
-                    new Answer("5 Monate", false),
-                    Difficulty.Easy),
-
-                new Question("Wie oft werden die bayrischen Kommunalwahlen durchgeführt?",
-                    new Answer("2", false),
-                    new Answer("4", false),
-                    new Answer("6", true),
-                    new Answer("5", false),
-                    Difficulty.Easy),
-
-                new Question("Wer schlägt die Minister vor?",
-                    new Answer("Bundespräsident", false),
-                    new Answer("Bundesrat", false),
-                    new Answer("Bundestag", false),
-                    new Answer("Bundeskanzler", true),
-                    Difficulty.Easy),
-
-                new Question("Wofür steht RFCs?",
-                    new Answer("Request for Communications", false),
-                    new Answer("Request for Comments", true),
-                    new Answer("Request for Changes", false),
-                    new Answer("Request for Charges", false),
-                    Difficulty.Medium),
-
-                new Question("An was wird der View im MVVM-Pattern gebunden?",
-                    new Answer("Nichts", false),
-                    new Answer("Model", false),
-                    new Answer("ModelView", false),
-                    new Answer("ViewModel", true),
-                    Difficulty.Easy),
-
-                new Question("Was bewirkt der Befehl AVG in einer Datenbank abfrage?",
-                    new Answer("Ermittelt das Niedrigste", false),
-                    new Answer("Ermittelt das Höchste", true),
-                    new Answer("Ermittelt den Durchsnitt", false),
-                    new Answer("Ermittelt die Summe", false),
-                    Difficulty.Easy),
-
-                new Question("Welcher Befehl wird bei einer Datenbank abfrage als erstes durchlaufen?",
-                    new Answer("FROM", true),
-                    new Answer("WHERE", false),
-                    new Answer("SELECT", false),
-                    new Answer("GROUP BY", false),
-                    Difficulty.Easy),
-
-                new Question("Warum führt man Scrum ein?",
-                    new Answer("Effiziens steigerung", false),
-                    new Answer("Qualitäts steigerung", false),
-                    new Answer("Quantitäts steigerung", false),
-                    new Answer("Kommunikations steigerung", true),
-                    Difficulty.Easy),
-
-                new Question("Welche Syntax deklariert XML richtig?",
-                    new Answer("<?xml version='1.0'?>", true),
-                    new Answer("<xml version='1,0'>", false),
-                    new Answer("<?xml version='1,0'>", false),
-                    new Answer("<?xml version='1.0'?/>", false),
-                    Difficulty.Easy)
-
-            };
-            return list;
-        }
     }
 }

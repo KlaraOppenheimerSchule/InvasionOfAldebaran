@@ -14,11 +14,7 @@ namespace InvasionOfAldebaran.ViewModels
 {
     public sealed class PlayViewModel : NotifyPropertyChangedBase
     {
-        private const int maxWave = 3;
         private const int spawnInterval = 5;
-        private const int questionStartTime = 7;
-	    private const int maxPoints = 100;
-	    private const int friendlyFirePenalty = 3;
 	    private const int enemyEscapePenalty = 1;
 		private const double timerInterval = 0.014;
 
@@ -33,19 +29,21 @@ namespace InvasionOfAldebaran.ViewModels
         private List<AnimatedObject> _objects;
         private List<AnimatedObject> _enemies;
 
-        private Question _currentQuestion;
         private int _currentWave;
         private DateTime _nextSpawn;
-        private bool _spawnAllowed;
 
         private int _points;
         private string _message;
-		private int _questionCounter;
 
 		#region Properties
 
 		public Canvas Canvas { get; private set; }
         public Player Player { get; private set; }
+
+		public int Lives
+		{
+			get; private set;
+		}
 
 		public int Points
         {
@@ -81,10 +79,6 @@ namespace InvasionOfAldebaran.ViewModels
 	    public double PlayAreaWidth => this.Canvas.Width + 6;
 
 	    #endregion Properties
-
-        public delegate void GameEndedEventHandler(int points);
-
-        public event GameEndedEventHandler GameEnded;
 
         public PlayViewModel(FrameWindowViewModel frameWindow)
         {
@@ -133,10 +127,7 @@ namespace InvasionOfAldebaran.ViewModels
                 // Ends the game once the maximum question counter is reached
                 var result = MessageBox.Show($"Deine Punkte: {this.Points}", "Gratulation", MessageBoxButton.OK);
                 if (result.Equals(MessageBoxResult.OK))
-					this.EndGame();
-               
-                _nextSpawn = DateTime.Now.AddSeconds(questionStartTime);
-                _spawnAllowed = true;
+					this.EndGame();  
             }
 			// Animate every item on the canvas and check if it is still inside the canvas boundaries
             foreach (var item in _objects)
@@ -149,8 +140,11 @@ namespace InvasionOfAldebaran.ViewModels
 
                     if (item.GetType() != typeof(Enemy))
                         continue;
-					else  
-                        this.Points -= enemyEscapePenalty;
+					else
+					{
+						this.Points--;
+						this.Lives--;
+					}
                 }
             }
 			// Collision Detection between enemies and missiles
@@ -186,9 +180,11 @@ namespace InvasionOfAldebaran.ViewModels
 
         public void EndGame()
         {
-            _timer.Tick -= this.AnimateObjects;
+			_timer.Tick -= this.AnimateObjects;
             _spawner.ObjectsSpawned -= this.AddObjectEventHandler;
+			_inputHandler.EscapeKeyPressed -= this.EndGame;
 
+			this.Points *= this.CurrentWave;
 			// todo: evtl gehts nicht
 			_frameViewModel.DisplayAddScoreScreen(this.Points);
 		}
@@ -213,9 +209,9 @@ namespace InvasionOfAldebaran.ViewModels
             _objects.Add(this.Player);
             // First Spawn after this amount of seconds
             _nextSpawn = DateTime.Now.AddSeconds(spawnInterval);
+			this.Lives = 5;
             this.CurrentWave = 0;
-            _spawnAllowed = true;
-            this.Points = 1;
+            this.Points = 0;
             this.Message = "Shoot!";
 
             _timer.Interval = TimeSpan.FromSeconds(timerInterval);

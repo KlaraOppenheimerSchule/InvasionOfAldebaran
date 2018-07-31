@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace InvasionOfAldebaran.Helper
 {
-	class ScoreCompareHelper : IComparer<Score>
+	public class ScoreCompareHelper : IComparer<Score>
 	{
 		public int Compare(Score x, Score y)
 		{
@@ -15,9 +15,9 @@ namespace InvasionOfAldebaran.Helper
 			Score yScore = (Score)y;
 
 			if (xScore.Points > yScore.Points)
-				return 1;
-			if (xScore.Points < yScore.Points)
 				return -1;
+			if (xScore.Points < yScore.Points)
+				return 1;
 			else
 				return 0;
 		}

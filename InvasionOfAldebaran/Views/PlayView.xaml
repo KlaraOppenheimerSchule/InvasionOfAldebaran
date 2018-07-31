@@ -26,12 +26,14 @@
 		</Grid.ColumnDefinitions>
 
 		<!-- Question -->
-		<Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Visibility="Visible" BorderBrush="DarkMagenta" BorderThickness="3">
-			<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" FontWeight="Bold" Foreground="LightGray" 
-					   Style="{StaticResource NewFontStyle}" TextWrapping="Wrap"/>
+		<Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Visibility="Visible" BorderBrush="DarkMagenta" 
+				BorderThickness="3">
+			<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" FontWeight="Bold" 
+					   Foreground="LightGray" Style="{StaticResource NewFontStyle}" TextWrapping="Wrap"/>
 		</Border>
 		<!-- Instructions -->
-		<Border Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" ClipToBounds="True" Visibility="Visible" BorderBrush="DarkMagenta" BorderThickness="3">
+		<Border Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" ClipToBounds="True" Visibility="Visible" 
+				BorderBrush="DarkMagenta" BorderThickness="3">
             <StackPanel>
                 <TextBlock HorizontalAlignment="Center" FontSize="28" FontWeight="Bold" Foreground="LightGray" 
 					   Text="Spielregeln" Style="{StaticResource NewFontStyle}" Padding="0 40"/>
@@ -40,18 +42,12 @@
                 <Border Visibility="Visible" BorderBrush="DarkMagenta" BorderThickness="1" Margin="0 10 0 10"/>
 				<TextBlock HorizontalAlignment="Left" FontSize="16" FontWeight="Bold" Foreground="LightGray" 
 					   Text="- Schieße mit der Leertaste!" Style="{StaticResource NewFontStyle}" Padding="0 20"/>
+				<Border Visibility="Visible" BorderBrush="DarkMagenta" BorderThickness="1" Margin="0 10 0 10"/>
+				<TextBlock HorizontalAlignment="Left" FontSize="16" FontWeight="Bold" Foreground="LightGray" 
+					   Text="- Je mehr Wellen desto mehr Punkte" Style="{StaticResource NewFontStyle}" Padding="0 20"/>
                 <Border Visibility="Visible" BorderBrush="DarkMagenta" BorderThickness="1" Margin="0 10 0 10"/>
 				<TextBlock HorizontalAlignment="Left" FontSize="16" FontWeight="Bold" Foreground="LightGray" 
-					   Text="- Schieße auf die falschen Antworten!" Style="{StaticResource NewFontStyle}" Padding="0 20"/>
-                <Border Visibility="Visible" BorderBrush="DarkMagenta" BorderThickness="1" Margin="0 10 0 10"/>
-				<TextBlock HorizontalAlignment="Left" FontSize="16" FontWeight="Bold" Foreground="LightGray" 
-					   Text="- Lasse die richtigen Antworten durch!" Style="{StaticResource NewFontStyle}" Padding="0 20"/>
-                <Border Visibility="Visible" BorderBrush="DarkMagenta" BorderThickness="1" Margin="0 10 0 10"/>
-				<TextBlock HorizontalAlignment="Left" FontSize="16" FontWeight="Bold" Foreground="LightGray" 
-					   Text="- Nach 11 Fragen endet das Spiel!" Style="{StaticResource NewFontStyle}" Padding="0 20"/>
-                <Border Visibility="Visible" BorderBrush="DarkMagenta" BorderThickness="1" Margin="0 10 0 10"/>
-				<TextBlock HorizontalAlignment="Left" FontSize="16" FontWeight="Bold" Foreground="LightGray" 
-					   Text="- Versuche 100 Punkte zu erreichen!" Style="{StaticResource NewFontStyle}" Padding="0 20"/>
+					   Text="- Versuche möglichst viele Punkte zu erreichen!" Style="{StaticResource NewFontStyle}" Padding="0 20"/>
             </StackPanel>
 		</Border>
 		<!-- Canvas -->
@@ -62,12 +58,21 @@
 		</Border>
 
 		<!-- Answer Panel -->
-		<Border Grid.Row="1" Grid.Column="2" Grid.RowSpan="2" Visibility="Visible" BorderBrush="DarkMagenta" BorderThickness="3">
-		<StackPanel Grid.Row="1" Grid.Column="2" VerticalAlignment="Top" HorizontalAlignment="Center" CanVerticallyScroll="True">
-			<!-- Points -->
-                <TextBlock Text="{Binding Points, StringFormat='Points:  {0}'}" Foreground="LightGray" FontSize="28" FontWeight="Bold" 
-					   HorizontalAlignment="Center" Margin="0 30 0 0" Style="{StaticResource NewFontStyle}"/>
-			<!-- Answers -->
+		<Border Grid.Row="1" Grid.Column="2" Grid.RowSpan="2" Visibility="Visible" BorderBrush="DarkMagenta" 
+				BorderThickness="3">
+		<StackPanel Grid.Row="1" Grid.Column="2" VerticalAlignment="Top" HorizontalAlignment="Center" 
+					CanVerticallyScroll="True">
+			<!-- Lives, Points, Wave -->
+				<TextBlock Text="{Binding Lives, StringFormat='Lives:  {0}'}" Foreground="DarkRed" FontSize="28" 
+						   FontWeight="Bold" HorizontalAlignment="Center" Margin="0 30 0 0" 
+						   Style="{StaticResource NewFontStyle}"/>
+				<TextBlock Text="{Binding Points, StringFormat='Points:  {0}'}" Foreground="LightBlue" FontSize="28" 
+						   FontWeight="Bold" HorizontalAlignment="Center" Margin="0 30 0 0" 
+						   Style="{StaticResource NewFontStyle}"/>
+				<TextBlock Text="{Binding CurrentWave, StringFormat='Wave:  {0}'}" Foreground="Beige" FontSize="28" 
+						   FontWeight="Bold" HorizontalAlignment="Center" Margin="0 30 0 0" 
+						   Style="{StaticResource NewFontStyle}"/>
+				<!-- Answers -->
 			<ItemsControl Margin="0 50 0 0">
 				<Grid>
 					<Grid.ColumnDefinitions>
@@ -75,9 +80,11 @@
 						<ColumnDefinition Width="*" />
 					</Grid.ColumnDefinitions>
 					<Image Grid.Column="0" Grid.Row="0" Margin="5 0"
-						   HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="Fant" Stretch="Fill" Width="30" Height="30"/>
+						   HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="Fant" Stretch="Fill" 
+						   Width="30" Height="30"/>
 					<TextBlock Grid.Column="1" Grid.Row="0" Text="" FontSize="24" 
-							   FontWeight="Bold" HorizontalAlignment="Left" Style="{StaticResource NewFontStyle}" Foreground="LightGray"/>
+							   FontWeight="Bold" HorizontalAlignment="Left" Style="{StaticResource NewFontStyle}" 
+							   Foreground="LightGray"/>
 				</Grid>
 			</ItemsControl>
 			<Border Visibility="Visible" BorderBrush="DarkMagenta" BorderThickness="1" Margin="0 10 0 10"/>
@@ -88,9 +95,11 @@
 						<ColumnDefinition Width="*" />
 					</Grid.ColumnDefinitions>
 					<Image Grid.Column="0" Grid.Row="0" Margin="5 0"
-			               HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="Fant" Stretch="Fill" Width="30" Height="30"/>
+			               HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="Fant" Stretch="Fill" 
+						   Width="30" Height="30"/>
 					<TextBlock Grid.Column="1" Grid.Row="0" Text="" FontSize="24" 
-			                   FontWeight="Bold" HorizontalAlignment="Left" Foreground="LightGray" Style="{StaticResource NewFontStyle}"/>
+			                   FontWeight="Bold" HorizontalAlignment="Left" Foreground="LightGray" 
+							   Style="{StaticResource NewFontStyle}"/>
 				</Grid>
 			</ItemsControl>
 			<Border Visibility="Visible" BorderBrush="DarkMagenta" BorderThickness="1" Margin="0 10 0 10"/>
@@ -101,9 +110,11 @@
 						<ColumnDefinition Width="*" />
 					</Grid.ColumnDefinitions>
 					<Image Grid.Column="0" Grid.Row="0" Margin="5 0"
-					       HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="Fant" Stretch="Fill" Width="30" Height="30"/>
+					       HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="Fant" Stretch="Fill" 
+						   Width="30" Height="30"/>
 					<TextBlock Grid.Column="1" Grid.Row="0" Text="" FontSize="24" 
-					           FontWeight="Bold" HorizontalAlignment="Left" Foreground="LightGray" Style="{StaticResource NewFontStyle}"/>
+					           FontWeight="Bold" HorizontalAlignment="Left" Foreground="LightGray" 
+							   Style="{StaticResource NewFontStyle}"/>
 				</Grid>
 			</ItemsControl>
 			<Border Visibility="Visible" BorderBrush="DarkMagenta" BorderThickness="1" Margin="0 10 0 10"/>
@@ -114,22 +125,24 @@
 						<ColumnDefinition Width="*" />
 					</Grid.ColumnDefinitions>
 					<Image Grid.Column="0" Grid.Row="0" Margin="5 0"
-			               HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="Fant" Stretch="Fill" Width="30" Height="30"/>
+			               HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="Fant" Stretch="Fill" 
+						   Width="30" Height="30"/>
 					<TextBlock Grid.Column="1" Grid.Row="0" Text="" FontSize="24" 
-			                   FontWeight="Bold" HorizontalAlignment="Left" Foreground="LightGray" Style="{StaticResource NewFontStyle}"/>
+			                   FontWeight="Bold" HorizontalAlignment="Left" Foreground="LightGray" 
+							   Style="{StaticResource NewFontStyle}"/>
 				</Grid>
 			</ItemsControl>
 		</StackPanel>
 		</Border>
 		<!-- Hit Messages & Wave Number -->
-		<Border Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="1" Visibility="Visible" BorderBrush="DarkMagenta" BorderThickness="3" >
+		<Border Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="1" Visibility="Visible" BorderBrush="DarkMagenta" 
+				BorderThickness="3" >
 			<Grid>
-                <TextBlock Text="{Binding Message}" Foreground="LightGray" FontSize="16" Margin="10 0"
-				           HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Style="{StaticResource NewFontStyle}"/>
-                
-                <TextBlock HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="LightGray" FontSize="16" 
+				<TextBlock Text="{Binding Message}" Foreground="LightGray" FontSize="16" Margin="10 0"
+				           HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" 
+						   Style="{StaticResource NewFontStyle}"/>
+				<TextBlock HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="LightGray" FontSize="16" 
 						   Margin="10 0" FontWeight="Bold" Style="{StaticResource NewFontStyle}"/>
-				
 			</Grid>
 		</Border>
 	</Grid>

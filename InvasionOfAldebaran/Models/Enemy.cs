@@ -1,4 +1,5 @@
 ﻿using InvasionOfAldebaran.Helper;
+using System.Collections;
 using System.Windows.Controls;
 
 namespace InvasionOfAldebaran.Models
@@ -16,11 +17,17 @@ namespace InvasionOfAldebaran.Models
 		private double _slowSpeed = _slowSpeedFactor * CanvasHeight;
 		private double _mediumSpeed = _mediumSpeedFactor * CanvasHeight;
 		private double _fastSpeed = _fastSpeedFactor * CanvasHeight;
-
+		
+		/// <summary>
+		/// Indicates whether the alien is moving sideways or not
+		/// </summary>
 		public bool MovesSideways { get; private set; }
+		/// <summary>
+		/// The file name of the associated alien picture under the resources folder
+		/// </summary>
         public string AlienName { get; private set; }
 
-        public Enemy(string alien, string imagePath, Coords coords, Speed speed, double moveAmount) : base(imagePath, coords)
+        public Enemy(string alien, string imagePath, Coords coords, Speed speed, double speedMulti, double moveAmount) : base(imagePath, coords)
         {
             this.AlienName = alien;
 	        _maxDeviation = moveAmount;
@@ -28,15 +35,15 @@ namespace InvasionOfAldebaran.Models
 			switch (speed)
             {
                 case Speed.Fast:
-                    this.Vy = _slowSpeed;
+                    this.Vy = _slowSpeed * speedMulti;
                     break;
 
                 case Speed.Medium:
-                    this.Vy = _mediumSpeed;
+                    this.Vy = _mediumSpeed * speedMulti;
                     break;
 
                 case Speed.Slow:
-                    this.Vy = _fastSpeed;
+                    this.Vy = _fastSpeed * speedMulti;
                     break;
             }
             this.MovesSideways = RandomBool.Get();

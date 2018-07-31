@@ -12,6 +12,7 @@ namespace InvasionOfAldebaran.ViewModels
     public class MainMenuViewModel : NotifyPropertyChangedBase
     {
 		private List<Score> _highScore;
+		private ScoreCompareHelper _scoreHelper;
 
 		public string Name { get; set; }
         public ICommand PlayButtonCommand { get; set; }
@@ -25,7 +26,7 @@ namespace InvasionOfAldebaran.ViewModels
 			{
 				this._highScore = value;
 				// todo: Sorting funktioniert evtl nicht
-				this._highScore.Sort(new ScoreCompareHelper());
+				this._highScore.Sort(_scoreHelper);
 
 				for (int i = 0; i < _highScore.Count; i++)
 				{
@@ -40,19 +41,26 @@ namespace InvasionOfAldebaran.ViewModels
         public MainMenuViewModel(FrameWindowViewModel frameModel)
         {
             _frameModel = frameModel;
+			_scoreHelper = new ScoreCompareHelper();
 
             this.PlayButtonCommand = new RelayCommand(this.ChangeWindow);
             this.CloseButtonCommand = new RelayCommand(this.CloseWindow);
 
 			this.Highscore = new List<Score>
 			{
-				new Score(50, "Ein Spieler")
+				new Score(50, "Ein Spieler"),
+				new Score(40, "Schlechtester"),
+				new Score(123, "Bester")
+				
 			};
+			this._highScore.Sort(_scoreHelper);
 		}
 
         public void AddScore(Score score)
         {
-			this.Highscore.Add(score);
+			var newList = this.Highscore;
+			newList.Add(score);
+			this.Highscore = newList;
         }
 
 		#region Interface Members

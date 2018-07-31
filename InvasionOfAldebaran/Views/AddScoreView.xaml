@@ -7,18 +7,39 @@
 			 xmlns:vm="clr-namespace:InvasionOfAldebaran.ViewModels"
              mc:Ignorable="d" 
 			 d:DataContext="{d:DesignInstance vm:AddScoreViewModel}"
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="850" d:DesignWidth="950">
+	<!-- Background Image -->
 	<UserControl.Background>
-		<ImageBrush ImageSource="../Resources/Images/Background.jpg"></ImageBrush>
+		<ImageBrush ImageSource="../Resources/Images/IngameBackground.jpg"></ImageBrush>
 	</UserControl.Background>
+	<!-- Font Style -->
 	<UserControl.Resources>
 		<Style TargetType="{x:Type Label}" x:Key="NewFontStyle">
 			<Setter Property="FontFamily" Value="../../Resources/Fonts/#Good Times Rg" />
 		</Style>
 	</UserControl.Resources>
 	<Grid>
-		<Label Content="{Binding Points}"></Label>
-		<Label Content="Type in your Name"></Label>
-		<TextBox></TextBox>
-    </Grid>
+		<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="*" />
+			</Grid.ColumnDefinitions>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="*" />
+				<RowDefinition Height="*" />
+				<RowDefinition Height="*" />
+			</Grid.RowDefinitions>
+		<Label Grid.Row="0" Grid.Column="1" Content="Your Score!" FontSize="42" Foreground="White" 
+			   VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource NewFontStyle}"/>
+		<Label Grid.Row="0" Grid.Column="1" Content="{Binding Points}" FontSize="48" Foreground="White" 
+			   VerticalAlignment="Bottom" HorizontalAlignment="Center" Style="{StaticResource NewFontStyle}"/>
+		<Label Grid.Row="1" Grid.Column="1" FontSize="30" Foreground="White" VerticalAlignment="Top" 
+			   HorizontalAlignment="Center" Margin="0 60" Content="Type in your Name" Style="{StaticResource NewFontStyle}"/>
+		<TextBox Grid.Row="1" Grid.Column="1" FontSize="26" Foreground="Black" MinWidth="280" 
+				 Text="{Binding Name, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" 
+				 VerticalAlignment="Center" HorizontalAlignment="Center" MaxLength="48"/>
+		<Button Grid.Row="1" Grid.Column="1" MaxHeight="70" MaxWidth="210" Content="Continue" FontSize="24"
+				VerticalAlignment="Bottom" FontWeight="Bold" Command="{Binding SendScoreCommand}"
+				IsEnabled="{Binding ButtonEnabled}"/>
+	</Grid>
 </UserControl>

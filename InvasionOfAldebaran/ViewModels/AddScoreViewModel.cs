@@ -1,10 +1,4 @@
-﻿using Caliburn.Micro;
-using InvasionOfAldebaran.Helper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using InvasionOfAldebaran.Helper;
 using System.Windows.Input;
 
 namespace InvasionOfAldebaran.ViewModels
@@ -13,13 +7,15 @@ namespace InvasionOfAldebaran.ViewModels
 	{
 		private int _points;
 		private string _name;
+		private bool _buttonEnabled;
 
 		private FrameWindowViewModel _frameModel;
+		
 
 		public int Points
 		{
 			get { return this._points; }
-			set
+			private set
 			{
 				this._points = value;
 				this.NotifyPropertyChanged(nameof(this.Points));
@@ -32,6 +28,21 @@ namespace InvasionOfAldebaran.ViewModels
 			{
 				if(!string.IsNullOrEmpty(value))
 					this._name = value;
+
+				if (this._name.Length > 3)
+					this.ButtonEnabled = true;
+				else
+					this.ButtonEnabled = false;
+			}
+		}
+
+		public bool ButtonEnabled
+		{
+			get { return this._buttonEnabled; }
+			private set
+			{
+				this._buttonEnabled = value;
+				this.NotifyPropertyChanged(nameof(this.ButtonEnabled));
 			}
 		}
 
@@ -41,6 +52,7 @@ namespace InvasionOfAldebaran.ViewModels
 		{
 			this._frameModel = frameModel;
 			this.Points = points;
+			this.ButtonEnabled = false;
 			this.SendScoreCommand = new RelayCommand(this.SendScoreAndChangeMainMenu);
 		}
 
