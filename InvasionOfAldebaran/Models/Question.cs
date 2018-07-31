@@ -38,7 +38,7 @@ namespace InvasionOfAldebaran.Models
         private void HandleAnswers(List<Answer> answers)
         {
             if (answers == null)
-                throw new ArgumentNullException($@"The provided answerlist {answers} was null");
+                throw new ArgumentNullException($@"The provided answerlist was null");
 
             var aliens = new List<string> { "alien1", "alien2", "alien3", "alien4" };
             var correctAnswerHandled = false;

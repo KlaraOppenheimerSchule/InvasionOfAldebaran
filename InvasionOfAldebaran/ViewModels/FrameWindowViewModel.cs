@@ -38,10 +38,15 @@ namespace InvasionOfAldebaran.ViewModels
         public void DisplayAddScoreScreen(int score)
         {
 			// Todo: Neue Instanz von AddScore erstellen und anzeigen lassen, anschließend Highscore im MainMenu aktualisieren
-			var AddScore = new AddScoreViewModel(score);
+			var AddScore = new AddScoreViewModel(this, score);
 
 			this.ActivateItem(AddScore);
 	    }
+		public void SetNewHighScore(Score score)
+		{
+			var menu = this.Items.Single(s => s is MainMenuViewModel) as MainMenuViewModel;
+			menu.AddScore(score);
+		}
 
 	    public void ChangeScreen(Type screen, Type from = null)
 	    {

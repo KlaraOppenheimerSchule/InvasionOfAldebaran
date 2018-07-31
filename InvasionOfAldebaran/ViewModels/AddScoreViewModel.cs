@@ -1,18 +1,22 @@
 ﻿using Caliburn.Micro;
+using InvasionOfAldebaran.Helper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace InvasionOfAldebaran.ViewModels
 {
 	public class AddScoreViewModel : NotifyPropertyChangedBase
 	{
-		private string _points;
+		private int _points;
 		private string _name;
 
-		public string Points
+		private FrameWindowViewModel _frameModel;
+
+		public int Points
 		{
 			get { return this._points; }
 			set
@@ -31,9 +35,21 @@ namespace InvasionOfAldebaran.ViewModels
 			}
 		}
 
-		public AddScoreViewModel(int points)
+		public ICommand SendScoreCommand { get; private set; }
+
+		public AddScoreViewModel(FrameWindowViewModel frameModel, int points)
 		{
-			this.Points = points.ToString();
+			this._frameModel = frameModel;
+			this.Points = points;
+			this.SendScoreCommand = new RelayCommand(this.SendScoreAndChangeMainMenu);
+		}
+
+		private void SendScoreAndChangeMainMenu()
+		{
+			var score = new Score(this.Points, this.Name);
+			this._frameModel.SetNewHighScore(score);
+
+			this._frameModel.ChangeScreen(typeof(MainMenuViewModel));
 		}
 	}
 }

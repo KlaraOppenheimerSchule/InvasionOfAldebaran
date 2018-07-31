@@ -9,59 +9,58 @@ using System.Windows.Media;
 
 namespace InvasionOfAldebaran.ViewModels
 {
-    public class MainMenuViewModel : Screen
+    public class MainMenuViewModel : NotifyPropertyChangedBase
     {
-        public string Name { get; set; }
-        private string _highScore;
+		private List<Score> _highScore;
+
+		public string Name { get; set; }
         public ICommand PlayButtonCommand { get; set; }
         public ICommand CloseButtonCommand { get; set; }
         public int Points { get; set; }
         public int NewPoints { get; set; }
-	    public List<Score> Highscore { get; set; }
+	    public List<Score> Highscore
+		{
+			get { return this._highScore; }
+			set
+			{
+				this._highScore = value;
+				// todo: Sorting funktioniert evtl nicht
+				this._highScore.Sort(new ScoreCompareHelper());
+
+				for (int i = 0; i < _highScore.Count; i++)
+				{
+					this._highScore[i].ListPosition = i + 1;
+				}
+				NotifyPropertyChanged(nameof(Highscore));
+			}
+		}
 
         private FrameWindowViewModel _frameModel;
 
         public MainMenuViewModel(FrameWindowViewModel frameModel)
         {
-          string[] arguments = Environment.GetCommandLineArgs();
-
-            //if (arguments.Length > 2)
-            //{
-            //    this.Name = arguments[1];
-
-            //    int.TryParse(arguments[2], out var points);
-            //    this.Points = points;
-            //}
-
             _frameModel = frameModel;
 
             this.PlayButtonCommand = new RelayCommand(this.ChangeWindow);
             this.CloseButtonCommand = new RelayCommand(this.CloseWindow);
-			this.Highscore = new List<Score>();
-			this.Highscore.Add(new Score(50, "Ein Spieler"));
-        }
 
-        public string ReturnHighscore()
+			this.Highscore = new List<Score>
+			{
+				new Score(50, "Ein Spieler")
+			};
+		}
+
+        public void AddScore(Score score)
         {
-            return _highScore;
+			this.Highscore.Add(score);
         }
 
-        public void SetScore(int score, string name)
-        {
-            this.NewPoints = score;
-            if( this.Points < score )
-                {
-                this.Points = score;
-                }
-
-        }
 		#region Interface Members
 
         private void CloseWindow()
         {
             _frameModel.CloseItem(_frameModel);
         }
-
 
         private void ChangeWindow()
         {

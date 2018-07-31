@@ -27,6 +27,7 @@ namespace InvasionOfAldebaran.ViewModels
 
         private SpawnHandler _spawner;
         private InputHandler _inputHandler;
+		private Random _random;
 
         private List<AnimatedObject> _objectsToBeDeleted;
         private List<AnimatedObject> _objects;
@@ -45,18 +46,6 @@ namespace InvasionOfAldebaran.ViewModels
 
 		public Canvas Canvas { get; private set; }
         public Player Player { get; private set; }
-
-		public int QuestionCounter {
-			get
-			{
-				return this._questionCounter;
-			}
-			private set
-			{
-				this._questionCounter = value;
-				this.NotifyPropertyChanged(nameof(this.QuestionCounter));
-			}
-		}
 
 		public int Points
         {
@@ -80,20 +69,6 @@ namespace InvasionOfAldebaran.ViewModels
             }
         }
 
-        public Question CurrentQuestion
-        {
-            get { return _currentQuestion; }
-            private set
-            {
-                if (value == null)
-                {
-                    this.GameEnded?.Invoke(this.Points);
-                    _currentQuestion = value;
-                }
-                _currentQuestion = value;
-                this.NotifyPropertyChanged(nameof(this.CurrentQuestion));
-            }
-        }
         public int CurrentWave
         {
             get { return _currentWave; }
@@ -118,6 +93,7 @@ namespace InvasionOfAldebaran.ViewModels
             string imagePath = @"../../Resources/Images/IngameBackground.jpg";
             var imageBitmap = new BitmapImage(new Uri(imagePath, UriKind.Relative));
             backgroundImage.ImageSource = imageBitmap;
+			this._random = new Random();
 
 	        double canvasHeight = this._frameViewModel.Height - 164;
 	        double canvasWidth = this._frameViewModel.Width / 2.55;
@@ -141,34 +117,28 @@ namespace InvasionOfAldebaran.ViewModels
             // Handles Input for the player
             this._inputHandler.ApplyInput();
 
-            if (_currentWave >= maxWave)
-                _spawnAllowed = false;
-
-			if (_spawnAllowed && _nextSpawn <= DateTime.Now)
+			// Spawn new enemies after the spawninterval ended
+			if (_nextSpawn <= DateTime.Now)
             {
-                var enemies = _spawner.SpawnEnemies(this.CurrentQuestion);
+                var enemies = _spawner.SpawnEnemies();
                 _objects.AddRange(enemies);
                 _enemies.AddRange(enemies);
                 _nextSpawn = DateTime.Now.AddSeconds(spawnInterval);
                 this.CurrentWave++;
             }
-            if (!_spawnAllowed && _enemies.Count <= 0)
+			// end the game after a certain wave or if the player lost all of his lifes(not implemented)
+            if (this.CurrentWave >= 11)
             {
-                this.CurrentWave = 0;
-                this.CurrentQuestion = _spawner.GetQuestion();
                 Soundmanager.PlayNewQuestion();
                 // Ends the game once the maximum question counter is reached
-                if (this.CurrentQuestion == null)
-                {
-                    var result = MessageBox.Show($"Deine Punkte: {this.Points}", "Gratulation", MessageBoxButton.OK);
-                    if (result.Equals(MessageBoxResult.OK))
-                        this.EndGame();
-                }
-				this.QuestionCounter++;
+                var result = MessageBox.Show($"Deine Punkte: {this.Points}", "Gratulation", MessageBoxButton.OK);
+                if (result.Equals(MessageBoxResult.OK))
+					this.EndGame();
+               
                 _nextSpawn = DateTime.Now.AddSeconds(questionStartTime);
                 _spawnAllowed = true;
             }
-
+			// Animate every item on the canvas and check if it is still inside the canvas boundaries
             foreach (var item in _objects)
             {
                 item.Animate(_timer.Interval, this.Canvas);
@@ -179,16 +149,11 @@ namespace InvasionOfAldebaran.ViewModels
 
                     if (item.GetType() != typeof(Enemy))
                         continue;
-
-                    var ship = item as Enemy;
-                    if (ship?.GetType() == typeof(Enemy) &&
-                        !ship.AlienName.Equals(this.CurrentQuestion?.CorrectAnswer.Alien))
-                    {
+					else  
                         this.Points -= enemyEscapePenalty;
-                    }
                 }
             }
-
+			// Collision Detection between enemies and missiles
             foreach (var enemy in _objects.OfType<Enemy>())
             {
                 foreach (var missile in _objects.OfType<Missile>())
@@ -196,25 +161,17 @@ namespace InvasionOfAldebaran.ViewModels
                     if (!enemy.IntersectsWith(missile.Coords.X, missile.Coords.Y, enemy.Image, missile.Image))
                         continue;
 
-                    if (enemy.AlienName.Equals(this.CurrentQuestion?.CorrectAnswer.Alien))
-                    {
-                        Soundmanager.PlayFriendlyExplosion();
-                        _objectsToBeDeleted.Add(enemy);
-                        _enemies.Remove(enemy);
-                        _objectsToBeDeleted.Add(missile);
-                        this.Message = "That was a friendly ship!";
-                        this.Points -= friendlyFirePenalty;
-                    }
+					if(this._random.Next(0, 3) == 0)
+						Soundmanager.PlayFriendlyExplosion();
                     else
-                    {
-                        Soundmanager.PlayEnemyExplosion();
-                        _objectsToBeDeleted.Add(enemy);
-                        _enemies.Remove(enemy);
-                        _objectsToBeDeleted.Add(missile);
-                        this.Message = "Good hit!";
-                        this.Points++;
-                    }
-                }
+						Soundmanager.PlayEnemyExplosion();
+                    
+					_objectsToBeDeleted.Add(enemy);
+					_enemies.Remove(enemy);
+					_objectsToBeDeleted.Add(missile);
+					this.Message = "Good hit!";
+					this.Points++;
+				}
             }
             _objectsToBeDeleted.ForEach(obj => _objects.Remove(obj));
 
@@ -254,14 +211,12 @@ namespace InvasionOfAldebaran.ViewModels
 
             // Setup for Gameplay
             _objects.Add(this.Player);
-            this.CurrentQuestion = _spawner.GetQuestion();
             // First Spawn after this amount of seconds
             _nextSpawn = DateTime.Now.AddSeconds(spawnInterval);
             this.CurrentWave = 0;
             _spawnAllowed = true;
             this.Points = 1;
-			this.QuestionCounter = 1;
-            this.Message = "Shoot the wrong answers!";
+            this.Message = "Shoot!";
 
             _timer.Interval = TimeSpan.FromSeconds(timerInterval);
             _timer.Start();

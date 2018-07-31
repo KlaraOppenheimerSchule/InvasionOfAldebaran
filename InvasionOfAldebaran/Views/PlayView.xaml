@@ -27,8 +27,8 @@
 
 		<!-- Question -->
 		<Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Visibility="Visible" BorderBrush="DarkMagenta" BorderThickness="3">
-			<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding CurrentQuestion.Text}"
-				   FontSize="24" FontWeight="Bold" Foreground="LightGray" Style="{StaticResource NewFontStyle}" TextWrapping="Wrap"/>
+			<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" FontWeight="Bold" Foreground="LightGray" 
+					   Style="{StaticResource NewFontStyle}" TextWrapping="Wrap"/>
 		</Border>
 		<!-- Instructions -->
 		<Border Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" ClipToBounds="True" Visibility="Visible" BorderBrush="DarkMagenta" BorderThickness="3">
@@ -74,9 +74,9 @@
 						<ColumnDefinition Width="50" />
 						<ColumnDefinition Width="*" />
 					</Grid.ColumnDefinitions>
-					<Image Grid.Column="0" Grid.Row="0" Source="{Binding CurrentQuestion.Answers[0].Source}" Margin="5 0"
+					<Image Grid.Column="0" Grid.Row="0" Margin="5 0"
 						   HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="Fant" Stretch="Fill" Width="30" Height="30"/>
-					<TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding CurrentQuestion.Answers[0].Text}" FontSize="24" 
+					<TextBlock Grid.Column="1" Grid.Row="0" Text="" FontSize="24" 
 							   FontWeight="Bold" HorizontalAlignment="Left" Style="{StaticResource NewFontStyle}" Foreground="LightGray"/>
 				</Grid>
 			</ItemsControl>
@@ -87,9 +87,9 @@
 						<ColumnDefinition Width="50" />
 						<ColumnDefinition Width="*" />
 					</Grid.ColumnDefinitions>
-					<Image Grid.Column="0" Grid.Row="0" Source="{Binding CurrentQuestion.Answers[1].Source}" Margin="5 0"
+					<Image Grid.Column="0" Grid.Row="0" Margin="5 0"
 			               HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="Fant" Stretch="Fill" Width="30" Height="30"/>
-					<TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding CurrentQuestion.Answers[1].Text}" FontSize="24" 
+					<TextBlock Grid.Column="1" Grid.Row="0" Text="" FontSize="24" 
 			                   FontWeight="Bold" HorizontalAlignment="Left" Foreground="LightGray" Style="{StaticResource NewFontStyle}"/>
 				</Grid>
 			</ItemsControl>
@@ -100,9 +100,9 @@
 						<ColumnDefinition Width="50" />
 						<ColumnDefinition Width="*" />
 					</Grid.ColumnDefinitions>
-					<Image Grid.Column="0" Grid.Row="0" Source="{Binding CurrentQuestion.Answers[2].Source}" Margin="5 0"
+					<Image Grid.Column="0" Grid.Row="0" Margin="5 0"
 					       HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="Fant" Stretch="Fill" Width="30" Height="30"/>
-					<TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding CurrentQuestion.Answers[2].Text}" FontSize="24" 
+					<TextBlock Grid.Column="1" Grid.Row="0" Text="" FontSize="24" 
 					           FontWeight="Bold" HorizontalAlignment="Left" Foreground="LightGray" Style="{StaticResource NewFontStyle}"/>
 				</Grid>
 			</ItemsControl>
@@ -113,9 +113,9 @@
 						<ColumnDefinition Width="50" />
 						<ColumnDefinition Width="*" />
 					</Grid.ColumnDefinitions>
-					<Image Grid.Column="0" Grid.Row="0" Source="{Binding CurrentQuestion.Answers[3].Source}" Margin="5 0"
+					<Image Grid.Column="0" Grid.Row="0" Margin="5 0"
 			               HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="Fant" Stretch="Fill" Width="30" Height="30"/>
-					<TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding CurrentQuestion.Answers[3].Text}" FontSize="24" 
+					<TextBlock Grid.Column="1" Grid.Row="0" Text="" FontSize="24" 
 			                   FontWeight="Bold" HorizontalAlignment="Left" Foreground="LightGray" Style="{StaticResource NewFontStyle}"/>
 				</Grid>
 			</ItemsControl>
@@ -126,10 +126,9 @@
 			<Grid>
                 <TextBlock Text="{Binding Message}" Foreground="LightGray" FontSize="16" Margin="10 0"
 				           HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Style="{StaticResource NewFontStyle}"/>
-                <!--<TextBlock Text="{Binding CurrentWave, StringFormat='Wave: {0} / 3'}" HorizontalAlignment="Center" 
-						   VerticalAlignment="Center" Foreground="LightGray" FontSize="16" Margin="10 0" FontWeight="Bold" Style="{StaticResource NewFontStyle}"/>-->
-                <TextBlock Text="{Binding QuestionCounter, StringFormat='Question: {0} / 11'}" HorizontalAlignment="Right" 
-						   VerticalAlignment="Center" Foreground="LightGray" FontSize="16" Margin="10 0" FontWeight="Bold" Style="{StaticResource NewFontStyle}"/>
+                
+                <TextBlock HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="LightGray" FontSize="16" 
+						   Margin="10 0" FontWeight="Bold" Style="{StaticResource NewFontStyle}"/>
 				
 			</Grid>
 		</Border>

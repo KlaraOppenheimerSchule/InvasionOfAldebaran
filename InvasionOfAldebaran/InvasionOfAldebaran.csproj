@@ -69,6 +69,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Helper\ScoreCompareHelper.cs" />
     <Compile Include="Helper\Serializer.cs" />
     <Compile Include="Helper\Soundmanager.cs" />
     <Compile Include="Models\AnimatedObject.cs" />

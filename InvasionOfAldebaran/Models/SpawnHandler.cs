@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
-using System.Windows.Media;
 
 namespace InvasionOfAldebaran.Models
 {
@@ -14,9 +13,10 @@ namespace InvasionOfAldebaran.Models
         private readonly Coords _playerSpawn;
         private readonly List<Coords> _spawnPoints;
         private readonly Random _r = new Random();
-        private double _spawnGap;
+		private List<string> _alienNames;
 
-        private DateTime _lastMissile;
+		private double _spawnGap;
+		private DateTime _lastMissile;
         private readonly List<AnimatedObject> _missiles;
         private readonly List<Question> _questions;
 	    private int _questionCounter;
@@ -33,6 +33,10 @@ namespace InvasionOfAldebaran.Models
             _spawnPoints = new List<Coords>();
 
             _missiles = new List<AnimatedObject>();
+			_alienNames = new List<string>
+			{
+				"alien1", "alien2", "alien3", "alien4"
+			};
             _questions = this.MakeList();
             _spawnGap = 0;
 	        _questionCounter = 0;
@@ -56,13 +60,12 @@ namespace InvasionOfAldebaran.Models
         /// <summary>
         /// Spawns a full Wave of enemies and returns a list containing them
         /// </summary>
-        /// <param name="question"></param>
         /// <returns></returns>
-        public List<AnimatedObject> SpawnEnemies(Question question)
+        public List<AnimatedObject> SpawnEnemies()
         {
             var enemies = new List<AnimatedObject>();
 
-            List<string> aliens = question.Answers.Select(answer => answer.Alien).ToList();
+			List<string> aliens = this._alienNames;
             Shuffle(aliens);
             List<Coords> spawns = _spawnPoints.Select(point => new Coords(point.X, point.Y)).ToList();
             for (int i = 0; i < 4; i++)
@@ -95,7 +98,7 @@ namespace InvasionOfAldebaran.Models
         /// Returns the next question from the questions array, null if there a no questions left.
         /// </summary>
         /// <returns></returns>
-        public Question GetQuestion()
+        public Question GetQuestions()
         {
             if (_questions.Count > 0 && this._questionCounter <= 10)
             {
@@ -109,27 +112,6 @@ namespace InvasionOfAldebaran.Models
             }
             else
                 return null;
-        }
-
-        /// <summary>
-        /// Fisher-Yates-Shuffle a List
-        /// </summary>
-        /// <param name="list">List of strings to be shuffled</param>
-        public void Shuffle(List<string> list)
-        {
-            RNGCryptoServiceProvider provider = new RNGCryptoServiceProvider();
-            int listCount = list.Count;
-            while (listCount > 1)
-            {
-                byte[] box = new byte[1];
-                do provider.GetBytes(box);
-                while (!(box[0] < listCount * (Byte.MaxValue / listCount)));
-                int k = (box[0] % listCount);
-                listCount--;
-                string value = list[k];
-                list[k] = list[listCount];
-                list[listCount] = value;
-            }
         }
 
         /// <summary>
@@ -152,7 +134,28 @@ namespace InvasionOfAldebaran.Models
             }
         }
 
-        private List<Question> MakeList()
+		/// <summary>
+		/// Fisher-Yates-Shuffle a List
+		/// </summary>
+		/// <param name="list">List of strings to be shuffled</param>
+		private void Shuffle(List<string> list)
+		{
+			RNGCryptoServiceProvider provider = new RNGCryptoServiceProvider();
+			int listCount = list.Count;
+			while (listCount > 1)
+			{
+				byte[] box = new byte[1];
+				do provider.GetBytes(box);
+				while (!(box[0] < listCount * (Byte.MaxValue / listCount)));
+				int k = (box[0] % listCount);
+				listCount--;
+				string value = list[k];
+				list[k] = list[listCount];
+				list[listCount] = value;
+			}
+		}
+
+		private List<Question> MakeList()
         {
             var list = new List<Question>()
             {
