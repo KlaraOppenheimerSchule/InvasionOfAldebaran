@@ -32,6 +32,9 @@ namespace InvasionOfAldebaran.ViewModels
 				{
 					this._highScore[i].ListPosition = i + 1;
 				}
+				if (_highScore.Count > 10)
+					_highScore.RemoveAt(_highScore.Count - 1);
+
 				NotifyPropertyChanged(nameof(Highscore));
 			}
 		}
@@ -61,6 +64,7 @@ namespace InvasionOfAldebaran.ViewModels
 			var newList = this.Highscore;
 			newList.Add(score);
 			this.Highscore = newList;
+			// ja ich weiß...
         }
 
 		#region Interface Members

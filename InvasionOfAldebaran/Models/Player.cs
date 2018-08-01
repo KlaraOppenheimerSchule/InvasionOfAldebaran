@@ -6,7 +6,7 @@ namespace InvasionOfAldebaran.Models
 {
     public class Player : AnimatedObject
     {
-		private const double speedFactor = 0.66667;
+		private const double speedFactor = 0.99;
 
 		private double _speed;	
 
@@ -20,8 +20,9 @@ namespace InvasionOfAldebaran.Models
             canvas.Children.Add(this.Image);
             Canvas.SetLeft(this.Image, this.Coords.X);
             Canvas.SetTop(this.Image, this.Coords.Y);
-            this.ResetSpeed();
-        }
+			this.Vx = 0;
+			this.Vy = 0;
+		}
 
         public override void Animate(TimeSpan interval, Canvas canvas)
         {

@@ -16,10 +16,10 @@ namespace InvasionOfAldebaran.ViewModels
     {
         private const int spawnInterval = 5;
 	    private const int enemyEscapePenalty = 1;
-		private const double timerInterval = 0.014;
+		private const double timerInterval = 0.016667;
 
         private readonly FrameWindowViewModel _frameViewModel;
-        private readonly DispatcherTimer _timer = new DispatcherTimer();
+        private readonly DispatcherTimer _timer = new DispatcherTimer(DispatcherPriority.Render);
 
         private SpawnHandler _spawner;
         private InputHandler _inputHandler;
@@ -34,6 +34,7 @@ namespace InvasionOfAldebaran.ViewModels
 
         private int _points;
         private string _message;
+		private int _lives;
 
 		#region Properties
 
@@ -42,7 +43,12 @@ namespace InvasionOfAldebaran.ViewModels
 
 		public int Lives
 		{
-			get; private set;
+			get { return this._lives; }
+			private set
+			{
+				this._lives = value >= 0 ? value : 0;
+				this.NotifyPropertyChanged(nameof(Lives));
+			}
 		}
 
 		public int Points
@@ -90,7 +96,7 @@ namespace InvasionOfAldebaran.ViewModels
 			this._random = new Random();
 
 	        double canvasHeight = this._frameViewModel.Height - 164;
-	        double canvasWidth = this._frameViewModel.Width / 2.55;
+	        double canvasWidth = this._frameViewModel.Width / 1.5;
 			AnimatedObject.CanvasHeight = canvasHeight;
 
 			this.Canvas = new Canvas()
@@ -120,12 +126,12 @@ namespace InvasionOfAldebaran.ViewModels
                 _nextSpawn = DateTime.Now.AddSeconds(spawnInterval);
                 this.CurrentWave++;
             }
-			// end the game after a certain wave or if the player lost all of his lifes(not implemented)
-            if (this.CurrentWave >= 11)
+			// end the game after a certain wave or if the player lost all of his lives(not implemented)
+            if (this.Lives <= 0)
             {
                 Soundmanager.PlayNewQuestion();
                 // Ends the game once the maximum question counter is reached
-                var result = MessageBox.Show($"Deine Punkte: {this.Points}", "Gratulation", MessageBoxButton.OK);
+                var result = MessageBox.Show($"Du hast alle Leben verloren! Deine Punkte: {this.Points * CurrentWave}", "Gratulation", MessageBoxButton.OK);
                 if (result.Equals(MessageBoxResult.OK))
 					this.EndGame();  
             }
@@ -142,7 +148,6 @@ namespace InvasionOfAldebaran.ViewModels
                         continue;
 					else
 					{
-						this.Points--;
 						this.Lives--;
 					}
                 }
@@ -185,6 +190,9 @@ namespace InvasionOfAldebaran.ViewModels
 			_inputHandler.EscapeKeyPressed -= this.EndGame;
 
 			this.Points *= this.CurrentWave;
+			if (Points < 1)
+				Points = 1;
+
 			// todo: evtl gehts nicht
 			_frameViewModel.DisplayAddScoreScreen(this.Points);
 		}
@@ -211,7 +219,7 @@ namespace InvasionOfAldebaran.ViewModels
             _nextSpawn = DateTime.Now.AddSeconds(spawnInterval);
 			this.Lives = 5;
             this.CurrentWave = 0;
-            this.Points = 0;
+            this.Points = 1;
             this.Message = "Shoot!";
 
             _timer.Interval = TimeSpan.FromSeconds(timerInterval);

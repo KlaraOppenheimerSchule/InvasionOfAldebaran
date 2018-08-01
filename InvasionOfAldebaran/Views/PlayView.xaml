@@ -72,22 +72,21 @@
 				<TextBlock Text="{Binding CurrentWave, StringFormat='Wave:  {0}'}" Foreground="Beige" FontSize="28" 
 						   FontWeight="Bold" HorizontalAlignment="Center" Margin="0 30 0 0" 
 						   Style="{StaticResource NewFontStyle}"/>
-				<!-- Answers -->
+			<!-- Freddy Face -->
 			<ItemsControl Margin="0 50 0 0">
-				<Grid>
+				<Grid x:Name="FreddyFace">
 					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="50" />
 						<ColumnDefinition Width="*" />
 					</Grid.ColumnDefinitions>
-					<Image Grid.Column="0" Grid.Row="0" Margin="5 0"
+						<Grid.Background>
+							<ImageBrush ImageSource="../Resources/Images/MainMenuBackground.jpg"></ImageBrush>
+						</Grid.Background>
+						<Image Grid.Column="0" Grid.Row="0" Margin="5 0"
 						   HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="Fant" Stretch="Fill" 
-						   Width="30" Height="30"/>
-					<TextBlock Grid.Column="1" Grid.Row="0" Text="" FontSize="24" 
-							   FontWeight="Bold" HorizontalAlignment="Left" Style="{StaticResource NewFontStyle}" 
-							   Foreground="LightGray"/>
-				</Grid>
+						  Source="../Resources/Images/FreddyPower.png" Height="{Binding ActualHeight, ElementName=FreddyFace}" />
+					</Grid>
 			</ItemsControl>
-			<Border Visibility="Visible" BorderBrush="DarkMagenta" BorderThickness="1" Margin="0 10 0 10"/>
+				<!--<Border Visibility="Visible" BorderBrush="DarkMagenta" BorderThickness="1" Margin="0 10 0 10"/>
 			<ItemsControl>
 				<Grid>
 					<Grid.ColumnDefinitions>
@@ -131,7 +130,7 @@
 			                   FontWeight="Bold" HorizontalAlignment="Left" Foreground="LightGray" 
 							   Style="{StaticResource NewFontStyle}"/>
 				</Grid>
-			</ItemsControl>
+			</ItemsControl>-->
 		</StackPanel>
 		</Border>
 		<!-- Hit Messages & Wave Number -->

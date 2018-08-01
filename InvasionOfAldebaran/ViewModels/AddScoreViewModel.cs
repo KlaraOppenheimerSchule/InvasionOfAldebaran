@@ -10,7 +10,6 @@ namespace InvasionOfAldebaran.ViewModels
 		private bool _buttonEnabled;
 
 		private FrameWindowViewModel _frameModel;
-		
 
 		public int Points
 		{
@@ -21,6 +20,7 @@ namespace InvasionOfAldebaran.ViewModels
 				this.NotifyPropertyChanged(nameof(this.Points));
 			}
 		}
+
 		public string Name
 		{
 			get { return this._name; }
