@@ -3,11 +3,10 @@ using System;
 using System.Linq;
 using System.Windows;
 using InvasionOfAldebaran.Helper;
-using System.Windows.Input;
 
 namespace InvasionOfAldebaran.ViewModels
 {
-    public class FrameWindowViewModel : Conductor<Screen>.Collection.OneActive
+	public class FrameWindowViewModel : Conductor<Screen>.Collection.OneActive
     {
         public string Name { get; set; }
         public int Points { get; set; }

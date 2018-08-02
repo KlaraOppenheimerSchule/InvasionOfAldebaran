@@ -96,7 +96,7 @@ namespace InvasionOfAldebaran.ViewModels
 			this._random = new Random();
 
 	        double canvasHeight = this._frameViewModel.Height - 164;
-	        double canvasWidth = this._frameViewModel.Width / 1.5;
+	        double canvasWidth = this._frameViewModel.Width / 2;
 			AnimatedObject.CanvasHeight = canvasHeight;
 
 			this.Canvas = new Canvas()

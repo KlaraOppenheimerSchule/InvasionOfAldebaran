@@ -26,10 +26,12 @@ namespace InvasionOfAldebaran.ViewModels
 			get { return this._name; }
 			set
 			{
-				if(!string.IsNullOrEmpty(value))
-					this._name = value;
+				if (string.IsNullOrEmpty(value))
+					return;
 
-				if (this._name.Length > 3)
+				_name = value;
+
+				if (_name.Length > 3)
 					this.ButtonEnabled = true;
 				else
 					this.ButtonEnabled = false;

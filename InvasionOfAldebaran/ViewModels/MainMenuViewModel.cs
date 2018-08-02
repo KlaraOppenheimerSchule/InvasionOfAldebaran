@@ -1,15 +1,11 @@
 ﻿using Caliburn.Micro;
 using InvasionOfAldebaran.Helper;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Security.RightsManagement;
 using System.Windows.Input;
-using System.Windows.Media;
 
 namespace InvasionOfAldebaran.ViewModels
 {
-    public class MainMenuViewModel : NotifyPropertyChangedBase
+	public class MainMenuViewModel : NotifyPropertyChangedBase
     {
 		private List<Score> _highScore;
 		private ScoreCompareHelper _scoreHelper;

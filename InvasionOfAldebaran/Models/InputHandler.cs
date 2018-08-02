@@ -1,11 +1,10 @@
 ﻿using InvasionOfAldebaran.Helper;
-using InvasionOfAldebaran.ViewModels;
-using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace InvasionOfAldebaran.Models
 {
-    public class InputHandler
+	public class InputHandler
     {
 		private Player _playerInstance;
 		private SpawnHandler _spawnerInstance;
@@ -18,7 +17,7 @@ namespace InvasionOfAldebaran.Models
 		public delegate void EscapeKeyEventHandler();
 		public event EscapeKeyEventHandler EscapeKeyPressed;
 
-        public InputHandler(IInputElement canvas, Player player, SpawnHandler spawner )
+        public InputHandler(Canvas canvas, Player player, SpawnHandler spawner )
         {
 			this._playerInstance = player;
 			this._spawnerInstance = spawner;
