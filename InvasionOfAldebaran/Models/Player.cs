@@ -24,10 +24,10 @@ namespace InvasionOfAldebaran.Models
 			this.Vy = 0;
 		}
 
-        public override void Animate(TimeSpan interval, Canvas canvas)
+        public override void Animate(double interval, Canvas canvas)
         {
-            this.Coords.X += this.Vx * interval.TotalSeconds;
-            this.Coords.Y += this.Vy * interval.TotalSeconds;
+            this.Coords.X += this.Vx * interval;
+            this.Coords.Y += this.Vy * interval;
 
             if ((this.Coords.X + (this.Image.ActualWidth)) > canvas.ActualWidth)
             {

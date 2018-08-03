@@ -31,10 +31,10 @@ namespace InvasionOfAldebaran.Models
 
         public abstract void Draw(Canvas canvas);
 
-        public virtual void Animate(TimeSpan interval, Canvas canvas)
+        public virtual void Animate(double interval, Canvas canvas)
         {
-            this.Coords.X += this.Vx * interval.TotalSeconds;
-            this.Coords.Y += this.Vy * interval.TotalSeconds;
+            this.Coords.X += this.Vx * interval;
+            this.Coords.Y += this.Vy * interval;
 
             if (this.Coords.X < 0)
             {
