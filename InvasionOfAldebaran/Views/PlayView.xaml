@@ -82,7 +82,7 @@
 						<Grid.Background>
 							<ImageBrush ImageSource="../Resources/Images/MainMenuBackground.jpg"></ImageBrush>
 						</Grid.Background>
-						<Image Grid.Column="0" Grid.Row="0" Margin="5 0"
+						<Image Grid.Column="0" Grid.Row="0" Margin="5 0" VerticalAlignment="Bottom"
 						   HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="Fant" Stretch="Fill" 
 						  Source="../Resources/Images/FreddyPower.png" Height="{Binding ActualWidth, ElementName=FreddyFace}" />
 					</Grid>
