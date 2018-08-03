@@ -15,7 +15,7 @@ namespace InvasionOfAldebaran.ViewModels
     public sealed class PlayViewModel : NotifyPropertyChangedBase
     {
         private const int spawnInterval = 4;
-		private const double timerInterval = 0.0111;
+		private const float timerInterval = 0.005f;
 
         private readonly FrameWindowViewModel _frameViewModel;
         private readonly DispatcherTimer _timer = new DispatcherTimer(DispatcherPriority.Render);
@@ -243,7 +243,6 @@ namespace InvasionOfAldebaran.ViewModels
 			this.Lives = 5;
             this.CurrentWave = 0;
             this.Points = 1;
-            this.Message = "Shoot!";
 
             _timer.Interval = TimeSpan.FromSeconds(timerInterval);
             _timer.Start();

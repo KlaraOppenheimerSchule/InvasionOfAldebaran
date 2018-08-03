@@ -24,7 +24,7 @@ namespace InvasionOfAldebaran.Models
 			this.Vy = 0;
 		}
 
-        public override void Animate(double interval, Canvas canvas)
+        public override void Animate(float interval, Canvas canvas)
         {
             this.Coords.X += this.Vx * interval;
             this.Coords.Y += this.Vy * interval;

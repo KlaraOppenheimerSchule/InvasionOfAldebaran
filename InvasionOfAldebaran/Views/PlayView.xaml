@@ -84,7 +84,7 @@
 						</Grid.Background>
 						<Image Grid.Column="0" Grid.Row="0" Margin="5 0"
 						   HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="Fant" Stretch="Fill" 
-						  Source="../Resources/Images/FreddyPower.png" Height="{Binding ActualHeight, ElementName=FreddyFace}" />
+						  Source="../Resources/Images/FreddyPower.png" Height="{Binding ActualWidth, ElementName=FreddyFace}" />
 					</Grid>
 			</ItemsControl>
 				<!--<Border Visibility="Visible" BorderBrush="DarkMagenta" BorderThickness="1" Margin="0 10 0 10"/>
