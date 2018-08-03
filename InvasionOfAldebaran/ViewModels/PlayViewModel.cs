@@ -18,7 +18,7 @@ namespace InvasionOfAldebaran.ViewModels
 		private const double timerInterval = 0.0111;
 
         private readonly FrameWindowViewModel _frameViewModel;
-        private readonly DispatcherTimer _timer = new DispatcherTimer(DispatcherPriority.Send);
+        private readonly DispatcherTimer _timer = new DispatcherTimer(DispatcherPriority.Render);
 
         private SpawnHandler _spawner;
         private InputHandler _inputHandler;
@@ -134,7 +134,7 @@ namespace InvasionOfAldebaran.ViewModels
 					this.EndGame();  
             }
 			// Animate every item on the canvas and check if it is still inside the canvas boundaries
-			for(int i = _objects.Count; i >= 0; i--)
+			for (int i = 0; i < _objects.Count; i++)
 			{
 				var current = _objects[i];
 
@@ -152,116 +152,55 @@ namespace InvasionOfAldebaran.ViewModels
 						Soundmanager.PlayNewQuestion();
 					}
 				}
-				// Collision Detection between enemies and missiles
-				if (_objects[i].GetType() != typeof(Missile))
-					continue;
-
-				var missile = _objects[i] as Missile;
-
-				for (int j = _enemies.Count; i >= 0; i--)
+			}
+			// Collision Detection between enemies and missiles
+			if (_enemies.Count > 0)
+			{
+				for (int i = 0; i < _objects.Count; i++)
 				{
-					var eny = _enemies[j] as Enemy;
-
-					if (!eny.IntersectsWith(missile.Coords.X, missile.Coords.Y, eny.Image, missile.Image))
+					if (_objects[i].GetType() != typeof(Missile))
 						continue;
 
-					if (_random.Next(0, 8) == 0)
-						Soundmanager.PlayFriendlyExplosion();
-					else
-						Soundmanager.PlayEnemyExplosion();
+					var missile = _objects[i] as Missile;
 
-					_objectsToBeDeleted.Add(eny);
-					_objectsToBeDeleted.Add(missile);
-					this.Points++;
+					for (int j = 0; j < _objects.Count; j++)
+					{
+						if (_objects[j].GetType() != typeof(Enemy))
+							continue;
+
+						var eny = _objects[j] as Enemy;
+
+						if (eny.IntersectsWith(missile.Coords.X, missile.Coords.Y, eny.Image, missile.Image))
+						{
+							if (_random.Next(0, 8) == 0)
+								Soundmanager.PlayFriendlyExplosion();
+							else
+								Soundmanager.PlayEnemyExplosion();
+
+							_objectsToBeDeleted.Add(eny);
+							_objectsToBeDeleted.Add(missile);
+							this.Points++;
+						}
+					}
 				}
 			}
-     //       foreach (var item in _objects)
-     //       {
-     //           item.Animate(_timer.Interval, this.Canvas);
-
-     //           if (item.ReachedEnd)
-     //           {
-     //               _objectsToBeDeleted.Add(item);
-
-     //               if (item.GetType() != typeof(Enemy))
-     //                   continue;
-					//else
-					//{
-					//	this.Lives--;
-					//	Soundmanager.PlayNewQuestion();
-					//}
-     //           }
-     //       }
-			// Collision Detection between enemies and missiles
-			//for(int i = _objects.Count; i <= 0; i--)
-			//{
-			//	if (_objects[i].GetType() != typeof(Missile))
-			//		continue;
-
-			//	var missile = _objects[i] as Missile;
-
-			//	for(int j = _enemies.Count; i <= 0; i--)
-			//	{
-			//		var eny = _enemies[j] as Enemy;
-
-			//		if (!eny.IntersectsWith(missile.Coords.X, missile.Coords.Y, eny.Image, missile.Image))
-			//			continue;
-
-			//		if(_random.Next(0, 8) == 0)
-			//			Soundmanager.PlayFriendlyExplosion();
-			//		else
-			//			Soundmanager.PlayEnemyExplosion();
-
-			//		_objectsToBeDeleted.Add(eny);
-			//		_objectsToBeDeleted.Add(missile);
-			//		this.Points++;
-			//	}
-			//}
-
-    //        foreach (var enemy in _objects.OfType<Enemy>())
-    //        {
-    //            foreach (var missile in _objects.OfType<Missile>())
-    //            {
-    //                if (!enemy.IntersectsWith(missile.Coords.X, missile.Coords.Y, enemy.Image, missile.Image))
-    //                    continue;
-
-				//	if(this._random.Next(0, 8) == 0)
-				//		Soundmanager.PlayFriendlyExplosion();
-    //                else
-				//		Soundmanager.PlayEnemyExplosion();
-                    
-				//	_objectsToBeDeleted.Add(enemy);
-				//	_objectsToBeDeleted.Add(missile);
-				//	this.Message = "Good hit!";
-				//	this.Points++;
-				//}
-    //        }
-            //_objectsToBeDeleted.ForEach(obj => _objects.Remove(obj));
-
-            //var eny = _objectsToBeDeleted.Where(obj => obj.GetType() == typeof(Enemy)).ToList();
-			if(_objectsToBeDeleted.Count != 0)
+			// Remove destroyed or offscreen Objects
+			for (int i = 0; i < _objectsToBeDeleted.Count; i++)
 			{
-				for (int i = _objectsToBeDeleted.Count; i >= 0; i--)
-				{
-					var current = _objectsToBeDeleted[i];
+				var current = _objectsToBeDeleted[i];
 
-					_objects.Remove(current);
+				_objects.Remove(current);
 
-					if (current.GetType() == typeof(Enemy))
-						_enemies.Remove(current);
-				}
+				if (current.GetType() == typeof(Enemy))
+					_enemies.Remove(current);
 			}
-            
-			//for(int i = eny.Count; i <= 0; i--)
-			//{
-			//	_enemies.Remove(eny[i]);
-			//}
-
-            _objectsToBeDeleted.Clear();
-
+			// Clear the deletion list for the next frame
+			_objectsToBeDeleted.Clear();
+			// Clear the Canvas for the next frame
             this.Canvas.Children.Clear();
 
-			for(int i = _objects.Count; i >= 0; i--)
+			// Draw the next frame
+			for(int i = 0;  i < _objects.Count; i++)
 			{
 				_objects[i].Draw(Canvas);
 			}
@@ -312,7 +251,7 @@ namespace InvasionOfAldebaran.ViewModels
 
         private void AddObjectEventHandler(List<AnimatedObject> newObjects)
         {
-            if (newObjects.FirstOrDefault() is Enemy)
+            if (newObjects[0] is Enemy)
             {
                 _objects.AddRange(newObjects);
                 _enemies.AddRange(newObjects.Where(obj => obj.GetType() == typeof(Enemy)));

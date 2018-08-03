@@ -22,8 +22,8 @@ namespace InvasionOfAldebaran.Models
 			this._playerInstance = player;
 			this._spawnerInstance = spawner;
 
-            canvas.PreviewKeyDown += this.OnKeyDownHandler;
-            canvas.PreviewKeyUp += this.OnKeyUpDownHandler;
+            canvas.KeyDown += this.OnKeyDownHandler;
+            canvas.KeyUp += this.OnKeyUpDownHandler;
         }
 
         private void OnKeyDownHandler(object sender, KeyEventArgs e)
