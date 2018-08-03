@@ -110,41 +110,39 @@ namespace InvasionOfAldebaran.ViewModels
 
         private void AnimateObjects(object sender, EventArgs e)
         {
-            if (!this.Canvas.IsFocused)
-                this.Canvas.Focus();
+			if (!this.Canvas.IsFocused)
+				this.Canvas.Focus();
 
-            // Handles Input for the player
-            this._inputHandler.ApplyInput();
+			// Handles Input for the player
+			this._inputHandler.ApplyInput();
 
 			// Spawn new enemies after the spawninterval ended
 			if (_nextSpawn <= DateTime.Now)
-            {
-                var enemies = _spawner.SpawnEnemies();
-                _objects.AddRange(enemies);
-                _enemies.AddRange(enemies);
-                _nextSpawn = DateTime.Now.AddSeconds(spawnInterval);
-                this.CurrentWave++;
-            }
-			// end the game after a certain wave or if the player lost all of his lives(not implemented)
-            if (this.Lives <= 0)
-            {
-                // Ends the game once the maximum question counter is reached
-                var result = MessageBox.Show($"Du hast alle Leben verloren! Deine Punkte: {this.Points * CurrentWave}", "Gratulation", MessageBoxButton.OK);
-                if (result.Equals(MessageBoxResult.OK))
-					this.EndGame();  
-            }
-			// Animate every item on the canvas and check if it is still inside the canvas boundaries
-			for (int i = 0; i < _objects.Count; i++)
 			{
-				var current = _objects[i];
+				var enemies = _spawner.SpawnEnemies();
+				_objects.AddRange(enemies);
+				_enemies.AddRange(enemies);
+				_nextSpawn = DateTime.Now.AddSeconds(spawnInterval);
+				this.CurrentWave++;
+			}
+			// end the game after a certain wave or if the player lost all of his lives(not implemented)
+			if (this.Lives <= 0)
+			{
+				// Ends the game once the maximum question counter is reached
+				var result = MessageBox.Show($"Du hast alle Leben verloren! Deine Punkte: {this.Points * CurrentWave}", "Gratulation", MessageBoxButton.OK);
+				if (result.Equals(MessageBoxResult.OK))
+					this.EndGame();
+			}
+			// Animate every item on the canvas and check if it is still inside the canvas boundaries
+			foreach (var item in _objects)
+			{
+				item.Animate(timerInterval, this.Canvas);
 
-				current.Animate(timerInterval, Canvas);
-
-				if (current.ReachedEnd)
+				if (item.ReachedEnd)
 				{
-					_objectsToBeDeleted.Add(current);
+					_objectsToBeDeleted.Add(item);
 
-					if (current.GetType() != typeof(Enemy))
+					if (item.GetType() != typeof(Enemy))
 						continue;
 					else
 					{
@@ -154,57 +152,33 @@ namespace InvasionOfAldebaran.ViewModels
 				}
 			}
 			// Collision Detection between enemies and missiles
-			if (_enemies.Count > 0)
+			foreach (var enemy in _objects.OfType<Enemy>())
 			{
-				for (int i = 0; i < _objects.Count; i++)
+				foreach (var missile in _objects.OfType<Missile>())
 				{
-					if (_objects[i].GetType() != typeof(Missile))
+					if (!enemy.IntersectsWith(missile.Coords.X, missile.Coords.Y, enemy.Image, missile.Image))
 						continue;
 
-					var missile = _objects[i] as Missile;
+					if (this._random.Next(0, 8) == 0)
+						Soundmanager.PlayFriendlyExplosion();
+					else
+						Soundmanager.PlayEnemyExplosion();
 
-					for (int j = 0; j < _objects.Count; j++)
-					{
-						if (_objects[j].GetType() != typeof(Enemy))
-							continue;
-
-						var eny = _objects[j] as Enemy;
-
-						if (eny.IntersectsWith(missile.Coords.X, missile.Coords.Y, eny.Image, missile.Image))
-						{
-							if (_random.Next(0, 8) == 0)
-								Soundmanager.PlayFriendlyExplosion();
-							else
-								Soundmanager.PlayEnemyExplosion();
-
-							_objectsToBeDeleted.Add(eny);
-							_objectsToBeDeleted.Add(missile);
-							this.Points++;
-						}
-					}
+					_objectsToBeDeleted.Add(enemy);
+					_objectsToBeDeleted.Add(missile);
+					this.Points++;
 				}
 			}
-			// Remove destroyed or offscreen Objects
-			for (int i = 0; i < _objectsToBeDeleted.Count; i++)
-			{
-				var current = _objectsToBeDeleted[i];
+			_objectsToBeDeleted.ForEach(obj => _objects.Remove(obj));
 
-				_objects.Remove(current);
+			var eny = _objectsToBeDeleted.Where(obj => obj.GetType() == typeof(Enemy)).ToList();
+			eny.ForEach(obj => _enemies.Remove(obj));
 
-				if (current.GetType() == typeof(Enemy))
-					_enemies.Remove(current);
-			}
-			// Clear the deletion list for the next frame
 			_objectsToBeDeleted.Clear();
-			// Clear the Canvas for the next frame
-            this.Canvas.Children.Clear();
 
-			// Draw the next frame
-			for(int i = 0;  i < _objects.Count; i++)
-			{
-				_objects[i].Draw(Canvas);
-			}
-        }
+			this.Canvas.Children.Clear();
+			_objects.ForEach(item => item.Draw(this.Canvas));
+		}
 
         public void EndGame()
         {

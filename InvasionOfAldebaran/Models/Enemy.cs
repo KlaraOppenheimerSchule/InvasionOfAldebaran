@@ -1,14 +1,13 @@
 ﻿using InvasionOfAldebaran.Helper;
-using System.Collections;
 using System.Windows.Controls;
 
 namespace InvasionOfAldebaran.Models
 {
     public class Enemy : AnimatedObject
     {
-		private const double _slowSpeedFactor = 0.05;
-		private const double _mediumSpeedFactor = 0.10;
-		private const double _fastSpeedFactor = 0.16;
+		private const double _slowSpeedFactor = 0.1;
+		private const double _mediumSpeedFactor = 0.15;
+		private const double _fastSpeedFactor = 0.2;
 
 		private readonly double _maxDeviation;
         private readonly double _initialPosX;
