@@ -18,7 +18,7 @@ namespace InvasionOfAldebaran.ViewModels
 		private const double timerInterval = 0.008;
 
         private readonly FrameWindowViewModel _frameViewModel;
-        private readonly DispatcherTimer _timer = new DispatcherTimer(DispatcherPriority.Render);
+        private readonly DispatcherTimer _timer = new DispatcherTimer(DispatcherPriority.Send);
 
         private SpawnHandler _spawner;
         private InputHandler _inputHandler;
@@ -128,7 +128,6 @@ namespace InvasionOfAldebaran.ViewModels
 			// end the game after a certain wave or if the player lost all of his lives(not implemented)
             if (this.Lives <= 0)
             {
-                Soundmanager.PlayNewQuestion();
                 // Ends the game once the maximum question counter is reached
                 var result = MessageBox.Show($"Du hast alle Leben verloren! Deine Punkte: {this.Points * CurrentWave}", "Gratulation", MessageBoxButton.OK);
                 if (result.Equals(MessageBoxResult.OK))
@@ -148,6 +147,7 @@ namespace InvasionOfAldebaran.ViewModels
 					else
 					{
 						this.Lives--;
+						Soundmanager.PlayNewQuestion();
 					}
                 }
             }
@@ -159,7 +159,7 @@ namespace InvasionOfAldebaran.ViewModels
                     if (!enemy.IntersectsWith(missile.Coords.X, missile.Coords.Y, enemy.Image, missile.Image))
                         continue;
 
-					if(this._random.Next(0, 3) == 0)
+					if(this._random.Next(0, 8) == 0)
 						Soundmanager.PlayFriendlyExplosion();
                     else
 						Soundmanager.PlayEnemyExplosion();

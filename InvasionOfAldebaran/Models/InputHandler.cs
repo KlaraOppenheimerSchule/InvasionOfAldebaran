@@ -22,8 +22,8 @@ namespace InvasionOfAldebaran.Models
 			this._playerInstance = player;
 			this._spawnerInstance = spawner;
 
-            canvas.KeyDown += this.OnKeyDownHandler;
-            canvas.KeyUp += this.OnKeyUpDownHandler;
+            canvas.PreviewKeyDown += this.OnKeyDownHandler;
+            canvas.PreviewKeyUp += this.OnKeyUpDownHandler;
         }
 
         private void OnKeyDownHandler(object sender, KeyEventArgs e)
@@ -57,7 +57,7 @@ namespace InvasionOfAldebaran.Models
 				case Key.Escape:
 					EscapePressed = true;
 					break;
-
+				
 				case (default):
 					break;
             }
@@ -89,14 +89,14 @@ namespace InvasionOfAldebaran.Models
         }
 		public void ApplyInput()
 		{
-			if (this.SpacePressed)
-				this._spawnerInstance.SpawnMissile(this._playerInstance);
-
 			if (this.LeftPressed)
 				this._playerInstance.Move(Direction.Left);
 
 			if (this.RightPressed)
 				this._playerInstance.Move(Direction.Right);
+
+			if (this.SpacePressed)
+				this._spawnerInstance.SpawnMissile(this._playerInstance);
 
 			if (this.EscapePressed)
 				this.EscapeKeyPressed?.Invoke();
