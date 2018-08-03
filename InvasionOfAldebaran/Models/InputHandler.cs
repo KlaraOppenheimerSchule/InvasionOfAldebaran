@@ -28,29 +28,24 @@ namespace InvasionOfAldebaran.Models
 
         private void OnKeyDownHandler(object sender, KeyEventArgs e)
         {
-            switch (e.Key)
-            {
-                case Key.Left:
-					LeftPressed = true;
-					RightPressed = false;
-					break;
+            //switch (e.Key)
+            //{
+            if(e.Key == Key.Left)
+			{
+				LeftPressed = true;
+				RightPressed = false;
+			}		
+			if(e.Key == Key.Right)
+			{
+				RightPressed = true;
+				LeftPressed = false;
+			}
+			if(e.Key == Key.Space)
+                SpacePressed = true;
 
-                case Key.Right:
-					RightPressed = true;
-					LeftPressed = false;
-					break;
-
-                case Key.Space:
-                    SpacePressed = true;
-                    break;
-
-				case Key.Escape:
-					EscapePressed = true;
-					break;
-				
-				case (default):
-					break;
-            }
+			if(e.Key == Key.Escape)
+				EscapePressed = true;	
+			//}
         }
 
         private void OnKeyUpDownHandler(object sender, KeyEventArgs e)
@@ -90,7 +85,6 @@ namespace InvasionOfAldebaran.Models
 
 			if (this.EscapePressed)
 				this.EscapeKeyPressed?.Invoke();
-			
 		}
     }
 }

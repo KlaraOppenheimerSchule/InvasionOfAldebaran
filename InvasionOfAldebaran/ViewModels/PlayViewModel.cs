@@ -34,6 +34,7 @@ namespace InvasionOfAldebaran.ViewModels
         private int _points;
         private string _message;
 		private int _lives;
+		private object plinq;
 
 		#region Properties
 
@@ -125,7 +126,7 @@ namespace InvasionOfAldebaran.ViewModels
 				_nextSpawn = DateTime.Now.AddSeconds(spawnInterval);
 				this.CurrentWave++;
 			}
-			// end the game after a certain wave or if the player lost all of his lives(not implemented)
+			// end the game after the player lost all of his lives
 			if (this.Lives <= 0)
 			{
 				// Ends the game once the maximum question counter is reached
@@ -178,6 +179,7 @@ namespace InvasionOfAldebaran.ViewModels
 
 			this.Canvas.Children.Clear();
 			_objects.ForEach(item => item.Draw(this.Canvas));
+			//Parallel.ForEach<AnimatedObject>(_objects, aObj => aObj.Draw(Canvas));
 		}
 
         public void EndGame()
@@ -190,7 +192,6 @@ namespace InvasionOfAldebaran.ViewModels
 			if (Points < 1)
 				Points = 1;
 
-			// todo: evtl gehts nicht
 			_frameViewModel.DisplayAddScoreScreen(this.Points);
 		}
 

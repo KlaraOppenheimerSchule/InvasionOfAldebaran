@@ -21,7 +21,6 @@ namespace InvasionOfAldebaran.ViewModels
 			set
 			{
 				this._highScore = value;
-				// todo: Sorting funktioniert evtl nicht
 				this._highScore.Sort(_scoreHelper);
 
 				for (int i = 0; i < _highScore.Count; i++)
