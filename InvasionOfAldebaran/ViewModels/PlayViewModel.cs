@@ -14,9 +14,8 @@ namespace InvasionOfAldebaran.ViewModels
 {
     public sealed class PlayViewModel : NotifyPropertyChangedBase
     {
-        private const int spawnInterval = 5;
-	    private const int enemyEscapePenalty = 1;
-		private const double timerInterval = 0.016667;
+        private const int spawnInterval = 4;
+		private const double timerInterval = 0.008;
 
         private readonly FrameWindowViewModel _frameViewModel;
         private readonly DispatcherTimer _timer = new DispatcherTimer(DispatcherPriority.Render);

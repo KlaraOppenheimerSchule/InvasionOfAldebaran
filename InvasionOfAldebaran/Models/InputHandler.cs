@@ -31,13 +31,23 @@ namespace InvasionOfAldebaran.Models
             switch (e.Key)
             {
                 case Key.Left:
-					RightPressed = false;
-					LeftPressed = true;
+					if(e.KeyStates == KeyStates.Down)
+					{
+						LeftPressed = true;
+						RightPressed = false;
+					}	
+					else
+						LeftPressed = false;
                     break;
 
                 case Key.Right:
-					LeftPressed = false;
-					RightPressed = true;
+					if (e.KeyStates == KeyStates.Down)
+					{
+						RightPressed = true;
+						LeftPressed = false;
+					}
+					else
+						RightPressed = true;
                     break;
 
                 case Key.Space:
