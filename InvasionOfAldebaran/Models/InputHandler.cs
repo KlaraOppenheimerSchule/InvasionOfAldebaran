@@ -22,8 +22,8 @@ namespace InvasionOfAldebaran.Models
 			this._playerInstance = player;
 			this._spawnerInstance = spawner;
 
-            canvas.KeyDown += this.OnKeyDownHandler;
-            canvas.KeyUp += this.OnKeyUpDownHandler;
+            canvas.PreviewKeyDown += this.OnKeyDownHandler;
+            canvas.PreviewKeyUp += this.OnKeyUpDownHandler;
         }
 
         private void OnKeyDownHandler(object sender, KeyEventArgs e)
@@ -31,24 +31,14 @@ namespace InvasionOfAldebaran.Models
             switch (e.Key)
             {
                 case Key.Left:
-					//if(e.KeyStates == KeyStates.Down)
-					//{
-						LeftPressed = true;
-						RightPressed = false;
-					//}	
-					//else
-					//	LeftPressed = false;
-                    break;
+					LeftPressed = true;
+					RightPressed = false;
+					break;
 
                 case Key.Right:
-					//if (e.KeyStates == KeyStates.Down)
-					//{
-						RightPressed = true;
-						LeftPressed = false;
-					//}
-					//else
-					//	RightPressed = true;
-                    break;
+					RightPressed = true;
+					LeftPressed = false;
+					break;
 
                 case Key.Space:
                     SpacePressed = true;

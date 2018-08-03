@@ -6,7 +6,7 @@ namespace InvasionOfAldebaran.Models
 {
     public class Player : AnimatedObject
     {
-		private const double speedFactor = 2.4;
+		private const double speedFactor = 2.8;
 
 		private double _speed;	
 
