@@ -15,7 +15,7 @@ namespace InvasionOfAldebaran.ViewModels
     public sealed class PlayViewModel : NotifyPropertyChangedBase
     {
         private const int spawnInterval = 4;
-		private const double timerInterval = 0.008;
+		private const double timerInterval = 0.0111;
 
         private readonly FrameWindowViewModel _frameViewModel;
         private readonly DispatcherTimer _timer = new DispatcherTimer(DispatcherPriority.Send);
@@ -134,7 +134,7 @@ namespace InvasionOfAldebaran.ViewModels
 					this.EndGame();  
             }
 			// Animate every item on the canvas and check if it is still inside the canvas boundaries
-			for(int i = _objects.Count; i <= 0; i--)
+			for(int i = _objects.Count; i >= 0; i--)
 			{
 				var current = _objects[i];
 
@@ -158,7 +158,7 @@ namespace InvasionOfAldebaran.ViewModels
 
 				var missile = _objects[i] as Missile;
 
-				for (int j = _enemies.Count; i <= 0; i--)
+				for (int j = _enemies.Count; i >= 0; i--)
 				{
 					var eny = _enemies[j] as Enemy;
 
@@ -239,15 +239,17 @@ namespace InvasionOfAldebaran.ViewModels
             //_objectsToBeDeleted.ForEach(obj => _objects.Remove(obj));
 
             //var eny = _objectsToBeDeleted.Where(obj => obj.GetType() == typeof(Enemy)).ToList();
-
-			for(int i = _objectsToBeDeleted.Count; i <= 0; i--)
+			if(_objectsToBeDeleted.Count != 0)
 			{
-				var current = _objectsToBeDeleted[i];
+				for (int i = _objectsToBeDeleted.Count; i >= 0; i--)
+				{
+					var current = _objectsToBeDeleted[i];
 
-				_objects.Remove(current);
+					_objects.Remove(current);
 
-				if (current.GetType() == typeof(Enemy))
-					_enemies.Remove(current);
+					if (current.GetType() == typeof(Enemy))
+						_enemies.Remove(current);
+				}
 			}
             
 			//for(int i = eny.Count; i <= 0; i--)
@@ -259,7 +261,7 @@ namespace InvasionOfAldebaran.ViewModels
 
             this.Canvas.Children.Clear();
 
-			for(int i = _objects.Count; i <= 0; i--)
+			for(int i = _objects.Count; i >= 0; i--)
 			{
 				_objects[i].Draw(Canvas);
 			}
@@ -284,9 +286,9 @@ namespace InvasionOfAldebaran.ViewModels
         private void StartGameEventHandler(object sender, EventArgs e)
         {
             // initialization
-            _objects = new List<AnimatedObject>(24);
-            _enemies = new List<AnimatedObject>(12);
-            _objectsToBeDeleted = new List<AnimatedObject>(12);
+            _objects = new List<AnimatedObject>();
+            _enemies = new List<AnimatedObject>();
+            _objectsToBeDeleted = new List<AnimatedObject>();
             _spawner = new SpawnHandler(this.Canvas.Width, this.Canvas.Height, 4);
 			this.Player = _spawner.SpawnPlayer();
 			_inputHandler = new InputHandler(this.Canvas, this.Player, this._spawner);
