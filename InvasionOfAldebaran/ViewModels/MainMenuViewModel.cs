@@ -44,23 +44,27 @@ namespace InvasionOfAldebaran.ViewModels
             this.PlayButtonCommand = new RelayCommand(this.ChangeWindow);
             this.CloseButtonCommand = new RelayCommand(this.CloseWindow);
 
-			this.Highscore = new List<Score>
-			{
-				new Score(50, "Ein Spieler"),
-				new Score(40, "Schlechtester"),
-				new Score(123, "Bester")
-				
-			};
-			this._highScore.Sort(_scoreHelper);
+			_highScore = LoadScore();
 		}
 
         public void AddScore(Score score)
         {
-			var newList = this.Highscore;
+			var newList = _highScore;
 			newList.Add(score);
 			this.Highscore = newList;
 			// ja ich weiß...
+
+			Serializer.SerializeObject<List<Score>>(Highscore, @"../../saves.xml");
         }
+		private List<Score> LoadScore()
+		{
+			var savedScores = Serializer.DeserializeXml<List<Score>>(@"../../saves.xml");
+
+			if (savedScores != null)
+				return savedScores as List<Score>;
+			else
+				throw new System.Exception("Couldnt load saved Scores");
+		}
 
 		#region Interface Members
 

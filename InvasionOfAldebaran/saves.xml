@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfScore xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Score>
+    <Name>Bester</Name>
+    <Points>2100</Points>
+    <ListPosition>1</ListPosition>
+  </Score>
+  <Score>
+    <Name>Ein Spieler</Name>
+    <Points>1220</Points>
+    <ListPosition>2</ListPosition>
+  </Score>
+  <Score>
+    <Name>Schlechtester</Name>
+    <Points>800</Points>
+    <ListPosition>3</ListPosition>
+  </Score>
+  <Score>
+    <Name>NeuerTest</Name>
+    <Points>208</Points>
+    <ListPosition>4</ListPosition>
+  </Score>
+  <Score>
+    <Name>Test1</Name>
+    <Points>8</Points>
+    <ListPosition>5</ListPosition>
+  </Score>
+  <Score>
+    <Name>Neutest</Name>
+    <Points>6</Points>
+    <ListPosition>6</ListPosition>
+  </Score>
+  <Score>
+    <Name>BesseralsVorher</Name>
+    <Points>2</Points>
+    <ListPosition>7</ListPosition>
+  </Score>
+  <Score>
+    <Name>Idiot</Name>
+    <Points>1</Points>
+    <ListPosition>8</ListPosition>
+  </Score>
+  <Score>
+    <Name>Depp</Name>
+    <Points>1</Points>
+    <ListPosition>9</ListPosition>
+  </Score>
+  <Score>
+    <Name>Hallodu</Name>
+    <Points>1</Points>
+    <ListPosition>10</ListPosition>
+  </Score>
+</ArrayOfScore>

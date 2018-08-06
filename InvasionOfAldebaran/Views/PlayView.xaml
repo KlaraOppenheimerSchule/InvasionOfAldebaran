@@ -74,8 +74,8 @@
 						   FontWeight="Bold" HorizontalAlignment="Center" Margin="0 10 0 0" 
 						   Style="{StaticResource NewFontStyle}"/>
 			<!-- Freddy Face -->
-			<ItemsControl Margin="0 50 0 0">
-				<Grid x:Name="FreddyFace">
+			<ItemsControl Margin="0 50 0 0" VerticalAlignment="Bottom">
+				<Grid x:Name="FreddyFace" VerticalAlignment="Bottom">
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="*" />
 					</Grid.ColumnDefinitions>

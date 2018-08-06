@@ -1,7 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 
 namespace InvasionOfAldebaran.ViewModels
 {
+	[Serializable]
 	public class Score
 	{
 		public string Name { get; set; }
@@ -12,6 +14,7 @@ namespace InvasionOfAldebaran.ViewModels
 		}
 		public int ListPosition { get; set; }
 
+		public Score() { }
 		public Score(int points, string name)
 		{
 			this.Name = name;
