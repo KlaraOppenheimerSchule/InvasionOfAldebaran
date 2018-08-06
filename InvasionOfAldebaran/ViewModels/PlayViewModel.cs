@@ -34,7 +34,6 @@ namespace InvasionOfAldebaran.ViewModels
         private int _points;
         private string _message;
 		private int _lives;
-		private object plinq;
 
 		#region Properties
 
@@ -160,7 +159,7 @@ namespace InvasionOfAldebaran.ViewModels
 					if (!enemy.IntersectsWith(missile.Coords.X, missile.Coords.Y, enemy.Image, missile.Image))
 						continue;
 
-					if (this._random.Next(0, 8) == 0)
+					if (this._random.Next(0, 10) == 0)
 						Soundmanager.PlayFriendlyExplosion();
 					else
 						Soundmanager.PlayEnemyExplosion();
@@ -179,7 +178,6 @@ namespace InvasionOfAldebaran.ViewModels
 
 			this.Canvas.Children.Clear();
 			_objects.ForEach(item => item.Draw(this.Canvas));
-			//Parallel.ForEach<AnimatedObject>(_objects, aObj => aObj.Draw(Canvas));
 		}
 
         public void EndGame()
