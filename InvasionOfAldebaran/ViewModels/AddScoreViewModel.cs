@@ -68,9 +68,9 @@ namespace InvasionOfAldebaran.ViewModels
 			string hName = HandleName(_name);
 
 			var score = new Score(this.Points, hName);
-			this._frameModel.SetNewHighScore(score);
 
 			this._frameModel.ChangeScreen(typeof(MainMenuViewModel));
+			this._frameModel.SetNewHighScore(score);
 		}
 
 		private List<string> LoadWordFilter()

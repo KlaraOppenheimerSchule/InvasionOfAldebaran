@@ -51,6 +51,7 @@ namespace InvasionOfAldebaran.ViewModels
 		public void SetNewHighScore(Score score)
 		{
 			var menu = this.Items.Single(s => s is MainMenuViewModel) as MainMenuViewModel;
+
 			menu.AddScore(score);
 		}
 		/// <summary>

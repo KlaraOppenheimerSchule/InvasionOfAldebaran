@@ -64,7 +64,7 @@
 			   HorizontalContentAlignment="Center" Foreground="White" VerticalContentAlignment="Top" />
 		<!--<Border Grid.Column="1" Grid.Row="1" Margin="0,45,0,10" BorderBrush="White" BorderThickness="0 5 0 0" />-->
 		<ItemsControl Grid.Column="1" Grid.Row="1" x:Name="HighScore" ItemTemplate="{StaticResource HighScoreStack}" 
-					  ItemsSource="{Binding Highscore, Mode=TwoWay}" HorizontalAlignment="Stretch" VerticalAlignment="Top" 
+					  ItemsSource="{Binding Highscore, Mode=OneWay}" HorizontalAlignment="Stretch" VerticalAlignment="Top" 
 					  Margin="10,65,10,10" VerticalContentAlignment="Center" HorizontalContentAlignment="Stretch">
 			<ItemsControl.ItemsPanel>
 				<ItemsPanelTemplate>
