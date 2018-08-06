@@ -1,5 +1,7 @@
 ﻿using InvasionOfAldebaran.Helper;
 using System.Windows.Input;
+using System;
+using System.Collections.Generic;
 
 namespace InvasionOfAldebaran.ViewModels
 {
@@ -8,6 +10,7 @@ namespace InvasionOfAldebaran.ViewModels
 		private int _points;
 		private string _name;
 		private bool _buttonEnabled;
+		private List<string> _forbiddenStrings;
 
 		private FrameWindowViewModel _frameModel;
 
@@ -38,6 +41,7 @@ namespace InvasionOfAldebaran.ViewModels
 			}
 		}
 
+		
 		public bool ButtonEnabled
 		{
 			get { return this._buttonEnabled; }
@@ -56,14 +60,56 @@ namespace InvasionOfAldebaran.ViewModels
 			this.Points = points;
 			this.ButtonEnabled = false;
 			this.SendScoreCommand = new RelayCommand(this.SendScoreAndChangeMainMenu);
+			this._forbiddenStrings = LoadWordFilter();
 		}
 
 		private void SendScoreAndChangeMainMenu()
 		{
-			var score = new Score(this.Points, this.Name);
+			string hName = HandleName(_name);
+
+			var score = new Score(this.Points, hName);
 			this._frameModel.SetNewHighScore(score);
 
 			this._frameModel.ChangeScreen(typeof(MainMenuViewModel));
 		}
+
+		private List<string> LoadWordFilter()
+		{
+			var filter = Serializer.DeserializeXml<List<string>>(@"../../wordfilter.xml");
+
+			if (filter != null)
+				return filter as List<string>;
+			else
+				throw new System.Exception("Couldnt load saved Scores");
+		}
+
+		private string HandleName(string value)
+		{
+			var censoredString = value;
+
+			foreach (var word in _forbiddenStrings)
+			{
+				if(censoredString.ToLower().Contains(word))
+				{
+					string censor = "";
+
+					for (int i = 0; i < word.Length; i++)
+					{
+						censor += "#";
+					}
+					
+					censoredString = censoredString.ToUpper().Replace(word.ToUpper(), censor);
+				}
+			}
+			var shortenedString = "";
+
+			if (censoredString.Length > 20)
+				shortenedString = censoredString.Substring(0, 20);
+			else
+				shortenedString = censoredString;
+
+			return shortenedString;
+		}
+
 	}
 }

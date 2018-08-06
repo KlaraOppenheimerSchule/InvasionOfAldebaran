@@ -183,6 +183,7 @@
     <Resource Include="Resources\Images\alien3.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="wordfilter.xml" />
     <Resource Include="saves.xml" />
     <Resource Include="Resources\Images\IngameBackground.jpg" />
     <Resource Include="Resources\Images\MainMenuBackground.jpg" />
