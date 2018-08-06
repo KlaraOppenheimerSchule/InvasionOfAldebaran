@@ -10,7 +10,7 @@ namespace InvasionOfAldebaran.ViewModels
 		public int Points { get; set; }
 		public string ScoreString
 		{
-			get { return ListPosition.ToString() + ". " + this.Name + " : " + this.Points.ToString(); }
+			get { return ListPosition.ToString() + ".  " + this.Name + "  :  " + this.Points.ToString(); }
 		}
 		public int ListPosition { get; set; }
 

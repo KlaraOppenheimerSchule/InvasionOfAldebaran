@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 	<string>arschloch</string>
-	<string>ficken</string>
-	<string>fuck</string>
 	<string>hitler</string>
+	<string>h1tler</string>
+	<string>h1tl3r</string>
 	<string>scheisse</string>
 	<string>scheiße</string>
 	<string>wichser</string>
@@ -12,6 +12,7 @@
 	<string>wixxer</string>
 	<string>ficken</string>
 	<string>fick</string>
+	<string>fuck</string>
 	<string>pussy</string>
 	<string>muschi</string>
 	<string>pisse</string>

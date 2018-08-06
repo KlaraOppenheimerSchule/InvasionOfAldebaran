@@ -16,11 +16,28 @@
 		<Style TargetType="{x:Type Label}" x:Key="NewFontStyle">
 			<Setter Property="FontFamily" Value="../../Resources/Fonts/#Good Times Rg" />
 		</Style>
+		<Style TargetType="{x:Type TextBlock}" x:Key="NewFontStyleBlock">
+			<Setter Property="FontFamily" Value="../../Resources/Fonts/#Good Times Rg" />
+		</Style>
 		<!-- Templates -->
 		<DataTemplate x:Key="HighScoreStack" >
 			<StackPanel>
-				<Label Content="{Binding ScoreString}" Foreground="White" Style="{StaticResource NewFontStyle}" 
-					   FontSize="22" />
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="5*"/>
+						<ColumnDefinition Width="1.5*" />
+					</Grid.ColumnDefinitions>
+					<TextBlock Grid.Column="0" Text="{Binding ListPosition, StringFormat=' {0}. '}" Foreground="White" Style="{StaticResource NewFontStyleBlock}" 
+					   FontSize="26" HorizontalAlignment="Stretch" />
+					<TextBlock Grid.Column="1" Text="{Binding Name}" Foreground="White" Style="{StaticResource NewFontStyleBlock}" 
+					   FontSize="26" HorizontalAlignment="Stretch" />
+					<TextBlock Grid.Column="2" Text="{Binding Points}" Foreground="White" Style="{StaticResource NewFontStyleBlock}" 
+					   FontSize="26" HorizontalAlignment="Stretch" />
+					<Border Grid.Column="0" Grid.ColumnSpan="4" Visibility="Visible" BorderBrush="White" BorderThickness="0 1 0 0" Margin="0 40 0 10"/>
+				</Grid>
+				<!--<Label Content="{Binding ScoreString}" Foreground="White" Style="{StaticResource NewFontStyle}" 
+					   FontSize="26" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"/>-->
 			</StackPanel>
 		</DataTemplate>
 	</UserControl.Resources>
@@ -28,7 +45,7 @@
 	<Grid>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="*" />
-			<ColumnDefinition Width="*" />
+			<ColumnDefinition Width="1.2*" />
 			<ColumnDefinition Width="*" />
 		</Grid.ColumnDefinitions>
 		<Grid.RowDefinitions>
@@ -41,24 +58,24 @@
 			   Style="{StaticResource NewFontStyle}" HorizontalContentAlignment="Center" Foreground="White" 
 			   VerticalContentAlignment="Center"  Content="Backspace Invaders" 
 			   HorizontalAlignment="Center" VerticalAlignment="Center" 
-			   Height="90" Width="Auto" FontSize="48" />
+			   Height="90" Width="Auto" FontSize="52" />
 		<!-- Highscore List -->
-		<Label Grid.Column="1" Grid.Row="1" Content="Highscores Top 10" Style="{StaticResource NewFontStyle}" FontSize="26"
-			   HorizontalContentAlignment="Center" Foreground="White" VerticalContentAlignment="Top"/>
-		<Border Grid.Column="1" Grid.Row="1" Margin="0,37,0,11" BorderBrush="White" BorderThickness="0 5 0 0" />
+		<Label Grid.Column="1" Grid.Row="1" Content="Highscores Top 10" Style="{StaticResource NewFontStyle}" FontSize="32"
+			   HorizontalContentAlignment="Center" Foreground="White" VerticalContentAlignment="Top" />
+		<!--<Border Grid.Column="1" Grid.Row="1" Margin="0,45,0,10" BorderBrush="White" BorderThickness="0 5 0 0" />-->
 		<ItemsControl Grid.Column="1" Grid.Row="1" x:Name="HighScore" ItemTemplate="{StaticResource HighScoreStack}" 
-					  ItemsSource="{Binding Highscore, Mode=TwoWay}" HorizontalAlignment="Center" VerticalAlignment="Top" 
-					  Margin="10,47,10,10" VerticalContentAlignment="Center">
+					  ItemsSource="{Binding Highscore, Mode=TwoWay}" HorizontalAlignment="Stretch" VerticalAlignment="Top" 
+					  Margin="10,65,10,10" VerticalContentAlignment="Center" HorizontalContentAlignment="Stretch">
 			<ItemsControl.ItemsPanel>
 				<ItemsPanelTemplate>
-					<VirtualizingStackPanel Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+					<VirtualizingStackPanel Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Stretch"/>
 				</ItemsPanelTemplate>
 			</ItemsControl.ItemsPanel>
 		</ItemsControl>
 		<!-- Buttons -->
 		<Button Grid.Column="1" Grid.Row="3" x:Name="PlayButton" Content="Play" HorizontalAlignment="Left"  
-				VerticalAlignment="Top" Width="150" Height="30" Command="{Binding PlayButtonCommand}" />
+				VerticalAlignment="Top" Width="150" Height="30" Command="{Binding PlayButtonCommand}" Margin="50 0"/>
 		<Button Grid.Column="1" Grid.Row="3" x:Name="ExitButton" Content="Exit" HorizontalAlignment="Right"   
-				VerticalAlignment="Top" Width="150" Height="30" Command="{Binding CloseButtonCommand}" />
+				VerticalAlignment="Top" Width="150" Height="30" Command="{Binding CloseButtonCommand}" Margin="50 0"/>
 	</Grid>
 </UserControl>
