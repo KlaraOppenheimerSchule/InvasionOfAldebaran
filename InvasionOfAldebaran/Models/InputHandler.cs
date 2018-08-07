@@ -28,50 +28,53 @@ namespace InvasionOfAldebaran.Models
 
         private void OnKeyDownHandler(object sender, KeyEventArgs e)
         {
-            //switch (e.Key)
-            //{
             if(e.Key == Key.Left)
 			{
 				LeftPressed = true;
 				RightPressed = false;
+				e.Handled = true;
 			}		
 			if(e.Key == Key.Right)
 			{
 				RightPressed = true;
 				LeftPressed = false;
+				e.Handled = true;
 			}
 			if(e.Key == Key.Space)
-                SpacePressed = true;
-
-			if(e.Key == Key.Escape)
-				EscapePressed = true;	
-			//}
-        }
+			{
+				SpacePressed = true;
+				e.Handled = true;
+			}
+			if (e.Key == Key.Escape)
+			{
+				EscapePressed = true;
+				e.Handled = true;
+			}
+		}
 
         private void OnKeyUpDownHandler(object sender, KeyEventArgs e)
         {
-            switch (e.Key)
-            {
-				case Key.Left:
-					LeftPressed = false;
-					break;
-
-				case Key.Right:
-					RightPressed = false;
-					break;
-
-				case Key.Space:
-                    SpacePressed = false;
-                    break;
-
-				case Key.Escape:
-					EscapePressed = false;
-					break;
-
-				case (default):
-					break;
+			if (e.Key == Key.Left)
+			{
+				LeftPressed = false;
+				e.Handled = true;
 			}
-        }
+			if (e.Key == Key.Right)
+			{
+				RightPressed = false;
+				e.Handled = true;
+			}
+			if (e.Key == Key.Space)
+			{
+				SpacePressed = false;
+				e.Handled = true;
+			}
+			if (e.Key == Key.Escape)
+			{
+				EscapePressed = false;
+				e.Handled = true;
+			}
+		}
 		public void ApplyInput()
 		{
 			if (this.LeftPressed)
