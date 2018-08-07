@@ -5,7 +5,7 @@ namespace InvasionOfAldebaran.Models
 {
     public class Missile : AnimatedObject
     {
-        private const double speed = -3800;
+        private const double speed = -4200;
 
         public Missile(string imagePath, Coords player) : base(imagePath, player)
         {

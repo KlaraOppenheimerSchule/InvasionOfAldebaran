@@ -1,5 +1,6 @@
 ﻿using Caliburn.Micro;
 using InvasionOfAldebaran.Helper;
+using InvasionOfAldebaran.Models;
 using System.Collections.Generic;
 using System.Windows.Input;
 
@@ -44,24 +45,36 @@ namespace InvasionOfAldebaran.ViewModels
             this.PlayButtonCommand = new RelayCommand(this.ChangeWindow);
             this.CloseButtonCommand = new RelayCommand(this.CloseWindow);
 
-			_highScore = LoadScore();
+			List<Score> scores = new List<Score>();
+			scores = LoadScores();
+
+			Highscore = scores;
 		}
 
         public void AddScore(Score score)
         {
-			var newList = _highScore;
+			var newList = new List<Score>();
+			newList.AddRange(_highScore);
 			newList.Add(score);
-			this.Highscore = newList;
+			Highscore = newList;
 			// ja ich weiß...
 
-			Serializer.SerializeObject<List<Score>>(Highscore, @"../../saves.xml");
+			var serializableScores = new List<SerializableScore>();
+			_highScore.ForEach(s => serializableScores.Add(s.GetSerializableScore()));
+
+			Serializer.SerializeObject<List<SerializableScore>>(serializableScores, @"../../saves.xml");
         }
-		private List<Score> LoadScore()
+		private List<Score> LoadScores()
 		{
-			var savedScores = Serializer.DeserializeXml<List<Score>>(@"../../saves.xml");
+			var savedScores = (List<SerializableScore>)Serializer.DeserializeXml<List<SerializableScore>>(@"../../saves.xml");
 
 			if (savedScores != null)
-				return savedScores as List<Score>;
+			{
+				List<Score> scores = new List<Score>();
+				savedScores.ForEach(s => scores.Add(new Score(s.Points, s.Name)));
+
+				return scores as List<Score>;
+			}
 			else
 				throw new System.Exception("Couldnt load saved Scores");
 		}
@@ -70,7 +83,12 @@ namespace InvasionOfAldebaran.ViewModels
 
         private void CloseWindow()
         {
-            _frameModel.CloseItem(_frameModel);
+			var serializableScores = new List<SerializableScore>();
+			_highScore.ForEach(s => serializableScores.Add(s.GetSerializableScore()));
+
+			Serializer.SerializeObject<List<SerializableScore>>(serializableScores, @"../../saves.xml");
+
+			_frameModel.CloseItem(_frameModel);
         }
 
         private void ChangeWindow()

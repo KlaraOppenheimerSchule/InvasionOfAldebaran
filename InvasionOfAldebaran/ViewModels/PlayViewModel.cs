@@ -83,7 +83,10 @@ namespace InvasionOfAldebaran.ViewModels
         }
 	    public double PlayAreaWidth => this.Canvas.Width + 6;
 
-	    #endregion Properties
+		#endregion Properties
+
+		public delegate void GameEndedEventhandler(int points);
+		public event GameEndedEventhandler GameEnded;
 
         public PlayViewModel(FrameWindowViewModel frameWindow)
         {
@@ -187,10 +190,8 @@ namespace InvasionOfAldebaran.ViewModels
 			_inputHandler.EscapeKeyPressed -= this.EndGame;
 
 			this.Points *= this.CurrentWave;
-			if (Points < 1)
-				Points = 1;
-
-			_frameViewModel.DisplayAddScoreScreen(this.Points);
+			
+			GameEnded.Invoke(_points);
 		}
 
         #region EventHandler
@@ -215,7 +216,7 @@ namespace InvasionOfAldebaran.ViewModels
             _nextSpawn = DateTime.Now.AddSeconds(spawnInterval);
 			this.Lives = 5;
             this.CurrentWave = 0;
-            this.Points = 1;
+            this.Points = 0;
 
             _timer.Interval = TimeSpan.FromSeconds(timerInterval);
             _timer.Start();

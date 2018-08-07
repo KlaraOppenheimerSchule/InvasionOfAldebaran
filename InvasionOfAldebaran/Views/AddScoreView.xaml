@@ -37,7 +37,7 @@
 			   HorizontalAlignment="Center" Margin="0 40" Content="Type in your Name" Style="{StaticResource NewFontStyle}"/>
 		
 		<TextBox Grid.Row="1" Grid.Column="1" FontSize="26" Foreground="Black" MinWidth="280" 
-				 Text="{Binding Name, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" 
+				 Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
 				 VerticalAlignment="Center" HorizontalAlignment="Center" MaxLength="20"/>
 		<Label Grid.Row="1" Grid.Column="1" FontSize="14" Foreground="White" VerticalAlignment="Bottom" 
 			   HorizontalAlignment="Center" Margin="0 100" Content="20 characters max" Style="{StaticResource NewFontStyle}"/>

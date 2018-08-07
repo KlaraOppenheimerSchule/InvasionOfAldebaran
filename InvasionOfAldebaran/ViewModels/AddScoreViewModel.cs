@@ -23,7 +23,6 @@ namespace InvasionOfAldebaran.ViewModels
 				this.NotifyPropertyChanged(nameof(this.Points));
 			}
 		}
-
 		public string Name
 		{
 			get { return this._name; }
@@ -38,10 +37,10 @@ namespace InvasionOfAldebaran.ViewModels
 					this.ButtonEnabled = true;
 				else
 					this.ButtonEnabled = false;
+
+				NotifyPropertyChanged(nameof(Name));
 			}
 		}
-
-		
 		public bool ButtonEnabled
 		{
 			get { return this._buttonEnabled; }
@@ -54,23 +53,30 @@ namespace InvasionOfAldebaran.ViewModels
 
 		public ICommand SendScoreCommand { get; private set; }
 
-		public AddScoreViewModel(FrameWindowViewModel frameModel, int points)
+		public delegate void ScoreAddedEventHandler(Score score);
+		public event ScoreAddedEventHandler ScoreAdded;
+
+		public AddScoreViewModel(FrameWindowViewModel frameModel)
 		{
 			this._frameModel = frameModel;
-			this.Points = points;
 			this.ButtonEnabled = false;
 			this.SendScoreCommand = new RelayCommand(this.SendScoreAndChangeMainMenu);
 			this._forbiddenStrings = LoadWordFilter();
 		}
 
+		public void SetPoints(int points)
+		{
+			this.Points = points;
+		}
+
 		private void SendScoreAndChangeMainMenu()
 		{
-			string hName = HandleName(_name);
+			var score = new Score(Points, HandleName(_name));
+			_points = 0;
+			_name = "";
+			NotifyPropertyChanged(nameof(Name));
 
-			var score = new Score(this.Points, hName);
-
-			this._frameModel.ChangeScreen(typeof(MainMenuViewModel));
-			this._frameModel.SetNewHighScore(score);
+			this.ScoreAdded.Invoke(score);
 		}
 
 		private List<string> LoadWordFilter()
@@ -97,7 +103,6 @@ namespace InvasionOfAldebaran.ViewModels
 					{
 						censor += "#";
 					}
-					
 					censoredString = censoredString.ToUpper().Replace(word.ToUpper(), censor);
 				}
 			}

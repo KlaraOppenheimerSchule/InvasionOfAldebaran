@@ -28,32 +28,34 @@ namespace InvasionOfAldebaran.ViewModels
 	        this.Height = SystemParameters.WorkArea.Height;
 			this.Width = SystemParameters.WorkArea.Width;
 
-            this.Items.Add(new MainMenuViewModel(this));
-            this.Items.Add(new PlayViewModel(this));
-			this.Items.Add(new IntroViewModel(this));
+			MainMenuViewModel mainmenu = new MainMenuViewModel(this);
+			this.Items.Add(mainmenu);
+
+			AddScoreViewModel addScore = new AddScoreViewModel(this);
+			addScore.ScoreAdded += AddScore_ScoreAdded;
+			this.Items.Add(addScore);
+
+			PlayViewModel playViewModel = new PlayViewModel(this);
+			playViewModel.GameEnded += PlayViewModel_GameEnded;
+			this.Items.Add(playViewModel);
+
             this.ChangeScreen(typeof(MainMenuViewModel));
         }
-		/// <summary>
-		/// Creates and displays a new instance of the AddScoreScreen which will be garbage collected after setting the highscore
-		/// </summary>
-		/// <param name="score">The score the player achieved</param>
-        public void DisplayAddScoreScreen(int score)
-        {
-			// Neue Instanz von AddScore erstellen und anzeigen lassen
-			var AddScore = new AddScoreViewModel(this, score);
 
-			this.ActivateItem(AddScore);
-	    }
-		/// <summary>
-		/// Adds the highscore into the existing highscore list in the MainMenuViewModel
-		/// </summary>
-		/// <param name="score"></param>
-		public void SetNewHighScore(Score score)
+		private void AddScore_ScoreAdded(Score score)
 		{
 			var menu = this.Items.Single(s => s is MainMenuViewModel) as MainMenuViewModel;
-
+			ChangeScreen(typeof(MainMenuViewModel));
 			menu.AddScore(score);
 		}
+
+		private void PlayViewModel_GameEnded(int points)
+		{
+			var addscore = this.Items.Single(s => s is AddScoreViewModel) as AddScoreViewModel;
+			ActivateItem(addscore);
+			addscore.SetPoints(points);
+		}
+		
 		/// <summary>
 		/// Displays one of the conductors ViewModels and sets the appropriate theme depending on the given type in the parameter
 		/// </summary>
@@ -82,6 +84,10 @@ namespace InvasionOfAldebaran.ViewModels
 				this.ActivateItem(this.Items.Single(s => s is PlayViewModel));
 				Soundmanager.PlayInGameTheme(true);
 		    }
+			if(screen == typeof(AddScoreViewModel))
+			{
+				this.ActivateItem(this.Items.Single(s => s is AddScoreViewModel));
+			}
 	    }
     }
 }

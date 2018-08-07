@@ -1,53 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ArrayOfScore xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <Score>
+<ArrayOfSerializableScore xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <SerializableScore>
     <Name>DanielTest</Name>
-    <Points>103000</Points>
-    <ListPosition>1</ListPosition>
-  </Score>
-  <Score>
-    <Name>DANIEL####ER</Name>
-    <Points>9</Points>
-    <ListPosition>2</ListPosition>
-  </Score>
-  <Score>
-    <Name>TA Lukas</Name>
-    <Points>8</Points>
-    <ListPosition>3</ListPosition>
-  </Score>
-  <Score>
-    <Name>TA Daniel</Name>
-    <Points>7</Points>
-    <ListPosition>4</ListPosition>
-  </Score>
-  <Score>
-    <Name>Gustav</Name>
-    <Points>6</Points>
-    <ListPosition>5</ListPosition>
-  </Score>
-  <Score>
-    <Name>#####SLAYER#####</Name>
-    <Points>5</Points>
-    <ListPosition>6</ListPosition>
-  </Score>
-  <Score>
-    <Name>HalloHalloHalloHallo</Name>
-    <Points>4</Points>
-    <ListPosition>7</ListPosition>
-  </Score>
-  <Score>
-    <Name>Timo</Name>
-    <Points>3</Points>
-    <ListPosition>8</ListPosition>
-  </Score>
-  <Score>
-    <Name>LetzerTestfürHeute</Name>
-    <Points>2</Points>
-    <ListPosition>9</ListPosition>
-  </Score>
-  <Score>
-    <Name>HighScore</Name>
     <Points>1</Points>
-    <ListPosition>10</ListPosition>
-  </Score>
-</ArrayOfScore>
+    <ListPosition>1</ListPosition>
+  </SerializableScore>
+  <SerializableScore>
+    <Name>Idiot123</Name>
+    <Points>0</Points>
+    <ListPosition>2</ListPosition>
+  </SerializableScore>
+  <SerializableScore>
+    <Name>Verlierer</Name>
+    <Points>0</Points>
+    <ListPosition>3</ListPosition>
+  </SerializableScore>
+  <SerializableScore>
+    <Name>Idiot</Name>
+    <Points>0</Points>
+    <ListPosition>4</ListPosition>
+  </SerializableScore>
+</ArrayOfSerializableScore>

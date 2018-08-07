@@ -92,7 +92,8 @@
     <Compile Include="ViewModels\MainMenuViewModel.cs" />
     <Compile Include="ViewModels\FrameWindowViewModel.cs" />
     <Compile Include="ViewModels\NotifyPropertyChangedBase.cs" />
-    <Compile Include="Models\Score.cs" />
+    <Compile Include="Models\SerializableScore.cs" />
+    <Compile Include="ViewModels\Helper\Score.cs" />
     <Compile Include="Views\AddScoreView.xaml.cs">
       <DependentUpon>AddScoreView.xaml</DependentUpon>
     </Compile>
