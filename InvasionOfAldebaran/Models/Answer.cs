@@ -1,9 +1,6 @@
-﻿using System;
-using InvasionOfAldebaran.Annotations;
-
-namespace InvasionOfAldebaran.Models
+﻿namespace InvasionOfAldebaran.Models
 {
-    public class Answer
+	public class Answer
     {
         public string Text { get; private set; }
         public bool IsCorrect { get; private set; }

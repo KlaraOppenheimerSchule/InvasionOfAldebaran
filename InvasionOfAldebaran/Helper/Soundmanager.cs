@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media;
 
 namespace InvasionOfAldebaran.Helper
 {
-    public static class Soundmanager
+	public static class Soundmanager
     {
         private static readonly Random r = new Random();
         private static readonly MediaPlayer enemySoundeffect = new MediaPlayer();

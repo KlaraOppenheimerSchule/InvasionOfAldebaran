@@ -1,6 +1,5 @@
 ﻿using InvasionOfAldebaran.Helper;
 using System.Windows.Input;
-using System;
 using System.Collections.Generic;
 
 namespace InvasionOfAldebaran.ViewModels

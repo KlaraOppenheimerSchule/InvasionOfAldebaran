@@ -1,12 +1,11 @@
-﻿using InvasionOfAldebaran.ViewModels;
-using System.Windows;
+﻿using System.Windows;
 
 namespace InvasionOfAldebaran.Views
 {
-    /// <summary>
-    /// Interaction logic for FrameWindowView.xaml
-    /// </summary>
-    public partial class FrameWindowView : Window
+	/// <summary>
+	/// Interaction logic for FrameWindowView.xaml
+	/// </summary>
+	public partial class FrameWindowView : Window
     {
         public FrameWindowView()
         {

@@ -60,18 +60,18 @@
 		<!-- Answer Panel -->
 		<Border Grid.Row="1" Grid.Column="2" Grid.RowSpan="2" Visibility="Visible" BorderBrush="DarkMagenta" 
 				BorderThickness="3">
-		<StackPanel Grid.Row="1" Grid.Column="2" VerticalAlignment="Top" HorizontalAlignment="Center" 
-					CanVerticallyScroll="True">
+		<StackPanel Grid.Row="1" Grid.Column="2" VerticalAlignment="Bottom" HorizontalAlignment="Center" 
+					CanVerticallyScroll="True" >
 			<!-- Lives, Points, Wave -->
-				<TextBlock Text="{Binding Lives, StringFormat='Lives:  {0}'}" Foreground="DarkRed" FontSize="24" 
-						   FontWeight="Bold" HorizontalAlignment="Center" Margin="0 30 0 0" 
-						   Style="{StaticResource NewFontStyle}"/>
-				<Border Visibility="Visible" BorderBrush="DarkMagenta" BorderThickness="1" Margin="0 10 0 10"/>
 				<TextBlock Text="{Binding Points, StringFormat='Points:  {0}'}" Foreground="LightBlue" FontSize="24" 
-						   FontWeight="Bold" HorizontalAlignment="Center" Margin="0 10 0 0" 
+						   FontWeight="Bold" HorizontalAlignment="Center" Margin="0 30 0 30" 
+						   Style="{StaticResource NewFontStyle}"/>
+				<Border Visibility="Visible" BorderBrush="DarkMagenta" BorderThickness="1" Margin="0 10 0 30"/>
+				<TextBlock Text="{Binding Lives, StringFormat='Lives:  {0}'}" Foreground="DarkRed" FontSize="24" 
+						   FontWeight="Bold" HorizontalAlignment="Center" Margin="0 0 0 20" 
 						   Style="{StaticResource NewFontStyle}"/>
 				<TextBlock Text="{Binding CurrentWave, StringFormat='Wave:   {0}'}" Foreground="Beige" FontSize="24" 
-						   FontWeight="Bold" HorizontalAlignment="Center" Margin="0 10 0 0" 
+						   FontWeight="Bold" HorizontalAlignment="Center" Margin="0 0 0 60" 
 						   Style="{StaticResource NewFontStyle}"/>
 			<!-- Freddy Face -->
 			<ItemsControl Margin="0 50 0 0" VerticalAlignment="Bottom">

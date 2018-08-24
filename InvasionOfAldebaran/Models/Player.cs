@@ -1,12 +1,11 @@
 ﻿using InvasionOfAldebaran.Helper;
-using System;
 using System.Windows.Controls;
 
 namespace InvasionOfAldebaran.Models
 {
-    public class Player : AnimatedObject
+	public class Player : AnimatedObject
     {
-		private const double speedFactor = 3.2;
+		private const double speedFactor = 2.6;
 
 		private double _speed;	
 

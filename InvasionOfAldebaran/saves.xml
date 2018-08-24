@@ -10,4 +10,19 @@
     <Points>10759</Points>
     <ListPosition>2</ListPosition>
   </SerializableScore>
+  <SerializableScore>
+    <Name>Steffen</Name>
+    <Points>8319</Points>
+    <ListPosition>3</ListPosition>
+  </SerializableScore>
+  <SerializableScore>
+    <Name>Nochmal Daniel</Name>
+    <Points>4488</Points>
+    <ListPosition>4</ListPosition>
+  </SerializableScore>
+  <SerializableScore>
+    <Name>Daniel</Name>
+    <Points>126</Points>
+    <ListPosition>5</ListPosition>
+  </SerializableScore>
 </ArrayOfSerializableScore>

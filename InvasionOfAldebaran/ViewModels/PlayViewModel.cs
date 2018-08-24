@@ -162,7 +162,7 @@ namespace InvasionOfAldebaran.ViewModels
 					if (!enemy.IntersectsWith(missile.Coords.X, missile.Coords.Y, enemy.Image, missile.Image))
 						continue;
 
-					if (this._random.Next(0, 10) == 0)
+					if (this._random.Next(0, 15) == 0)
 						Soundmanager.PlayFriendlyExplosion();
 					else
 						Soundmanager.PlayEnemyExplosion();
