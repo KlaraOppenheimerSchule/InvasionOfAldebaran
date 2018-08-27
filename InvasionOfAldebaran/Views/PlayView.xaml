@@ -74,11 +74,11 @@
 						   FontWeight="Bold" HorizontalAlignment="Center" Margin="0 0 0 60" 
 						   Style="{StaticResource NewFontStyle}"/>
 			<!-- Freddy Face -->
-			<ItemsControl Margin="0 50 0 0" VerticalAlignment="Bottom">
-				<Grid x:Name="FreddyFace" VerticalAlignment="Bottom">
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="*" />
-					</Grid.ColumnDefinitions>
+				<ItemsControl Margin="0 50 0 0" VerticalAlignment="Bottom">
+					<Grid x:Name="FreddyFace" VerticalAlignment="Bottom">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="*" />
+						</Grid.ColumnDefinitions>
 						<Grid.Background>
 							<ImageBrush ImageSource="../Resources/Images/MainMenuBackground.jpg"></ImageBrush>
 						</Grid.Background>
@@ -86,53 +86,8 @@
 						   HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="Fant" Stretch="Fill" 
 						  Source="../Resources/Images/FreddyPower.png" Height="{Binding ActualWidth, ElementName=FreddyFace}" />
 					</Grid>
-			</ItemsControl>
-				<!--<Border Visibility="Visible" BorderBrush="DarkMagenta" BorderThickness="1" Margin="0 10 0 10"/>
-			<ItemsControl>
-				<Grid>
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="50" />
-						<ColumnDefinition Width="*" />
-					</Grid.ColumnDefinitions>
-					<Image Grid.Column="0" Grid.Row="0" Margin="5 0"
-			               HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="Fant" Stretch="Fill" 
-						   Width="30" Height="30"/>
-					<TextBlock Grid.Column="1" Grid.Row="0" Text="" FontSize="24" 
-			                   FontWeight="Bold" HorizontalAlignment="Left" Foreground="LightGray" 
-							   Style="{StaticResource NewFontStyle}"/>
-				</Grid>
-			</ItemsControl>
-			<Border Visibility="Visible" BorderBrush="DarkMagenta" BorderThickness="1" Margin="0 10 0 10"/>
-			<ItemsControl >
-				<Grid>
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="50" />
-						<ColumnDefinition Width="*" />
-					</Grid.ColumnDefinitions>
-					<Image Grid.Column="0" Grid.Row="0" Margin="5 0"
-					       HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="Fant" Stretch="Fill" 
-						   Width="30" Height="30"/>
-					<TextBlock Grid.Column="1" Grid.Row="0" Text="" FontSize="24" 
-					           FontWeight="Bold" HorizontalAlignment="Left" Foreground="LightGray" 
-							   Style="{StaticResource NewFontStyle}"/>
-				</Grid>
-			</ItemsControl>
-			<Border Visibility="Visible" BorderBrush="DarkMagenta" BorderThickness="1" Margin="0 10 0 10"/>
-			<ItemsControl >
-				<Grid>
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="50" />
-						<ColumnDefinition Width="*" />
-					</Grid.ColumnDefinitions>
-					<Image Grid.Column="0" Grid.Row="0" Margin="5 0"
-			               HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="Fant" Stretch="Fill" 
-						   Width="30" Height="30"/>
-					<TextBlock Grid.Column="1" Grid.Row="0" Text="" FontSize="24" 
-			                   FontWeight="Bold" HorizontalAlignment="Left" Foreground="LightGray" 
-							   Style="{StaticResource NewFontStyle}"/>
-				</Grid>
-			</ItemsControl>-->
-		</StackPanel>
+				</ItemsControl>
+			</StackPanel>
 		</Border>
 		<!-- Hit Messages & Wave Number -->
 		<Border Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="1" Visibility="Visible" BorderBrush="DarkMagenta" 

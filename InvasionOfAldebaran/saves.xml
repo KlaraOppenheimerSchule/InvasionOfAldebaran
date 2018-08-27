@@ -22,7 +22,22 @@
   </SerializableScore>
   <SerializableScore>
     <Name>Daniel</Name>
-    <Points>126</Points>
+    <Points>154</Points>
     <ListPosition>5</ListPosition>
+  </SerializableScore>
+  <SerializableScore>
+    <Name>Daniel</Name>
+    <Points>126</Points>
+    <ListPosition>6</ListPosition>
+  </SerializableScore>
+  <SerializableScore>
+    <Name>Test</Name>
+    <Points>0</Points>
+    <ListPosition>7</ListPosition>
+  </SerializableScore>
+  <SerializableScore>
+    <Name>test1</Name>
+    <Points>0</Points>
+    <ListPosition>8</ListPosition>
   </SerializableScore>
 </ArrayOfSerializableScore>
