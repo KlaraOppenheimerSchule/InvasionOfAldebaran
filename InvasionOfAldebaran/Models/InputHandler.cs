@@ -89,5 +89,11 @@ namespace InvasionOfAldebaran.Models
 			if (this.EscapePressed)
 				this.EscapeKeyPressed?.Invoke();
 		}
+
+		public void Stop(Canvas canvas)
+		{
+			canvas.PreviewKeyDown -= this.OnKeyDownHandler;
+			canvas.PreviewKeyUp -= this.OnKeyUpDownHandler;
+		}
     }
 }

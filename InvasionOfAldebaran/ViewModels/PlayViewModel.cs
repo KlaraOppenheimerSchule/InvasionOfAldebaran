@@ -188,6 +188,7 @@ namespace InvasionOfAldebaran.ViewModels
 			_timer.Tick -= this.AnimateObjects;
             _spawner.ObjectsSpawned -= this.AddObjectEventHandler;
 			_inputHandler.EscapeKeyPressed -= this.EndGame;
+			_inputHandler.Stop(this.Canvas);
 
 			this.Points *= this.CurrentWave;
 			
@@ -198,6 +199,9 @@ namespace InvasionOfAldebaran.ViewModels
 
         private void StartGameEventHandler(object sender, EventArgs e)
         {
+			// Garbage Collect old gamedata first
+			GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced);
+
             // initialization
             _objects = new List<AnimatedObject>();
             _enemies = new List<AnimatedObject>();

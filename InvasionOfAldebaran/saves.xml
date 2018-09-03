@@ -1,43 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfSerializableScore xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <SerializableScore>
-    <Name>######</Name>
-    <Points>11178</Points>
+    <Name>Daniel</Name>
+    <Points>2001</Points>
     <ListPosition>1</ListPosition>
-  </SerializableScore>
-  <SerializableScore>
-    <Name>Daniel</Name>
-    <Points>10759</Points>
-    <ListPosition>2</ListPosition>
-  </SerializableScore>
-  <SerializableScore>
-    <Name>Steffen</Name>
-    <Points>8319</Points>
-    <ListPosition>3</ListPosition>
-  </SerializableScore>
-  <SerializableScore>
-    <Name>Nochmal Daniel</Name>
-    <Points>4488</Points>
-    <ListPosition>4</ListPosition>
-  </SerializableScore>
-  <SerializableScore>
-    <Name>Daniel</Name>
-    <Points>154</Points>
-    <ListPosition>5</ListPosition>
-  </SerializableScore>
-  <SerializableScore>
-    <Name>Daniel</Name>
-    <Points>126</Points>
-    <ListPosition>6</ListPosition>
-  </SerializableScore>
-  <SerializableScore>
-    <Name>Test</Name>
-    <Points>0</Points>
-    <ListPosition>7</ListPosition>
-  </SerializableScore>
-  <SerializableScore>
-    <Name>test1</Name>
-    <Points>0</Points>
-    <ListPosition>8</ListPosition>
   </SerializableScore>
 </ArrayOfSerializableScore>

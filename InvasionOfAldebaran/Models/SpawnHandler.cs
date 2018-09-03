@@ -20,7 +20,7 @@ namespace InvasionOfAldebaran.Models
 		private DateTime _lastMissile;
 	    private int _waveCounter;
 		private double _speedMultiplier = 1;
-		private double _multiplierStep = 0.25;
+		private double _multiplierStep = 0.15;
 		
 		public delegate void SpawnEventHandler(List<AnimatedObject> spawns);
 
